@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vs="clr-namespace:MauiPets"
+    xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
     xmlns:petpage="clr-namespace:MauiPets.Mvvm.Views.Pets"
     xmlns:controls ="clr-namespace:MauiPets.Controls"
     xmlns:contactspage="clr-namespace:MauiPets.Mvvm.Views.Contacts"
@@ -36,41 +37,41 @@
     
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
-        Title="Início"
+        Title="{resx:Localize Key=TituloInicio}"
         Icon="doghouse.png"
         ContentTemplate="{DataTemplate petpage:PetsPage}"
         Route="PetsPage"/>
         <ShellContent
-        Title="Despesas"
+        Title="{resx:Localize Key=TituloDespesas}"
         Icon="expenses.png"
         ContentTemplate="{DataTemplate expensespage:ExpensesPage}"
         Route="ExpensesPage" />
         <ShellContent
-        Title="Contactos"
+        Title="{resx:Localize Key=TituloContactos}"
         Icon="phone.png" 
         ContentTemplate="{DataTemplate contactspage:ContactsPage}"
         Route="ContactsPage" />
         <ShellContent
-            Title="Tarefas"
+            Title="{resx:Localize Key=TituloTarefas}"
             Icon="tasks.png" 
             ContentTemplate="{DataTemplate todospage:TodoPage}"
             Route="TodoPage" />
         <ShellContent
-            Title="Segurança"
+            Title="{resx:Localize Key=TituloSeguranca}"
             Icon="backup_icon.png"
             ContentTemplate="{DataTemplate utilitypage:BackupPage}"
             Route="BackupPage" />
 
-        <Tab Title="Settings" 
+        <Tab Title="{resx:Localize Key=TituloSettings}"
              Icon="gear.png">
-            <ShellContent 
-                    Title="Tabelas"
-                    Icon="list.png" 
+            <ShellContent
+                    Title="{resx:Localize Key=TituloGestaoTabelas}"
+                    Icon="list.png"
                     ContentTemplate="{DataTemplate settingspage:MainSettingsPage}"
                     Route="MainSettingsPage"/>
-            <ShellContent 
-                    Title="Despesas"
-                    Icon="expenses.png" 
+            <ShellContent
+                    Title="{resx:Localize Key=TituloDespesas}"
+                    Icon="expenses.png"
                     ContentTemplate="{DataTemplate expensesettingspage:ExpenseSettingsPage}"
                     Route="ExpenseSettingsPage" />
         </Tab>
@@ -79,7 +80,7 @@
 
     <ShellContent
         Title="Logs"
-        Icon="icon_log.png" 
+        Icon="icon_log.png"
         ContentTemplate="{DataTemplate logsmainpage:LogsMainPage}"
         Route="LogsMainPage" />
 

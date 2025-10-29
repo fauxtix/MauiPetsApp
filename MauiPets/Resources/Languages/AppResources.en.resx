@@ -384,4 +384,16 @@
   <data name="Pet_Vaccine_Next_Dose" xml:space="preserve">
     <value>Next vaccination</value>
   </data>
+  <data name="TituloInicio" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="TituloTarefas" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
+  <data name="TituloSeguranca" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="TituloSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
 </root>

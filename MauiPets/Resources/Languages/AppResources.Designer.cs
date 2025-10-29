@@ -610,7 +610,7 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tabelas auxiliares.
+        ///   Looks up a localized string similar to Tabelas.
         /// </summary>
         public static string TituloGestaoTabelas {
             get {
@@ -642,6 +642,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloImagem {
             get {
                 return ResourceManager.GetString("TituloImagem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Início.
+        /// </summary>
+        public static string TituloInicio {
+            get {
+                return ResourceManager.GetString("TituloInicio", resourceCulture);
             }
         }
         
@@ -808,6 +817,24 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Segurança.
+        /// </summary>
+        public static string TituloSeguranca {
+            get {
+                return ResourceManager.GetString("TituloSeguranca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuração.
+        /// </summary>
+        public static string TituloSettings {
+            get {
+                return ResourceManager.GetString("TituloSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Género.
         /// </summary>
         public static string TituloSexo {
@@ -831,6 +858,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloTarefa {
             get {
                 return ResourceManager.GetString("TituloTarefa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarefas.
+        /// </summary>
+        public static string TituloTarefas {
+            get {
+                return ResourceManager.GetString("TituloTarefas", resourceCulture);
             }
         }
         

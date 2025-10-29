@@ -244,7 +244,7 @@
     <value>Foto</value>
   </data>
   <data name="TituloGestaoTabelas" xml:space="preserve">
-    <value>Tabelas auxiliares</value>
+    <value>Tabelas</value>
   </data>
   <data name="TituloIdiomaIngles" xml:space="preserve">
     <value>Inglês</value>
@@ -383,5 +383,17 @@
   </data>
   <data name="Pet_Vaccine_Next_Dose" xml:space="preserve">
     <value>Próxima toma</value>
+  </data>
+  <data name="TituloInicio" xml:space="preserve">
+    <value>Início</value>
+  </data>
+  <data name="TituloTarefas" xml:space="preserve">
+    <value>Tarefas</value>
+  </data>
+  <data name="TituloSeguranca" xml:space="preserve">
+    <value>Segurança</value>
+  </data>
+  <data name="TituloSettings" xml:space="preserve">
+    <value>Configuração</value>
   </data>
 </root>
