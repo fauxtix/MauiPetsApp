@@ -114,14 +114,6 @@
                                                Padding="10"
                                                FontSize="18"
                                                HorizontalTextAlignment="Center" />
-                                        <Button Text="Galeria de Fotos"
-                                                Command="{Binding Source={x:Reference PetsPageRoot}, Path=BindingContext.OpenGalleryCommand}"
-                                                CommandParameter="{Binding Id}"
-                                                Margin="0,5"
-                                                BackgroundColor="#C5E1A5"
-                                                TextColor="Black"
-                                                FontSize="13"
-                                                HorizontalOptions="Center"/>
                                         <Grid RowDefinitions="*, *" ColumnDefinitions="*, *">
                                             <Border Grid.Row="0" Grid.Column="0" Stroke="LightGray" StrokeThickness="1" 
                                                     StrokeShape="RoundRectangle 5" Margin="5,1" Padding="5, 1">
@@ -157,6 +149,15 @@
                                                 </VerticalStackLayout>
                                             </Border>
                                         </Grid>
+                                        <Button Text="Galeria de Fotos"
+                                                Command="{Binding Source={x:Reference PetsPageRoot}, Path=BindingContext.OpenGalleryCommand}"
+                                                CommandParameter="{Binding Id}"
+                                                Margin="0,5"
+                                                BackgroundColor="#C5E1A5"
+                                                TextColor="Black"
+                                                FontSize="13"
+                                                HorizontalOptions="Center"/>
+
                                     </VerticalStackLayout>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>

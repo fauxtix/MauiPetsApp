@@ -26,6 +26,8 @@ public partial class PetGalleryViewModel : ObservableObject, IQueryAttributable
     [ObservableProperty]
     bool isBusy;
 
+    public bool HasPhotos => Photos != null && Photos.Count > 0;
+
     public PetGalleryViewModel(IPetPhotoService photoService)
     {
         _photoService = photoService;

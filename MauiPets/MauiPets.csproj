@@ -438,11 +438,17 @@
 		<MauiXaml Update="Mvvm\Views\PetFood\PetFoodAddOrEditPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Mvvm\Views\Documents\DocumentsPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Mvvm\Views\Pets\PetAddOrEditPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Mvvm\Views\Pets\PetDetailPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Mvvm\Views\Documents\PetDocumentsView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Mvvm\Views\Pets\PetGalleryPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>

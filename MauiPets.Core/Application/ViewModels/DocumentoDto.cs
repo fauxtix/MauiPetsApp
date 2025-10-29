@@ -6,7 +6,7 @@
         public string? Title { get; set; } = string.Empty;
         public string? Description { get; set; } = string.Empty;
         public string? DocumentPath { get; set; }
-        public string CreatedOn { get; set; } = string.Empty;
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public int PetId { get; set; }
     }
 }

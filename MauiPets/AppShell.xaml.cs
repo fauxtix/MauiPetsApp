@@ -1,5 +1,6 @@
 ﻿using MauiPets.Mvvm.Views.Contacts;
 using MauiPets.Mvvm.Views.Dewormers;
+using MauiPets.Mvvm.Views.Documents;
 using MauiPets.Mvvm.Views.Expenses;
 using MauiPets.Mvvm.Views.Logs;
 using MauiPets.Mvvm.Views.Notifications;
@@ -61,6 +62,9 @@ namespace MauiPets
 
             Routes.Add(nameof(LogsMainPage), typeof(LogsMainPage));
             Routes.Add(nameof(LogViewExceptionPage), typeof(LogViewExceptionPage));
+
+            Routes.Add(nameof(DocumentsPage), typeof(DocumentsPage));
+            Routes.Add(nameof(PetDocumentsView), typeof(PetDocumentsView));
 
             Routes.Add(nameof(EmailFormPage), typeof(EmailFormPage));
             Routes.Add(nameof(BackupPage), typeof(BackupPage));

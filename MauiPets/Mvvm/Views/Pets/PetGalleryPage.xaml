@@ -35,8 +35,7 @@
         <CollectionView Grid.Row="2"
                         ItemsSource="{Binding Photos}" 
                         SelectionMode="None" 
-                        EmptyView="Sem fotos para mostrar..."
-                        IsVisible="{Binding IsCarousel, Converter={StaticResource InverseBoolConverter}}">
+                        EmptyView="Sem fotos para mostrar...">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2"/>
             </CollectionView.ItemsLayout>

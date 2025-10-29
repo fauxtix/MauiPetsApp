@@ -23,7 +23,8 @@ namespace MauiPetsApp.Infrastructure
             dynamicParameters.Add("@Title", newDocument.Title);
             dynamicParameters.Add("@Description", newDocument.Description);
             dynamicParameters.Add("@DocumentPath", newDocument.DocumentPath);
-            dynamicParameters.Add("@CreatedOn", newDocument.CreatedOn);
+            // store CreatedOn as ISO 8601 string (UTC)
+            dynamicParameters.Add("@CreatedOn", newDocument.CreatedOn.ToString("o"));
             dynamicParameters.Add("@PetId", newDocument.PetId);
 
             StringBuilder sb = new StringBuilder();
@@ -34,7 +35,6 @@ namespace MauiPetsApp.Infrastructure
 
             try
             {
-                newDocument.CreatedOn = DateTime.Now.ToShortDateString();
                 using (var connection = _context.CreateConnection())
                 {
                     int insertedId = await connection.QueryFirstAsync<int>(sb.ToString(), param: dynamicParameters);
@@ -44,7 +44,7 @@ namespace MauiPetsApp.Infrastructure
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                Log.Error(ex, "Erro ao inserir documento");
                 return -1;
             }
         }
@@ -57,6 +57,7 @@ namespace MauiPetsApp.Infrastructure
             sb.Append("Title = @Title, ");
             sb.Append("Description = @Description, ");
             sb.Append("DocumentPath = @DocumentPath, ");
+            sb.Append("CreatedOn = @CreatedOn, ");
             sb.Append("PetId = @PetId ");
             sb.Append("WHERE Id = @Id");
 
@@ -65,6 +66,7 @@ namespace MauiPetsApp.Infrastructure
             dynamicParameters.Add("@Title", updateDocument.Title);
             dynamicParameters.Add("@Description", updateDocument.Description);
             dynamicParameters.Add("@DocumentPath", updateDocument.DocumentPath);
+            dynamicParameters.Add("@CreatedOn", updateDocument.CreatedOn.ToString("o"));
             dynamicParameters.Add("@PetId", updateDocument.PetId);
 
             try
@@ -80,7 +82,7 @@ namespace MauiPetsApp.Infrastructure
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                Log.Error(ex, "Erro ao actualizar documento");
                 return false;
             }
         }
@@ -100,7 +102,7 @@ namespace MauiPetsApp.Infrastructure
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                Log.Error(ex, "Erro ao apagar documento");
             }
         }
 
@@ -123,8 +125,8 @@ namespace MauiPetsApp.Infrastructure
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
-                return null!;
+                Log.Error(ex, "Erro ao obter documentos");
+                return Enumerable.Empty<Documento>();
             }
         }
 
@@ -141,14 +143,14 @@ namespace MauiPetsApp.Infrastructure
                 {
                     var output = await connection.QueryFirstOrDefaultAsync<Documento>(sb.ToString(),
                         param: new { Id = id });
-                    return output ?? new();
+                    return output ?? new Documento();
                 }
 
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
-                return null!;
+                Log.Error(ex, "Erro ao obter documento por id");
+                return new Documento();
             }
         }
 
@@ -173,8 +175,8 @@ namespace MauiPetsApp.Infrastructure
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
-                return null!;
+                Log.Error(ex, "Erro ao obter documentos VM");
+                return Enumerable.Empty<DocumentoVM>();
             }
         }
     }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiPets.Mvvm.Views.Pets.PetDocumentsView"
+             x:Name="Root">
+    <StackLayout Padding="8" Spacing="6">
+        <Grid ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Text="Adicionar PDF"
+                Command="{Binding PickCommand}"
+                Grid.Column="0"
+                IsEnabled="{Binding IsNotBusy}" />
+            
+            <!-- optional place for status / help -->
+            <Label Text="Selecione um PDF e preencha título / descrição" Grid.Column="1" VerticalOptions="Center" FontSize="Small" />
+        </Grid>
+
+        <!-- Inline editor shown after picking a file -->
+        <Frame IsVisible="{Binding IsEditing}" Padding="8" Margin="0,6,0,6" BorderColor="#DDD" BackgroundColor="#FFF">
+            <StackLayout Spacing="8">
+                <Label Text="Editar documento" FontAttributes="Bold" />
+                <Entry Placeholder="Título" Text="{Binding TitleInput}" />
+                <Editor Placeholder="Descrição (opcional)" HeightRequest="120" Text="{Binding DescriptionInput}" />
+                <Grid ColumnSpacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Text="Save" Command="{Binding SaveCommand}" Grid.Column="0" />
+                    <Button Text="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" />
+                </Grid>
+            </StackLayout>
+        </Frame>
+
+        <CollectionView ItemsSource="{Binding Documents}" SelectionMode="None" HeightRequest="220">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="{Binding Title}" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
+                        <Button Text="Abrir" Grid.Column="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.OpenCommand}"
+                                CommandParameter="{Binding .}" />
+                        <Button Text="Apagar" Grid.Column="2"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.DeleteCommand}"
+                                CommandParameter="{Binding Id}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center"/>
+    </StackLayout>
+</ContentView>

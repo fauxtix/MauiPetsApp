@@ -6,7 +6,7 @@ namespace MauiPets.Services;
 
 public class PetFichaPdfService : IPetFichaPdfService
 {
-    public MemoryStream GenerateFichaPetPdfAsync(
+    public async Task<MemoryStream> GenerateFichaPetPdfAsync(
         PetVM pet,
         IEnumerable<VacinaVM> vacinas,
         IEnumerable<DesparasitanteVM> desparasitantes,
@@ -18,30 +18,61 @@ public class PetFichaPdfService : IPetFichaPdfService
         var graphics = page.Graphics;
         float y = 20;
 
-        // Cabeçalho
         graphics.DrawString($"Ficha do Pet: {pet.Nome}", new PdfStandardFont(PdfFontFamily.Helvetica, 20, PdfFontStyle.Bold), PdfBrushes.DarkBlue, new Syncfusion.Drawing.PointF(0, y));
         y += 35;
 
         // Foto
-        //if (!string.IsNullOrEmpty(pet.Foto))
-        //{
-        //    try
-        //    {
-        //        using var imageStream = await FileSystem.OpenAppPackageFileAsync(pet.Foto);
-        //        if (imageStream != null)
-        //        {
-        //            var pdfImage = new PdfBitmap(imageStream);
-        //            graphics.DrawImage(pdfImage, 0, y, 100, 100);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"Erro ao carregar imagem do recurso: {ex.Message}");
-        //    }
-        //    y += 110;
-        //}
+        if (!string.IsNullOrEmpty(pet.Foto))
+        {
+            Stream imageStream = null;
+            try
+            {
+                if (System.IO.File.Exists(pet.Foto))
+                {
+                    imageStream = System.IO.File.OpenRead(pet.Foto);
+                }
+                else
+                {
+                    imageStream = await FileSystem.OpenAppPackageFileAsync(pet.Foto);
+                }
 
-        // Dados principais do Pet
+                if (imageStream != null)
+                {
+                    using (imageStream)
+                    {
+                        var pdfImage = new PdfBitmap(imageStream);
+
+                        var pageWidth = page.GetClientSize().Width;
+                        var maxImageWidth = Math.Min(120f, pageWidth - 40f);
+                        var imgWidth = pdfImage.Width;
+                        var imgHeight = pdfImage.Height;
+
+                        float scale = imgWidth > maxImageWidth ? (maxImageWidth / imgWidth) : 1f;
+                        var drawWidth = imgWidth * scale;
+                        var drawHeight = imgHeight * scale;
+
+                        var xPos = (pageWidth - drawWidth) / 2f;
+
+                        var pageHeight = page.GetClientSize().Height;
+                        if (y + drawHeight + 20f > pageHeight)
+                        {
+                            page = document.Pages.Add();
+                            graphics = page.Graphics;
+                            y = 20;
+                        }
+
+                        graphics.DrawImage(pdfImage, xPos, y, drawWidth, drawHeight);
+
+                        y += drawHeight + 10f;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao carregar imagem: {ex.Message} (path: {pet.Foto})");
+            }
+        }
+
         graphics.DrawString($"Raça: {pet.RacaAnimal}", new PdfStandardFont(PdfFontFamily.Helvetica, 14), PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, y));
         y += 22;
         graphics.DrawString($"Espécie: {pet.EspecieAnimal}", new PdfStandardFont(PdfFontFamily.Helvetica, 14), PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, y));
@@ -79,7 +110,6 @@ public class PetFichaPdfService : IPetFichaPdfService
         }
         y += 32;
 
-        // Vacinas
         if (vacinas != null && vacinas.Any())
         {
             graphics.DrawString("Vacinas:", new PdfStandardFont(PdfFontFamily.Helvetica, 16, PdfFontStyle.Bold), PdfBrushes.DarkGreen, new Syncfusion.Drawing.PointF(0, y));
@@ -94,7 +124,6 @@ public class PetFichaPdfService : IPetFichaPdfService
             y += 10;
         }
 
-        // Desparasitantes
         if (desparasitantes != null && desparasitantes.Any())
         {
             graphics.DrawString("Desparasitantes:", new PdfStandardFont(PdfFontFamily.Helvetica, 16, PdfFontStyle.Bold), PdfBrushes.DarkGreen, new Syncfusion.Drawing.PointF(0, y));
@@ -111,7 +140,6 @@ public class PetFichaPdfService : IPetFichaPdfService
             y += 10;
         }
 
-        // Rações
         if (racoes != null && racoes.Any())
         {
             graphics.DrawString("Rações:", new PdfStandardFont(PdfFontFamily.Helvetica, 16, PdfFontStyle.Bold), PdfBrushes.DarkGreen, new Syncfusion.Drawing.PointF(0, y));
@@ -126,7 +154,6 @@ public class PetFichaPdfService : IPetFichaPdfService
             y += 10;
         }
 
-        // Marcações
         if (marcacoes != null && marcacoes.Any())
         {
             var labelFont = new PdfStandardFont(PdfFontFamily.Helvetica, 12, PdfFontStyle.Bold);
@@ -139,13 +166,11 @@ public class PetFichaPdfService : IPetFichaPdfService
 
             foreach (var m in marcacoes)
             {
-                // Data (linha própria)
                 graphics.DrawString(
                     $"Data: {m.DataConsulta}",
                     valueFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(margemEsquerda, y));
                 y += 16;
 
-                // Motivo (linha separada, com wrap)
                 var motivoText = $"Motivo: {m.Motivo}";
                 var motivoElement = new PdfTextElement(motivoText, valueFont);
                 var motivoLayout = motivoElement.Draw(
@@ -155,7 +180,6 @@ public class PetFichaPdfService : IPetFichaPdfService
                 );
                 y = motivoLayout.Bounds.Bottom + 2;
 
-                // Diagnóstico (linha separada, com wrap)
                 var diagText = $"Diagnóstico: {m.Diagnostico}";
                 var diagElement = new PdfTextElement(diagText, valueFont);
                 var diagLayout = diagElement.Draw(
@@ -165,7 +189,6 @@ public class PetFichaPdfService : IPetFichaPdfService
                 );
                 y = diagLayout.Bounds.Bottom + 2;
 
-                // Tratamento (linha separada, com wrap)
                 var tratText = $"Tratamento: {m.Tratamento}";
                 var tratElement = new PdfTextElement(tratText, valueFont);
                 var tratLayout = tratElement.Draw(
@@ -185,14 +208,11 @@ public class PetFichaPdfService : IPetFichaPdfService
     private string FormatDate(string raw)
     {
         if (string.IsNullOrWhiteSpace(raw)) return "";
-        // Extrai só a parte da data se vier com hora (ex: 2024-05-06T00:00:00)
         var data = raw.Length >= 10 ? raw[..10] : raw;
         if (DateTime.TryParse(data, out var dt))
             return dt.ToString("yyyy-MM-dd");
-        // Se não conseguiu, tenta com o original
         if (DateTime.TryParse(raw, out dt))
             return dt.ToString("yyyy-MM-dd");
-        // Se ainda não conseguiu, devolve como está
         return raw;
     }
     private int CalculateAge(DateTime birthDate)
@@ -200,7 +220,6 @@ public class PetFichaPdfService : IPetFichaPdfService
         DateTime today = DateTime.Today;
         int age = today.Year - birthDate.Year;
 
-        // Verifica se já houve aniversário este ano
         if (birthDate.Date > today.AddYears(-age)) age--;
 
         return age;

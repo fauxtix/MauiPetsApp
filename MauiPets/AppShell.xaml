@@ -10,6 +10,7 @@
     xmlns:contactspage="clr-namespace:MauiPets.Mvvm.Views.Contacts"
     xmlns:expensespage="clr-namespace:MauiPets.Mvvm.Views.Expenses"
     xmlns:todospage="clr-namespace:MauiPets.Mvvm.Views.Todo"
+    xmlns:documentspage="clr-namespace:MauiPets.Mvvm.Views.Documents"
     xmlns:logsmainpage="clr-namespace:MauiPets.Mvvm.Views.Logs"
     xmlns:settingspage="clr-namespace:MauiPets.Mvvm.Views.Settings"
     xmlns:utilitypage="clr-namespace:MauiPets.Mvvm.Views.Utilities"
@@ -47,10 +48,16 @@
         ContentTemplate="{DataTemplate expensespage:ExpensesPage}"
         Route="ExpensesPage" />
         <ShellContent
-        Title="{resx:Localize Key=TituloContactos}"
-        Icon="phone.png" 
-        ContentTemplate="{DataTemplate contactspage:ContactsPage}"
-        Route="ContactsPage" />
+                Title="{resx:Localize Key=TituloContactos}"
+                Icon="phone.png" 
+                ContentTemplate="{DataTemplate contactspage:ContactsPage}"
+                Route="ContactsPage" />
+        <ShellContent
+                Title="{resx:Localize Key=TituloContactos}"
+                Icon="phone.png" 
+                ContentTemplate="{DataTemplate documentspage:DocumentsPage}"
+                Route="DocumentsPage" />
+
         <ShellContent
             Title="{resx:Localize Key=TituloTarefas}"
             Icon="tasks.png" 
@@ -77,7 +84,7 @@
         </Tab>
 
     </FlyoutItem>
-
+ 
     <ShellContent
         Title="Logs"
         Icon="icon_log.png"

@@ -8,6 +8,7 @@ using MauiPets.Core.Application.Interfaces.Services;
 using MauiPets.Core.Application.Interfaces.Services.Notifications;
 using MauiPets.Mvvm.ViewModels.Contacts;
 using MauiPets.Mvvm.ViewModels.Dewormers;
+using MauiPets.Mvvm.ViewModels.Documents;
 using MauiPets.Mvvm.ViewModels.Email;
 using MauiPets.Mvvm.ViewModels.Expenses;
 using MauiPets.Mvvm.ViewModels.Logs;
@@ -21,6 +22,7 @@ using MauiPets.Mvvm.ViewModels.Vaccines;
 using MauiPets.Mvvm.ViewModels.VetAppointments;
 using MauiPets.Mvvm.Views.Contacts;
 using MauiPets.Mvvm.Views.Dewormers;
+using MauiPets.Mvvm.Views.Documents;
 using MauiPets.Mvvm.Views.Expenses;
 using MauiPets.Mvvm.Views.Logs;
 using MauiPets.Mvvm.Views.Notifications;
@@ -134,6 +136,9 @@ namespace MauiPets
             builder.Services.AddTransient<PetDetailViewModel>();
             builder.Services.AddTransient<PetAddOrEditViewModel>();
             builder.Services.AddTransient<PetGalleryViewModel>();
+            builder.Services.AddTransient<PetDocumentsViewModel>();
+            builder.Services.AddTransient<DocumentsPageViewModel>();
+
 
             builder.Services.AddTransient<ContactsViewModel>();
             builder.Services.AddTransient<ContactDetailViewModel>();
@@ -184,6 +189,10 @@ namespace MauiPets
             builder.Services.AddTransient<PetDetailPage>();
             builder.Services.AddTransient<PetAddOrEditPage>();
             builder.Services.AddTransient<PetGalleryPage>();
+
+            builder.Services.AddTransient<DocumentsPage>();
+            builder.Services.AddTransient<PetDocumentsView>();
+
 
             builder.Services.AddTransient<ContactsPage>();
             builder.Services.AddTransient<ContactDetailPage>();
@@ -254,6 +263,7 @@ namespace MauiPets
 
             builder.Services.AddTransient<ILookupTableService, LookupTableService>();
             builder.Services.AddTransient<ITipoDespesaService, TipoDespesaService>();
+            builder.Services.AddTransient<IDocumentsService, DocumentsService>();
 
             builder.Services.AddSingleton<INotificationsSyncService, NotificationsSyncService>();
 
@@ -264,6 +274,7 @@ namespace MauiPets
             // repositories
             builder.Services.AddTransient<IPetRepository, PetRepository>();
             builder.Services.AddTransient<IPetPhotoRepository, PetPhotoRepository>();
+
             builder.Services.AddTransient<IDespesaRepository, DespesaRepository>();
             builder.Services.AddTransient<IVacinasRepository, VacinasRepository>();
             builder.Services.AddTransient<IDesparasitanteRepository, DesparasitanteRepository>();
@@ -277,6 +288,7 @@ namespace MauiPets
             builder.Services.AddTransient<ILogRepository, LogRepository>();
 
             builder.Services.AddSingleton<INotificationRepository, NotificationRepository>();
+            builder.Services.AddTransient<IDocumentsRepository, DocumentsRepository>();
 
 
             SetupSerilog(builder);

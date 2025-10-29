@@ -16,30 +16,6 @@ namespace MauiPetsApp.Infrastructure.Services
             _repository = repository;
             _mapper = mapper;
         }
-        public async Task DeleteDocument(int Id)
-        {
-            await _repository.DeleteDocument(Id);
-        }
-
-        public async Task<IEnumerable<DocumentoDto>> GetAll()
-        {
-            var resp = await _repository.GetAll();
-            var output = _mapper.Map<IEnumerable<DocumentoDto>>(resp);
-            return output;
-        }
-
-        public async Task<IEnumerable<DocumentoVM>> GetAllVM(int Id)
-        {
-            var documentsVM = await _repository.GetAllVM(Id);
-            return documentsVM;
-        }
-
-        public async Task<DocumentoDto> GetDocument_ById(int Id)
-        {
-            var resp = await _repository.GetDocument_ById(Id);
-            var output = _mapper.Map<DocumentoDto>(resp);
-            return output;
-        }
 
         public async Task<int> InsertDocument(DocumentoDto newDocument)
         {
@@ -68,5 +44,31 @@ namespace MauiPetsApp.Infrastructure.Services
                 return false;
             }
         }
+
+        public async Task DeleteDocument(int Id)
+        {
+            await _repository.DeleteDocument(Id);
+        }
+
+        public async Task<IEnumerable<DocumentoDto>> GetAll()
+        {
+            var resp = await _repository.GetAll();
+            var output = _mapper.Map<IEnumerable<DocumentoDto>>(resp);
+            return output;
+        }
+
+        public async Task<IEnumerable<DocumentoVM>> GetAllVM(int Id)
+        {
+            var documentsVM = await _repository.GetAllVM(Id);
+            return documentsVM;
+        }
+
+        public async Task<DocumentoDto> GetDocument_ById(int Id)
+        {
+            var resp = await _repository.GetDocument_ById(Id);
+            var output = _mapper.Map<DocumentoDto>(resp);
+            return output;
+        }
+
     }
 }
