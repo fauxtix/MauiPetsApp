@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiPets.Mvvm.Views.Settings.SettingsManagementPage"
+             xmlns:models="clr-namespace:MauiPetsApp.Core.Application.ViewModels.LookupTables;assembly=MauiPets.Core"
+             xmlns:viewmodel="clr-namespace:MauiPets.Mvvm.ViewModels.Settings"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodel:SettingsViewModel"
+             Title="{Binding Title}">
+
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding AddLookupTableDataCommand}" IconImageSource="add.png" />
+        <ToolbarItem Command="{Binding GoBackCommand}" IconImageSource="icon_close.svg" />
+    </ContentPage.ToolbarItems>
+
+    <Grid Margin="5, 25, 5, 5" Padding="5">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!-- Search Bar in the first row -->
+        <SearchBar x:Name="searchBar"
+                               Placeholder="Pesquisar"                              
+                               HorizontalOptions="Start"
+                               Margin=" 0, -15, 0, 0"
+                               WidthRequest="300">
+            <SearchBar.Behaviors>
+                <toolkit:EventToCommandBehavior EventName="TextChanged"
+                                                    Command="{Binding SearchSettingsCommand }" 
+                                                    CommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
+            </SearchBar.Behaviors>
+
+        </SearchBar>
+            
+        <BoxView Grid.Row="1"
+                 HeightRequest="1"
+                 BackgroundColor="Gray"
+                 HorizontalOptions="Fill"
+                 Margin="0,10,0,10" />
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Padding="10">
+
+                <CollectionView x:Name="lookupTablesView" 
+                                ItemsSource="{Binding FilteredLookupCollection}" 
+                                VerticalScrollBarVisibility="Always"
+                                SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="2" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:LookupTableVM">
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems SwipeBehaviorOnInvoked="Close">
+                                        <SwipeItem Text="Delete"
+                                                   IconImageSource="icon_delete.svg"
+                                                   BackgroundColor="LightPink"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SettingsViewModel}}, Path=DeleteLookupRecordCommand}"
+                                                   CommandParameter="{Binding .}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <VerticalStackLayout>
+                                    <Frame CornerRadius="10"
+                                           HasShadow="True"
+                                           BackgroundColor="AliceBlue"
+                                           Margin="4, 2, 4, 6" Padding="2">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SettingsViewModel}}, Path=EditLookupRecordCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        </Frame.GestureRecognizers>
+                                        <Grid Padding="2" ColumnSpacing="10" Margin="4" RowSpacing="5">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Row="0" Grid.Column="0" 
+                                                   TextColor="Black"
+                                                   Text="{Binding Descricao}"
+                                                   FontFamily="sans-serif-medium" Padding="3, 0, 0, 0"
+                                                   FontSize="16" VerticalOptions="Center" />
+                                        </Grid>
+                                    </Frame>
+                                </VerticalStackLayout>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

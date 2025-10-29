@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MauiPets.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vs="clr-namespace:MauiPets"
+    xmlns:petpage="clr-namespace:MauiPets.Mvvm.Views.Pets"
+    xmlns:controls ="clr-namespace:MauiPets.Controls"
+    xmlns:contactspage="clr-namespace:MauiPets.Mvvm.Views.Contacts"
+    xmlns:expensespage="clr-namespace:MauiPets.Mvvm.Views.Expenses"
+    xmlns:todospage="clr-namespace:MauiPets.Mvvm.Views.Todo"
+    xmlns:logsmainpage="clr-namespace:MauiPets.Mvvm.Views.Logs"
+    xmlns:settingspage="clr-namespace:MauiPets.Mvvm.Views.Settings"
+    xmlns:utilitypage="clr-namespace:MauiPets.Mvvm.Views.Utilities"
+    xmlns:expensesettingspage="clr-namespace:MauiPets.Mvvm.Views.Settings.Expenses"
+    FlyoutWidth="200"
+    FlyoutHeight="450"
+    Shell.TabBarIsVisible="False"
+    Shell.FlyoutBehavior="Flyout">
+
+    <Shell.FlyoutBackground>
+        <LinearGradientBrush StartPoint="0,0"
+                             EndPoint="1,1">
+            <GradientStop Color="#93e4c1"
+                          Offset="0.1" />
+            <GradientStop Color="#1f6f78"
+                          Offset="0.3" />
+            <GradientStop Color="#3baea0"
+                          Offset="0.5" />
+            <GradientStop Color="#118a7e"
+                          Offset="0.8" />
+            <GradientStop Color="#2c5d63"
+                          Offset="1.0" />
+        </LinearGradientBrush>
+    </Shell.FlyoutBackground>
+    
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent
+        Title="Início"
+        Icon="doghouse.png"
+        ContentTemplate="{DataTemplate petpage:PetsPage}"
+        Route="PetsPage"/>
+        <ShellContent
+        Title="Despesas"
+        Icon="expenses.png"
+        ContentTemplate="{DataTemplate expensespage:ExpensesPage}"
+        Route="ExpensesPage" />
+        <ShellContent
+        Title="Contactos"
+        Icon="phone.png" 
+        ContentTemplate="{DataTemplate contactspage:ContactsPage}"
+        Route="ContactsPage" />
+        <ShellContent
+            Title="Tarefas"
+            Icon="tasks.png" 
+            ContentTemplate="{DataTemplate todospage:TodoPage}"
+            Route="TodoPage" />
+        <ShellContent
+            Title="Segurança"
+            Icon="backup_icon.png"
+            ContentTemplate="{DataTemplate utilitypage:BackupPage}"
+            Route="BackupPage" />
+
+        <Tab Title="Settings" 
+             Icon="gear.png">
+            <ShellContent 
+                    Title="Tabelas"
+                    Icon="list.png" 
+                    ContentTemplate="{DataTemplate settingspage:MainSettingsPage}"
+                    Route="MainSettingsPage"/>
+            <ShellContent 
+                    Title="Despesas"
+                    Icon="expenses.png" 
+                    ContentTemplate="{DataTemplate expensesettingspage:ExpenseSettingsPage}"
+                    Route="ExpenseSettingsPage" />
+        </Tab>
+
+    </FlyoutItem>
+
+    <ShellContent
+        Title="Logs"
+        Icon="icon_log.png" 
+        ContentTemplate="{DataTemplate logsmainpage:LogsMainPage}"
+        Route="LogsMainPage" />
+
+    <Shell.FlyoutFooter>
+        <controls:FlyoutFooter />
+    </Shell.FlyoutFooter>
+
+</Shell>

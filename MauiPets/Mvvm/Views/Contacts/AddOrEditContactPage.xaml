@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiPets.Mvvm.Views.Contacts.AddOrEditContactPage"
+             xmlns:viewmodel="clr-namespace:MauiPets.Mvvm.ViewModels.Contacts"
+             xmlns:behaviours="clr-namespace:MauiPets.Mvvm.Behaviours.Pickers"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
+             x:DataType="viewmodel:ContactAddOrEditViewModel"
+             Title="{Binding EditCaption}">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="MediumLabelBold" TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style x:Key="MediumBlueLabelBold" TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontAttributes" Value="Italic"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="Blue"/>
+            </Style>
+            <Style x:Key="MediumEditorBold" TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style x:Key="MediumBlueEditorBold" TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontAttributes" Value="Italic"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="Blue"/>
+            </Style>
+
+            <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+                <Setter Property="TextColor" Value="Red" />
+            </Style>
+            <Style x:Key="ValidEntryStyle" TargetType="Entry">
+                <Setter Property="TextColor" Value="Green" />
+            </Style>
+            <Color x:Key="LightBackground">#FAF9F8</Color>
+            <Color x:Key="DarkBackground">Black</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding SaveContactDataCommand  }"
+                 IconImageSource="icon_save.png" />
+        <ToolbarItem Command="{Binding GoBackCommand}"
+                 IconImageSource="icon_close.svg" />
+    </ContentPage.ToolbarItems>
+    <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+        Dark={StaticResource DarkBackground}}">
+        <VerticalStackLayout Margin="2, 10, 0, 0">
+            <VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <Border Stroke="#2B0B98"
+                    StrokeThickness="2"
+                    StrokeShape="RoundRectangle 15,15,15,15"
+                    Background="#fff"
+                    Padding="6,8"
+                    Margin="4"
+                    HorizontalOptions="Fill">
+                <Grid Margin="15,5" RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Text="{resx:Localize Key=TituloNome}" 
+                           Grid.Row="0"
+                           FontSize = "14"
+			               VerticalOptions="Center">
+                    </Label>
+                    <Entry x:Name="TxtName"
+			               Text="{Binding ContactoVM.Nome}" 
+			               Grid.Row="1"
+                           FontFamily="Poppins"
+                           FontAttributes="Bold" 
+			               VerticalOptions="Center"/>
+                    <Label Text="{resx:Localize Key=TituloMorada}" 
+                            Grid.Row="2"
+                            FontSize = "14"
+			                VerticalOptions="Center"></Label>
+                    <Entry x:Name="TxtMorada"
+			                Text="{Binding ContactoVM.Morada}" 
+			                Grid.Row="3"
+			                VerticalOptions="Center"></Entry>
+                    <Label Text="{resx:Localize Key=TituloLocalidade}" 
+                            Grid.Row="4"
+                            FontSize = "14"
+			                VerticalOptions="Center"></Label>
+                    <Entry x:Name="TxtLocalidade"
+			                Text="{Binding ContactoVM.Localidade}" 
+                            Style="{StaticResource MediumLabelBold}"
+			                Grid.Row="5"
+			                VerticalOptions="Center"></Entry>
+                    <Label Text="{resx:Localize Key=TituloMovel}" 
+                            Grid.Row="6"
+                            FontSize = "14"
+			                VerticalOptions="Center"/>
+                    <Entry x:Name="TxtMovel"
+			                Text="{Binding ContactoVM.Movel}" 
+                            Style="{StaticResource MediumLabelBold}"
+			                Grid.Row="7"
+                            Keyboard="Telephone"
+			                VerticalOptions="Center"></Entry>
+                    <Label Text="{resx:Localize Key=TituloEmail}" 
+                            Grid.Row="8"
+                            FontSize = "14"
+			                VerticalOptions="Center"/>
+                    <Entry x:Name="TxtEMail"
+			              Text="{Binding ContactoVM.eMail}" 
+                           Style="{StaticResource MediumLabelBold}"
+  		                   Grid.Row="9"
+                           Keyboard="Email"
+			               VerticalOptions="Center"></Entry>
+                    <Label Text="{resx:Localize Key=TituloTipoContacto}" 
+                           Grid.Row="10"
+                           FontSize = "14"
+			               VerticalOptions="Center"/>
+                    <Picker x:Name="ContactTypesPicker" 
+                            Title="{resx:Localize Key=TituloTipoContacto}" 
+                            Grid.Row="11" 
+                            Style="{StaticResource MediumBlueLabelBold}"
+                            ItemsSource="{Binding ContactTypes}"
+                            SelectedItem="{Binding SelectedContactType}"
+                            SelectedIndex="{Binding ContactTypeSelectedIndex}"
+                            SelectedIndexChanged="SelectedIndexChanged"
+                            ItemDisplayBinding="{Binding Descricao}">
+                    </Picker>
+                    <Label Text="{resx:Localize Key=TituloNotas}" 
+                            Grid.Row="12"
+                            FontSize = "14"
+			                VerticalOptions="Start"></Label>
+                    <Editor x:Name="TxtNotas"
+			                Text="{Binding ContactoVM.Notas}" 
+                            AutoSize="TextChanges"
+                            IsSpellCheckEnabled="True"
+                            IsTextPredictionEnabled="True"
+			                Grid.Row="13"
+                            Keyboard="Plain"  
+			                VerticalOptions="Start"></Editor>
+                    
+                    <Grid HorizontalOptions="Center" VerticalOptions="Center" 
+                      Grid.RowSpan="14">
+                        <ActivityIndicator                
+                            IsRunning="{Binding IsBusy}" 
+                            HorizontalOptions="Center" 
+                            VerticalOptions="Center" 
+                            BackgroundColor="Transparent"
+                            Color="#03b48b"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

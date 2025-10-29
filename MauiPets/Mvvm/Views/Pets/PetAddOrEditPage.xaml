@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiPets.Mvvm.Views.Pets.PetAddOrEditPage"
+             xmlns:viewmodel="clr-namespace:MauiPets.Mvvm.ViewModels.Pets"
+             xmlns:behaviours="clr-namespace:MauiPets.Mvvm.Behaviours.Pickers"
+             xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
+             xmlns:conv="clr-namespace:MauiPets.Converters"
+              xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+              x:DataType="viewmodel:PetAddOrEditViewModel"
+             Title="{Binding PetDto.Nome}">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+                <Setter Property="TextColor" Value="Red" />
+            </Style>
+            <Style x:Key="ValidEntryStyle" TargetType="Entry">
+                <Setter Property="TextColor" Value="Green" />
+            </Style>
+            <Color x:Key="LightBackground">#FAF9F8</Color>
+            <Color x:Key="DarkBackground">Black</Color>
+            <Color x:Key="Primary">#FFC107</Color>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem  Command="{Binding SavePetDataCommand  }"
+                 IconImageSource="icon_save.png" />
+        <ToolbarItem Command="{Binding DeletePetCommand  }"
+                 IconImageSource="icon_delete.svg" />
+        <ToolbarItem Command="{Binding GoBackCommand  }"
+                 IconImageSource="icon_close.svg" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView 
+        BackgroundColor="{AppThemeBinding 
+        Light={StaticResource 
+        LightBackground}, 
+        Dark={StaticResource DarkBackground}}">
+        <Grid>
+            <VerticalStackLayout >
+                <VerticalStackLayout>
+                    <Border Stroke="#2B0B98"
+                        StrokeThickness="2"
+                        StrokeShape="RoundRectangle 22"
+                        Background="#fff"
+                        Padding="8,4"
+                        Margin="4"
+                        HeightRequest="40"
+                        HorizontalOptions="Fill">
+                        <HorizontalStackLayout VerticalOptions="Center"
+                                Spacing="8">
+                            <Image Source="tasks.png"
+                                        WidthRequest="24"  
+                                        HeightRequest="24"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Start"
+                                        Margin="5,0,8,0"/>
+                            <Label VerticalTextAlignment="Center"
+                                    HorizontalTextAlignment="Center"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    TextColor="Green"
+                                    Text="{Binding EditCaption}"
+                                    HorizontalOptions="Fill"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <Frame WidthRequest="220" CornerRadius="15" HeightRequest="120" Margin="0, 10, 0,0" HasShadow="True" 
+                       IsClippedToBounds="True"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center">
+
+                    <Image x:Name="PetPhoto"
+                           Source="{Binding PetPhoto, Mode=TwoWay}"
+                           Margin="0"
+                           WidthRequest="150"
+                           HeightRequest="150"
+                           VerticalOptions="Center">
+                        <Image.Shadow>
+                            <Shadow Brush="Black"
+                                    Offset="15,15"
+                                    Radius="20"
+                                    Opacity="0.9" />
+                        </Image.Shadow>
+                    </Image>
+                </Frame>
+                <Button Margin="10, 10, 10, 5" CornerRadius="20" 
+                        HeightRequest="50" WidthRequest="150" 
+                        Text="{resx:Localize Key=TituloEscolhaImagem}" 
+                        Command="{Binding PickImageCommand}" />
+
+                <Border Stroke="#2B0B98"
+                    StrokeThickness="2"
+                    StrokeShape="RoundRectangle 40,0,0,40"
+                    Background="#fff"
+                    Padding="8,4"
+                        Margin="4"
+                    HorizontalOptions="Fill">
+
+                    <mct:Expander Padding="10" Margin="3"
+                                  IsExpanded="True" IsClippedToBounds="True" >
+                        <mct:Expander.Header>
+                            <Frame 
+                                    BorderColor="Black"
+                                    BackgroundColor="LightSteelBlue"
+                                    CornerRadius="10">
+                                <Label Text="{resx:Localize Key=TituloDadosBiograficos}" FontSize="16" 
+                                       FontAttributes="Bold" TextColor="Black"
+                               />
+                            </Frame>
+                        </mct:Expander.Header>
+                        <mct:Expander.Content>
+                            <Grid Margin="2, 10, 0, 0" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"></RowDefinition>
+                                    <RowDefinition Height="50"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="50"></RowDefinition>
+                                    <RowDefinition Height="50"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width=".3*"></ColumnDefinition>
+                                    <ColumnDefinition Width=".7*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{resx:Localize Key=TituloNome}" 
+                                       Grid.Row="0"
+                                       Grid.Column="0"
+                                       FontSize="12"   
+			                           VerticalOptions="Center"></Label>
+                                <Entry x:Name="PetName"
+			                           Text="{Binding PetDto.Nome}" 
+                                       FontAttributes="Bold"
+			                           Grid.Row="0"
+                                       Grid.Column="1"
+			                           VerticalOptions="Center"></Entry>
+                                <Label Text="{resx:Localize Key=TituloDtNascimento}"
+                                       Grid.Row="1"
+                                       Grid.Column="0"
+                                       FontSize="12"
+			                           VerticalOptions="Center"></Label>
+
+                                <DatePicker x:Name="dobPicker"
+                                            Date="{Binding PetDto.DataNascimento}"
+                                            FontSize="12"
+                                            FontAttributes="Bold"
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            VerticalOptions="Center"/>
+
+                                <!--<Label Grid.Column="2"
+                                           FontSize="12"
+                                           VerticalOptions="Center">
+                                        <Label.Text>
+                                            <MultiBinding Converter="{StaticResource FormatIdadeConverter}">
+                                                <Binding Path="PetDto.DataNascimento" Converter="{StaticResource IdadeConverter}" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>-->
+                                <!--<Label Text="{Binding PetDto.DataNascimento, Converter={StaticResource IdadeConverter}}"
+                                           Grid.Column="2"
+                                           FontSize="12"   
+			                               VerticalOptions="Center"></Label>-->
+
+                                <Label Text="{resx:Localize Key=TituloDoencas}"
+                                       Grid.Row="2"
+                                       Grid.Column="0"
+                                       FontSize="12"   
+			                           VerticalOptions="Center"></Label>
+                                <Editor x:Name="PetDisease" 
+                                        AutoSize="TextChanges"
+                                        IsSpellCheckEnabled="True"
+                                        IsTextPredictionEnabled="True"
+			                           Text="{Binding PetDto.DoencaCronica}"  
+                                       Placeholder="{resx:Localize Key=TituloDoencasCronicas}"
+			                           Grid.Row="2"
+                                       Grid.Column="1"
+                                       FontSize="12"   
+                                        VerticalOptions="Center">
+                                </Editor>
+                                <Label Text="{resx:Localize Key=TituloPeso}"
+                                       Grid.Row="3"
+                                       Grid.Column="0"
+                                       FontSize="12"   
+			                           VerticalOptions="Center"></Label>
+                                <Entry x:Name="PetWeigh" Keyboard="Numeric"
+			                           Text="{Binding PetDto.IdPeso}" 
+			                           Grid.Row="3"
+                                       Grid.Column="1"
+			                           VerticalOptions="Center">
+                                    <Entry.Behaviors>
+                                        <mct:NumericValidationBehavior 
+                                            InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                            ValidStyle="{StaticResource ValidEntryStyle}"
+                                            Flags="ValidateOnValueChanged"
+                                            MinimumValue="1"
+                                            MaximumValue="45"
+                                            MaximumDecimalPlaces="0" />
+                                    </Entry.Behaviors>
+                                </Entry>
+                                <Label Text="{resx:Localize Key=TituloCor}"
+                                       Grid.Row="4"
+                                       Grid.Column="0"
+                                       FontSize="12"   
+			                           VerticalOptions="Center"></Label>
+                                <Entry x:Name="PetColor"
+			                           Text="{Binding PetDto.Cor}" 
+			                           Grid.Row="4"
+                                       Grid.Column="1"
+                                       FontSize="12"
+			                           VerticalOptions="Center"></Entry>
+                                <Label Text="{resx:Localize Key=TituloMedicacao}"
+                                       Grid.Row="5"
+                                       Grid.Column="0"
+                                       FontSize="12"   
+			                           VerticalOptions="Center"></Label>
+                                <Entry x:Name="PetMedication"
+			                           Text="{Binding PetDto.Medicacao}" 
+			                           Grid.Row="5"
+                                       Grid.Column="1"
+                                       FontSize="12"
+			                           VerticalOptions="Center"></Entry>
+
+                            </Grid>
+                        </mct:Expander.Content>
+                    </mct:Expander>
+                </Border>
+
+                <Border Stroke="#2B0B98"
+                        StrokeThickness="2"
+                        StrokeShape="RoundRectangle 40,0,0,40"
+                        Background="#fff"
+                        Padding="8,4"
+                        Margin="4"
+                        HorizontalOptions="Fill">
+                    <mct:Expander Padding="10" Margin="3"
+                                  IsExpanded="True">
+                        <mct:Expander.Header>
+                            <Frame 
+                            BorderColor="Black"
+                            BackgroundColor="LightSteelBlue"
+                            CornerRadius="10">
+                                <Label Text="{resx:Localize Key=TituloOutrosDados}" FontSize="16"
+                                   FontAttributes="Bold" TextColor="Black"/>
+                            </Frame>
+                        </mct:Expander.Header>
+                        <mct:Expander.Content>
+
+                            <Grid Margin="2, 10, 0, 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"></RowDefinition>
+                                    <RowDefinition Height="40"></RowDefinition>
+                                    <RowDefinition Height="40"></RowDefinition>
+                                    <RowDefinition Height="40"></RowDefinition>
+                                    <RowDefinition Height="40"></RowDefinition>
+                                    <RowDefinition Height="40"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width=".3*"></ColumnDefinition>
+                                    <ColumnDefinition Width=".7*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="{resx:Localize Key=TituloEspecie}" Grid.Row="0" Grid.Column="0" FontSize="11"  VerticalTextAlignment="Center" ></Label>
+                                <Picker x:Name="SpeciesPicker"
+                                    Title="{resx:Localize Key=TituloEscolhaEspecie}" 
+                                    Grid.Row="0" 
+                                    Grid.Column="1"
+                                    FontSize="12"
+                                    VerticalTextAlignment="Center"
+                                    ItemsSource="{Binding Species}" 
+                                    SelectedItem="{Binding SelectedSpecie, Mode=TwoWay}"
+                                    ItemDisplayBinding="{Binding Descricao}" />
+
+                                <Label 
+                                    VerticalOptions="Center" 
+                                    Grid.Row="1" Grid.Column="0" 
+                                    Text="{resx:Localize Key=TituloSexo}"
+                                    FontSize="11" />
+                                <FlexLayout Grid.Row="1" Grid.Column="1" >
+                                    <RadioButton Grid.Column="0" x:Name="genderMale" Content="{resx:Localize Key=TituloMasculino}" 
+                                                IsChecked="{Binding IsGenderMale, Mode=TwoWay}" FontSize="12"
+                                                GroupName="GenderType" 
+                                                CheckedChanged="GenderType_CheckedChanged"/>
+                                    <RadioButton Grid.Column="1" Content="{resx:Localize Key=TituloFeminino}"
+                                                 x:Name="genderFemale"
+                                                 FontSize="12"
+                                                 IsChecked="{Binding IsGenderFemale, Mode=TwoWay}"
+                                                GroupName="GenderType" 
+                                                CheckedChanged="GenderType_CheckedChanged"
+                                                VerticalOptions="Center"
+                                                HorizontalOptions="Start"/>
+                                </FlexLayout>
+
+
+                                <Label Text="{resx:Localize Key=TituloSituacao}" Grid.Row="2" Grid.Column="0" FontSize="11" VerticalTextAlignment="Center"  ></Label>
+                                <Picker x:Name="SituationsPicker"
+                                    Title="{resx:Localize Key=TituloEscolhaSituacao}" Grid.Row="2" Grid.Column="1"
+                                    ItemsSource="{Binding Situations}"
+                                    FontSize="12"
+                                    VerticalTextAlignment="Center"
+                                    SelectedItem="{Binding SelectedSituation, Mode=TwoWay}"
+                                    ItemDisplayBinding="{Binding Descricao}" />
+
+                                <Label Text="{resx:Localize Key=TituloTemperamento}" Grid.Row="3" Grid.Column="0" FontSize="10"  VerticalTextAlignment="Center"></Label>
+                                <Picker x:Name="TemperamentsPicker"
+                                        Title="{resx:Localize Key=TituloTemperamento}" Grid.Row="3" Grid.Column="1"
+                                        ItemsSource="{Binding Temperaments}" 
+                                        FontSize="12"
+                                        VerticalTextAlignment="Center"
+                                        SelectedItem="{Binding SelectedTemperament, Mode=TwoWay}"
+                                        ItemDisplayBinding="{Binding Descricao}" />
+
+                                <Label Text="{resx:Localize Key=Pet_Breed}" Grid.Row="4" Grid.Column="0" FontSize="11" VerticalTextAlignment="Center"  ></Label>
+                                <Picker x:Name="BreedsPicker"
+                                        Title="{resx:Localize Key=TituloEscolhaRaca}" Grid.Row="4" Grid.Column="1"
+                                        ItemsSource="{Binding Breeds}"
+                                        SelectedItem="{Binding SelectedBreed, Mode=TwoWay}" 
+                                        FontSize="12"
+                                        VerticalTextAlignment="Center"
+                                        ItemDisplayBinding="{Binding Descricao}" />
+
+                                <Label Text="{resx:Localize Key=Pet_Size}" Grid.Row="5" Grid.Column="0" FontSize="11" VerticalTextAlignment="Center"  ></Label>
+                                <Picker x:Name="SizesPicker"
+                                        Title="{resx:Localize Key=TituloEscolhaTamanho}" Grid.Row="5" Grid.Column="1"
+                                        ItemsSource="{Binding Sizes}"
+                                        SelectedItem="{Binding SelectedSize, Mode=TwoWay}"
+                                        FontSize="12"
+                                        VerticalTextAlignment="Center"
+                                        ItemDisplayBinding="{Binding Descricao}" />
+
+                                <!--Other Info-->
+
+                                <Grid Grid.Row="6" Grid.ColumnSpan="2" RowSpacing="1" Margin="0,5, 0, 5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width=".3*" />
+                                        <ColumnDefinition Width=".7*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Row="0" VerticalOptions="Center" FontSize="11" Grid.Column="0" Text="{resx:Localize Key=TituloChipado}"/>
+                                    <Switch Grid.Row="0" Grid.Column="1"
+                                            IsToggled="{Binding PetDto.Chipado}"
+                                            HorizontalOptions="Start" 
+                                            VerticalOptions="Center" />
+
+                                    <Label Grid.Row="1" VerticalOptions="Center" Margin="0, -25, 0, 0" FontSize="11" Grid.Column="0" Text="{resx:Localize Key=TituloCodigoChip}"/>
+                                    <Entry Grid.Row="1" VerticalOptions="Center" Margin="0, -25, 0, 0" FontSize="12" Grid.Column="1" Text="{Binding PetDto.NumeroChip}" />
+                                    <Label Grid.Row="2" VerticalOptions="Center" Margin="0, -35, 0, 0" FontSize="11" Grid.Column="0" Text="{resx:Localize Key=TituloDataChip}"/>
+                                    <DatePicker x:Name="chipDatePicker" 
+                                                Date="{Binding PetDto.DataChip}"
+                                                Grid.Row="2"
+                                                FontSize="12"
+                                                Grid.Column="1"
+                                                Margin="0, -35, 0, 0"
+                                                VerticalOptions="Center"/>
+                                    <Label Grid.Row="3" VerticalOptions="Center" FontSize="11" 
+                                           Text="{resx:Localize Key=Pet_Sterilised}"
+                                           Margin="0,-30, 0,0" Grid.Column="0"/>
+                                    <Switch Grid.Row="3" Grid.Column="1"
+                                            IsToggled="{Binding PetDto.Esterilizado}"
+                                            HorizontalOptions="Start" Margin="0, -30, 0, 0"
+                                            VerticalOptions="Center" />
+                                    <Label Grid.Row="4" VerticalOptions="Center"
+                                           Margin="0, -60, 0, 0" FontSize="11" Grid.Column="0" Text="{resx:Localize Key=TituloPadrinho}"/>
+                                    <Switch Grid.Row="4" Grid.Column="1"
+                                            IsToggled="{Binding PetDto.Padrinho}"
+                                            HorizontalOptions="Start" 
+                                            Margin="0, -60, 0, 0"
+                                            VerticalOptions="Center" />
+                                    <Label Text="{resx:Localize Key=TituloNotas}"
+                                           Grid.Row="5"
+                                           Grid.Column="0"
+                                           Margin="0, -30, 0, 0"
+                                           VerticalTextAlignment="Start"
+                                           FontSize="11">
+                                    </Label>
+                                    <Editor x:Name="PetNotes" AutoSize="TextChanges"
+			                                Text="{Binding PetDto.Observacoes}"
+			                                Grid.Row="6"
+                                            Grid.Column="1"
+                                            Margin="0, -38, 0, 0"
+                                            FontSize="12"   
+                                            VerticalTextAlignment="Start"
+                                            Keyboard="Text"
+                                            IsSpellCheckEnabled="false"
+                                            IsTextPredictionEnabled="True"
+			                                VerticalOptions="Start">
+                                    </Editor>
+                                </Grid>
+                            </Grid>
+                        </mct:Expander.Content>
+                    </mct:Expander>
+                </Border>
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>

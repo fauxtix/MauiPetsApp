@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiPets.Mvvm.Views.Vaccines.VaccineAddOrEditPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:conv="clr-namespace:MauiPets.Converters"
+             xmlns:viewmodel="clr-namespace:MauiPets.Mvvm.ViewModels.Vaccines"
+             x:DataType="viewmodel:VaccineAddOrEditModel"
+             Title="{Binding AddEditCaption}">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding SaveVaccineCommand  }"
+                 IconImageSource="icon_save.png" />
+        <ToolbarItem Command="{Binding ShowVaccinesInfoCommand}"
+                 IconImageSource="help.png" />
+        <ToolbarItem Command="{Binding GoBackCommand}"
+                 IconImageSource="icon_close.svg" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <conv:NextDoseDateConverter x:Key="nextDoseDateConverter" />
+        <conv:StringToDateConverter x:Key="stringToDateConverter" />
+        <Style x:Key="MediumLabelBold" TargetType="Label">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+        <Style x:Key="LargeLabel" TargetType="Label">
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout>
+        <Border StrokeShape="RoundRectangle 50"
+                    Stroke="Black"
+                    StrokeThickness="2"
+                    HeightRequest="160"
+                    WidthRequest="220"
+                    Margin="0,8,0,0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+            <Image Aspect="AspectFill"
+                        HeightRequest="160"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Source="{Binding PetPhoto}"
+                        WidthRequest="200"/>
+        </Border>
+        <Label Text="{Binding PetName}" 
+               TextColor="Magenta" Padding="10" FontSize="18"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               VerticalOptions="Center">
+        </Label>
+
+        <Border Stroke="#2B0B98"
+                    StrokeThickness="2"
+                    StrokeShape="RoundRectangle 22"
+                    Background="#fff"
+                    Padding="18,14"
+                    Margin="2,12"
+                WidthRequest="350"
+                    HorizontalOptions="Fill">
+
+            <Grid Margin="1" RowSpacing="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Text="Data" 
+                       Grid.Row="0"
+                       FontSize="14"
+                       VerticalOptions="Center">
+                </Label>
+                <DatePicker x:Name="TransactionDate"
+			               Date="{Binding SelectedVaccine.DataToma, Converter={StaticResource stringToDateConverter}}"  
+			               Grid.Row="1" HorizontalOptions="Start"
+                           FontAttributes="Bold" 
+			               VerticalOptions="Center"></DatePicker>
+                <Label Text="Tipo"
+                                       Grid.Row="2"
+                                       FontSize="14"
+			                           VerticalOptions="Center"/>
+
+                <Picker
+                    Title="Tipo de vacina"
+                    Grid.Row="3"
+                    FontSize="14"
+                    VerticalTextAlignment="Center"
+                    ItemsSource="{Binding TipoVacinas}"
+                    SelectedItem="{Binding TipoVacinaSelecionada, Mode=TwoWay}"
+                    ItemDisplayBinding="{Binding Vacina}" />
+
+                <Label Text="Marca"
+                                       Grid.Row="4"
+                                       FontSize="14"
+			                           VerticalOptions="Center"></Label>
+                
+                <Editor x:Name="VaccineBrand" 
+                        AutoSize="TextChanges"
+                        IsSpellCheckEnabled="True"
+                        IsTextPredictionEnabled="True"
+			            Text="{Binding SelectedVaccine.Marca}" 
+			            Grid.Row="5"
+			            VerticalOptions="Center">
+                </Editor>
+
+                <Label Text="Prx. toma em meses"
+                       Grid.Row="6"
+                       FontSize="14"/>
+                <Entry x:Name="NextPriodInMonths"
+                        Keyboard="Numeric"
+			            Text="{Binding SelectedVaccine.ProximaTomaEmMeses}"
+			            Grid.Row="7"
+                        FontSize="14" HorizontalOptions="Start"
+                        IsSpellCheckEnabled="false"
+			            VerticalOptions="Start">
+                </Entry>
+
+                <Label Text="Data Prx. toma"
+                       IsVisible="{Binding IsEditing}"
+                       Grid.Row="8"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Start"
+                       FontSize="14"/>
+
+                <Label FontAttributes="Bold" 
+                       IsVisible="{Binding IsEditing}"
+                       FontSize="14"
+                       Grid.Row="9"
+                       Text="{Binding DataProximaToma, StringFormat='{0:dd/MM/yyyy}' }" 
+                       TextColor="{Binding DataProximaToma, Converter={StaticResource nextDoseDateConverter}}" 
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"/>
+
+                <Grid HorizontalOptions="Center" VerticalOptions="Center" 
+                      Grid.RowSpan="10">
+                    <ActivityIndicator                
+                        IsRunning="{Binding IsBusy}" 
+                        HorizontalOptions="Center" 
+                        VerticalOptions="Center" 
+                        BackgroundColor="Transparent"
+                        Color="#03b48b"/>
+                </Grid>
+            </Grid>
+        </Border>
+        <VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

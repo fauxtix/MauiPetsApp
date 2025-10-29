@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiPets.Mvvm.Views.Settings.Expenses.CategoriesAddOrEditPage"
+             xmlns:viewmodel="clr-namespace:MauiPets.Mvvm.ViewModels.Settings"
+             x:DataType="viewmodel:ExpensesSettingsViewModel"
+             Title="Categoria de despesas">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding SaveLookupDataCommand  }"
+                 IconImageSource="icon_save.png" />
+        <ToolbarItem Command="{Binding GoBackCommand}"
+                 IconImageSource="icon_close.svg" />
+    </ContentPage.ToolbarItems>
+
+    <VerticalStackLayout Margin="2, 10, 0, 0">
+        <VerticalStackLayout>
+            <Border Stroke="#2B0B98"
+                        StrokeThickness="2"
+                        StrokeShape="RoundRectangle 22"
+                        Background="#fff"
+                        Padding="8,4"
+                        Margin="4"
+                        HeightRequest="40"
+                        HorizontalOptions="Fill">
+                <HorizontalStackLayout VerticalOptions="Center"
+                                Spacing="8">
+                    <Image Source="expenses.png"
+                                        WidthRequest="24"  
+                                        HeightRequest="24"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Start"
+                                        Margin="5,0,8,0"/>
+                    <Label VerticalTextAlignment="Center"
+                                    HorizontalTextAlignment="Center"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    TextColor="Green"
+                                    Text="{Binding EditCaption}"
+                                    HorizontalOptions="Fill"/>
+                </HorizontalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+        <VerticalStackLayout>
+            <Border Stroke="#2B0B98"
+                    StrokeThickness="2"
+                    StrokeShape="RoundRectangle 22"
+                    Background="#fff"
+                    Padding="8,4"
+                    Margin="4"
+                    HorizontalOptions="Fill">
+                <Grid Margin="4">
+                    <Editor x:Name="TableDescription" 
+                            AutoSize="TextChanges"
+                            IsSpellCheckEnabled="True"
+                            IsTextPredictionEnabled="True"
+			               Text="{Binding LookupRecordSelected.Descricao}" 
+                           HorizontalOptions="Fill"                          
+                           VerticalOptions="End">
+                    </Editor>
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+
+
+</ContentPage>
