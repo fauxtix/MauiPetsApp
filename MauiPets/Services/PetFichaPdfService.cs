@@ -27,9 +27,9 @@ public class PetFichaPdfService : IPetFichaPdfService
             Stream imageStream = null;
             try
             {
-                if (System.IO.File.Exists(pet.Foto))
+                if (File.Exists(pet.Foto))
                 {
-                    imageStream = System.IO.File.OpenRead(pet.Foto);
+                    imageStream = File.OpenRead(pet.Foto);
                 }
                 else
                 {
@@ -176,7 +176,7 @@ public class PetFichaPdfService : IPetFichaPdfService
                 var motivoLayout = motivoElement.Draw(
                     page,
                     new Syncfusion.Drawing.RectangleF(margemEsquerda + 10, y, larguraDisponivel - 10, 1000),
-                    new Syncfusion.Pdf.Graphics.PdfLayoutFormat() { Layout = PdfLayoutType.Paginate }
+                    new PdfLayoutFormat() { Layout = PdfLayoutType.Paginate }
                 );
                 y = motivoLayout.Bounds.Bottom + 2;
 
@@ -185,7 +185,7 @@ public class PetFichaPdfService : IPetFichaPdfService
                 var diagLayout = diagElement.Draw(
                     page,
                     new Syncfusion.Drawing.RectangleF(margemEsquerda + 10, y, larguraDisponivel - 10, 1000),
-                    new Syncfusion.Pdf.Graphics.PdfLayoutFormat() { Layout = PdfLayoutType.Paginate }
+                    new PdfLayoutFormat() { Layout = PdfLayoutType.Paginate }
                 );
                 y = diagLayout.Bounds.Bottom + 2;
 
@@ -194,7 +194,7 @@ public class PetFichaPdfService : IPetFichaPdfService
                 var tratLayout = tratElement.Draw(
                     page,
                     new Syncfusion.Drawing.RectangleF(margemEsquerda + 10, y, larguraDisponivel - 10, 1000),
-                    new Syncfusion.Pdf.Graphics.PdfLayoutFormat() { Layout = PdfLayoutType.Paginate }
+                    new PdfLayoutFormat() { Layout = PdfLayoutType.Paginate }
                 );
                 y = tratLayout.Bounds.Bottom + 10;
             }

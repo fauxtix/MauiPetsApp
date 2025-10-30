@@ -19,9 +19,18 @@ namespace MauiPetsApp.Infrastructure.Services
 
         public async Task<int> InsertDocument(DocumentoDto newDocument)
         {
-            var documentIdentity = _mapper.Map<Documento>(newDocument);
-            var insertedId = await _repository.InsertDocument(documentIdentity);
-            return insertedId;
+            try
+            {
+                var documentIdentity = _mapper.Map<Documento>(newDocument);
+                var insertedId = await _repository.InsertDocument(documentIdentity);
+                return insertedId;
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Erro ao inserir documento ({ex.Message})");
+                return -1;
+            }
         }
 
         public async Task<bool> UpdateDocument(int Id, DocumentoDto updateDocument)

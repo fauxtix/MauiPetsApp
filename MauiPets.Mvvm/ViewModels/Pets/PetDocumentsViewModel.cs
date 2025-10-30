@@ -1,4 +1,4 @@
-ï»¿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
@@ -14,19 +14,13 @@ namespace MauiPets.Mvvm.ViewModels.Pets
         public ObservableCollection<DocumentoVM> Documents { get; } = new();
 
         [ObservableProperty]
-        PetVM? selectedPet;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(CanAdd))]
-        bool isEditing;
-
-        public bool CanAdd => SelectedPet != null && !IsEditing;
-
-        [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsNotBusy))]
         bool isBusy;
 
         public bool IsNotBusy => !IsBusy;
+
+        [ObservableProperty]
+        bool isEditing;
 
         [ObservableProperty]
         string titleInput = string.Empty;
@@ -34,10 +28,11 @@ namespace MauiPets.Mvvm.ViewModels.Pets
         [ObservableProperty]
         string descriptionInput = string.Empty;
 
+        // path temporário do ficheiro já copiado, aguardando save/cancel
         string? PendingFilePath;
 
-        private int? _editingDocumentId;
-        private bool _pendingFileIsNew = false;
+        // Id do documento que está a ser editado (null => novo insert)
+        int? _editingDocumentId;
 
         public PetDocumentsViewModel(IDocumentsService documentsService)
         {
@@ -46,25 +41,8 @@ namespace MauiPets.Mvvm.ViewModels.Pets
 
         public void Initialize(int petId)
         {
-            _ = InitializeAsync(petId);
-        }
-
-        public async Task InitializeAsync(int petId)
-        {
             _petId = petId;
-
-            IsEditing = false;
-            PendingFilePath = null;
-            _pendingFileIsNew = false;
-            _editingDocumentId = null;
-            TitleInput = string.Empty;
-            DescriptionInput = string.Empty;
-            Documents.Clear();
-
-            if (petId > 0)
-            {
-                await LoadAsync();
-            }
+            _ = LoadAsync();
         }
 
         [RelayCommand]
@@ -75,7 +53,7 @@ namespace MauiPets.Mvvm.ViewModels.Pets
             {
                 IsBusy = true;
                 Documents.Clear();
-                var items = await _documentsService.GetAllVM(_petId);
+                var items = await _documents_service.GetAllVM(_petId);
                 foreach (var d in items) Documents.Add(d);
             }
             finally
@@ -84,9 +62,11 @@ namespace MauiPets.Mvvm.ViewModels.Pets
             }
         }
 
+        // Pick file and show inline editor (novo documento)
         [RelayCommand]
         async Task PickAsync()
         {
+            // (mesmo código de antes)
             FileResult result = null;
             string? destPath = null;
 
@@ -123,11 +103,11 @@ namespace MauiPets.Mvvm.ViewModels.Pets
                     await dest.FlushAsync();
                 }
 
+                // prepare inline editor for new document
                 PendingFilePath = destPath;
-                _pendingFileIsNew = true;
-                _editingDocumentId = null;
                 TitleInput = result.FileName;
                 DescriptionInput = string.Empty;
+                _editingDocumentId = null;
                 IsEditing = true;
             }
             catch (Exception ex)
@@ -141,23 +121,37 @@ namespace MauiPets.Mvvm.ViewModels.Pets
             }
         }
 
+        // Edit existing document metadata (inline)
+        [RelayCommand]
+        void Edit(DocumentoVM doc)
+        {
+            if (doc == null) return;
+
+            _editingDocumentId = doc.Id;
+            PendingFilePath = doc.DocumentPath; // keep existing path
+            TitleInput = doc.Title ?? string.Empty;
+            DescriptionInput = doc.Description ?? string.Empty;
+            IsEditing = true;
+        }
+
+        // Save (insert or update)
         [RelayCommand]
         async Task SaveAsync()
         {
             if (string.IsNullOrWhiteSpace(TitleInput))
             {
-                await Application.Current.MainPage.DisplayAlert("ValidaÃ§Ã£o", "Indique um tÃ­tulo para o documento.", "OK");
+                await Application.Current.MainPage.DisplayAlert("Validação", "Indique um título para o documento.", "OK");
                 return;
             }
 
+            // If inserting, ensure file exists
             if (!_editingDocumentId.HasValue)
             {
                 if (string.IsNullOrEmpty(PendingFilePath) || !File.Exists(PendingFilePath))
                 {
-                    await Application.Current.MainPage.DisplayAlert("Erro", "Ficheiro temporÃ¡rio inexistente. Por favor selecione novamente.", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Erro", "Ficheiro temporário inexistente. Por favor selecione novamente.", "OK");
                     IsEditing = false;
                     PendingFilePath = null;
-                    _pendingFileIsNew = false;
                     return;
                 }
             }
@@ -168,31 +162,31 @@ namespace MauiPets.Mvvm.ViewModels.Pets
 
                 if (_editingDocumentId.HasValue)
                 {
+                    // Update metadata only
                     var dto = new DocumentoDto
                     {
                         Id = _editingDocumentId.Value,
                         Title = TitleInput.Trim(),
                         Description = DescriptionInput?.Trim() ?? string.Empty,
-                        DocumentPath = PendingFilePath,
+                        DocumentPath = PendingFilePath, // keep same path unless you implement file replace
                         PetId = _petId
                     };
 
-                    var updated = await _documentsService.UpdateDocument(_editingDocumentId.Value, dto);
-                    if (!updated)
+                    var ok = await _documentsService.UpdateDocument(_editingDocumentId.Value, dto);
+                    if (!ok)
                     {
-                        if (_pendingFileIsNew)
-                            TryDeleteFile(PendingFilePath);
-
-                        await Application.Current.MainPage.DisplayAlert("Erro", "NÃ£o foi possÃ­vel atualizar o documento.", "OK");
+                        await Application.Current.MainPage.DisplayAlert("Erro", "Não foi possível actualizar o documento.", "OK");
                         return;
                     }
 
+                    // update UI collection in-place
                     var existing = Documents.FirstOrDefault(d => d.Id == _editingDocumentId.Value);
                     if (existing != null)
                     {
                         existing.Title = dto.Title;
                         existing.Description = dto.Description;
                         existing.DocumentPath = dto.DocumentPath;
+                        // notify collection item changed by replacing (simple approach)
                         var idx = Documents.IndexOf(existing);
                         Documents[idx] = existing;
                     }
@@ -210,10 +204,8 @@ namespace MauiPets.Mvvm.ViewModels.Pets
                     var insertedId = await _documentsService.InsertDocument(dto);
                     if (insertedId <= 0)
                     {
-                        if (_pendingFileIsNew)
-                            TryDeleteFile(PendingFilePath);
-
-                        await Application.Current.MainPage.DisplayAlert("Erro", "NÃ£o foi possÃ­vel registar o documento.", "OK");
+                        TryDeleteFile(PendingFilePath);
+                        await Application.Current.MainPage.DisplayAlert("Erro", "Não foi possível registar o documento.", "OK");
                         return;
                     }
 
@@ -223,25 +215,23 @@ namespace MauiPets.Mvvm.ViewModels.Pets
                         Title = dto.Title,
                         Description = dto.Description,
                         DocumentPath = dto.DocumentPath,
-                        CreatedOn = DateTime.UtcNow,
-                        PetId = dto.PetId
+                        PetId = dto.PetId,
+                        PetName = "" // optional
                     };
 
                     Documents.Insert(0, newVm);
                 }
 
+                // Reset editor state
                 IsEditing = false;
                 PendingFilePath = null;
-                _pendingFileIsNew = false;
-                _editingDocumentId = null;
                 TitleInput = string.Empty;
                 DescriptionInput = string.Empty;
+                _editingDocumentId = null;
             }
             catch (Exception ex)
             {
-                if (_pendingFileIsNew)
-                    TryDeleteFile(PendingFilePath);
-
+                TryDeleteFile(PendingFilePath);
                 await Application.Current.MainPage.DisplayAlert("Erro", $"Erro ao guardar documento: {ex.Message}", "OK");
             }
             finally
@@ -251,30 +241,18 @@ namespace MauiPets.Mvvm.ViewModels.Pets
         }
 
         [RelayCommand]
-        void Edit(DocumentoVM doc)
-        {
-            if (doc == null) return;
-
-            _editingDocumentId = doc.Id;
-            _pendingFileIsNew = false;
-            PendingFilePath = doc.DocumentPath;
-            TitleInput = doc.Title ?? string.Empty;
-            DescriptionInput = doc.Description ?? string.Empty;
-            IsEditing = true;
-        }
-
-        [RelayCommand]
         Task CancelAsync()
         {
-            if (_pendingFileIsNew)
+            // remove temp file (only if it was a newly picked file)
+            // if we were editing existing doc we don't delete its stored file
+            if (!_editingDocumentId.HasValue)
                 TryDeleteFile(PendingFilePath);
 
             PendingFilePath = null;
-            _pendingFileIsNew = false;
-            _editingDocumentId = null;
             TitleInput = string.Empty;
             DescriptionInput = string.Empty;
             IsEditing = false;
+            _editingDocumentId = null;
             return Task.CompletedTask;
         }
 
@@ -287,7 +265,7 @@ namespace MauiPets.Mvvm.ViewModels.Pets
             }
             catch
             {
-                // ignore for now
+                // ignore, could log
             }
         }
 
@@ -296,7 +274,7 @@ namespace MauiPets.Mvvm.ViewModels.Pets
         {
             try
             {
-                bool ok = await Application.Current.MainPage.DisplayAlert("Confirme", "Apaga documento?", "Sim", "NÃ£o");
+                bool ok = await Application.Current.MainPage.DisplayAlert("Confirme", "Apaga documento?", "Sim", "Não");
                 if (!ok) return;
 
                 IsBusy = true;

@@ -10,7 +10,7 @@
                FontFamily="PoppinsSemiBold"
                TextColor="Black"
                HorizontalOptions="Center" />
-        <Label Text="Fausto Luís 2024" Padding="0, 0, 0, 10"
+        <Label Text="Fausto Luís 2025" Padding="0, 0, 0, 10"
                TextColor="Black" 
                FontFamily="Poppins"
                FontSize="14"

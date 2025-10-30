@@ -10,12 +10,19 @@ namespace MauiPets.Mvvm.Views.Documents
             BindingContext = vm;
         }
 
-        protected override void OnAppearing()
+
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
+
             if (BindingContext is DocumentsPageViewModel vm)
             {
-                vm.LoadPetsCommand.Execute(null);
+                await vm.LoadPetsAsync();
+
+                // initialize/reset child VM and wait for it to finish
+                var petId = vm.SelectedPet?.Id ?? 0;
+                if (vm.PetDocumentsVm != null)
+                    await vm.PetDocumentsVm.InitializeAsync(petId);
             }
         }
     }

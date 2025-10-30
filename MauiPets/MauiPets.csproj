@@ -154,6 +154,9 @@
 		<MauiImage Update="Resources\Images\dewormers.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiImage>
+		<MauiImage Update="Resources\Images\documents.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
 		<MauiImage Update="Resources\Images\dogfeed.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiImage>
@@ -276,8 +279,6 @@
 		<None Remove="Database\PetsDB.db" />
 		<None Remove="Database\PetsDB.db.sql" />
 		<None Remove="Database\PetsDB.sqbpro" />
-		<None Remove="PetsDB.db.sql" />
-		<None Remove="PetsDB.sqbpro" />
 		<None Remove="Resources\Images\add.png" />
 		<None Remove="Resources\Images\appimage.png" />
 		<None Remove="Resources\Images\arrdwn.png" />
@@ -338,12 +339,6 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</EmbeddedResource>
 		<EmbeddedResource Include="Database\PetsDB.sqbpro">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</EmbeddedResource>
-		<EmbeddedResource Include="PetsDB.db.sql">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</EmbeddedResource>
-		<EmbeddedResource Include="PetsDB.sqbpro">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
 	</ItemGroup>
@@ -498,9 +493,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="PetsDB.db">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</None>
 		<None Update="Resources\Images\dogfood.png">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>

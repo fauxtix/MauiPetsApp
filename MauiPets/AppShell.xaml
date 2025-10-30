@@ -16,7 +16,7 @@
     xmlns:utilitypage="clr-namespace:MauiPets.Mvvm.Views.Utilities"
     xmlns:expensesettingspage="clr-namespace:MauiPets.Mvvm.Views.Settings.Expenses"
     FlyoutWidth="200"
-    FlyoutHeight="450"
+    FlyoutHeight="500"
     Shell.TabBarIsVisible="False"
     Shell.FlyoutBehavior="Flyout">
 
@@ -53,8 +53,8 @@
                 ContentTemplate="{DataTemplate contactspage:ContactsPage}"
                 Route="ContactsPage" />
         <ShellContent
-                Title="{resx:Localize Key=TituloContactos}"
-                Icon="phone.png" 
+                Title="{resx:Localize Key=TituloDocumentos}"
+                Icon="documents.png" 
                 ContentTemplate="{DataTemplate documentspage:DocumentsPage}"
                 Route="DocumentsPage" />
 

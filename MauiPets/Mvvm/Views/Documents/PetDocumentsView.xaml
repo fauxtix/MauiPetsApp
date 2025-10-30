@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:MauiPets.Converters"
              x:Class="MauiPets.Mvvm.Views.Pets.PetDocumentsView"
              x:Name="Root">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <conv:NullToBoolConverter x:Key="NullToBoolConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+
     <StackLayout Padding="8" Spacing="6">
         <Grid ColumnSpacing="8">
             <Grid.ColumnDefinitions>
@@ -10,28 +17,32 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
+            <!-- visible only when a pet is selected in the parent page VM -->
             <Button Text="Adicionar PDF"
-                Command="{Binding PickCommand}"
-                Grid.Column="0"
-                IsEnabled="{Binding IsNotBusy}" />
-            
-            <!-- optional place for status / help -->
-            <Label Text="Selecione um PDF e preencha título / descrição" Grid.Column="1" VerticalOptions="Center" FontSize="Small" />
+                    Command="{Binding PickCommand}"
+                    Grid.Column="0"
+                    IsVisible="{Binding CanAdd}"
+                    IsEnabled="{Binding IsNotBusy}" />
+
+            <Label Text="Selecione um PDF e preencha título / descrição"
+                   Grid.Column="1"
+                   VerticalOptions="Center"
+                   FontSize="Small"
+                   IsVisible="{Binding CanAdd}" />
         </Grid>
 
-        <!-- Inline editor shown after picking a file -->
         <Frame IsVisible="{Binding IsEditing}" Padding="8" Margin="0,6,0,6" BorderColor="#DDD" BackgroundColor="#FFF">
-            <StackLayout Spacing="8">
+            <StackLayout Spacing="4">
                 <Label Text="Editar documento" FontAttributes="Bold" />
                 <Entry Placeholder="Título" Text="{Binding TitleInput}" />
                 <Editor Placeholder="Descrição (opcional)" HeightRequest="120" Text="{Binding DescriptionInput}" />
-                <Grid ColumnSpacing="8">
+                <Grid ColumnSpacing="12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button Text="Save" Command="{Binding SaveCommand}" Grid.Column="0" />
-                    <Button Text="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" />
+                    <Button Text="Gravar" Command="{Binding SaveCommand}" Grid.Column="0" />
+                    <Button Text="Cancelar" Command="{Binding CancelCommand}" Grid.Column="1" />
                 </Grid>
             </StackLayout>
         </Frame>
@@ -39,19 +50,62 @@
         <CollectionView ItemsSource="{Binding Documents}" SelectionMode="None" HeightRequest="220">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Padding="6">
+                    <!-- tightened spacing and compact icons -->
+                    <Grid Padding="2" ColumnSpacing="4" VerticalOptions="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Label Text="{Binding Title}" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
-                        <Button Text="Abrir" Grid.Column="1"
+
+                        <Label Text="{Binding Title}"
+                               VerticalOptions="Center"
+                               LineBreakMode="TailTruncation"
+                               HorizontalOptions="Start"
+                               Margin="0,0,4,0" />
+
+                        <!-- Edit -->
+                        <Button Grid.Column="1"
+                                Text="✏️"
+                                FontSize="20"
+                                WidthRequest="40"
+                                HeightRequest="36"
+                                Padding="0"
+                                Margin="2,0"
+                                BackgroundColor="Transparent"
+                                BorderWidth="0"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.EditCommand}"
+                                CommandParameter="{Binding .}"
+                                SemanticProperties.Hint="Editar documento" />
+
+                        <!-- Open -->
+                        <Button Grid.Column="2"
+                                Text="📂"
+                                FontSize="20"
+                                WidthRequest="40"
+                                HeightRequest="36"
+                                Padding="0"
+                                Margin="2,0"
+                                BackgroundColor="Transparent"
+                                BorderWidth="0"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.OpenCommand}"
-                                CommandParameter="{Binding .}" />
-                        <Button Text="Apagar" Grid.Column="2"
+                                CommandParameter="{Binding .}"
+                                SemanticProperties.Hint="Abrir documento" />
+
+                        <!-- Delete -->
+                        <Button Grid.Column="3"
+                                Text="🗑️"
+                                FontSize="20"
+                                WidthRequest="40"
+                                HeightRequest="36"
+                                Padding="0"
+                                Margin="2,0"
+                                BackgroundColor="Transparent"
+                                BorderWidth="0"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.DeleteCommand}"
-                                CommandParameter="{Binding Id}" />
+                                CommandParameter="{Binding Id}"
+                                SemanticProperties.Hint="Apagar documento" />
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

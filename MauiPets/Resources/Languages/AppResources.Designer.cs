@@ -448,6 +448,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Documentos.
+        /// </summary>
+        public static string TituloDocumentos {
+            get {
+                return ResourceManager.GetString("TituloDocumentos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Doenças.
         /// </summary>
         public static string TituloDoencas {

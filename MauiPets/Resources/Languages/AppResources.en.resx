@@ -396,4 +396,7 @@
   <data name="TituloSettings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="TituloDocumentos" xml:space="preserve">
+    <value>Documents</value>
+  </data>
 </root>

@@ -24,7 +24,7 @@ namespace MauiPetsApp.Infrastructure
             dynamicParameters.Add("@Description", newDocument.Description);
             dynamicParameters.Add("@DocumentPath", newDocument.DocumentPath);
             // store CreatedOn as ISO 8601 string (UTC)
-            dynamicParameters.Add("@CreatedOn", newDocument.CreatedOn.ToString("o"));
+            dynamicParameters.Add("@CreatedOn", DateTime.UtcNow.ToString("yyyy-MM-dd"));
             dynamicParameters.Add("@PetId", newDocument.PetId);
 
             StringBuilder sb = new StringBuilder();
@@ -57,7 +57,6 @@ namespace MauiPetsApp.Infrastructure
             sb.Append("Title = @Title, ");
             sb.Append("Description = @Description, ");
             sb.Append("DocumentPath = @DocumentPath, ");
-            sb.Append("CreatedOn = @CreatedOn, ");
             sb.Append("PetId = @PetId ");
             sb.Append("WHERE Id = @Id");
 
@@ -66,7 +65,6 @@ namespace MauiPetsApp.Infrastructure
             dynamicParameters.Add("@Title", updateDocument.Title);
             dynamicParameters.Add("@Description", updateDocument.Description);
             dynamicParameters.Add("@DocumentPath", updateDocument.DocumentPath);
-            dynamicParameters.Add("@CreatedOn", updateDocument.CreatedOn.ToString("o"));
             dynamicParameters.Add("@PetId", updateDocument.PetId);
 
             try
@@ -157,6 +155,7 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task<IEnumerable<DocumentoVM>> GetAllVM(int Id)
         {
+
             StringBuilder sb = new StringBuilder();
             sb.Append("SELECT D.Id, D.Title, D.Description, D.DocumentPath, D.CreatedOn, D.PetId, P.Nome AS [PetName] ");
             sb.Append("FROM Documento D ");

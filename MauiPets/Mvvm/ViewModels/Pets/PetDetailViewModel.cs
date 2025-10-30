@@ -555,7 +555,7 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
                 PetDewormersVM?.Any() == true ? PetDewormersVM : Enumerable.Empty<DesparasitanteVM>(),
                 PetFoodVM?.Any() == true ? PetFoodVM : Enumerable.Empty<RacaoVM>(),
                 PetConsultationsVM?.Any() == true ? PetConsultationsVM : Enumerable.Empty<ConsultaVeterinarioVM>()
-    );
+            );
 
             var filePath = Path.Combine(FileSystem.CacheDirectory, $"Ficha_{PetVM.Nome}.pdf");
             using (var file = File.Create(filePath))
@@ -600,7 +600,6 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
 
         await Task.WhenAll(vaccinesTask, dewormersTask, foodItemsTask, consultationsTask);
 
-        // Clear and repopulate existing collections
         PetVaccinesVM.Clear();
         foreach (var vaccine in await vaccinesTask)
         {

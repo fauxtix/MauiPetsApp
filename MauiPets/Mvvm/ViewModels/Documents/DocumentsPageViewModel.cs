@@ -46,10 +46,8 @@ namespace MauiPets.Mvvm.ViewModels.Documents
 
         partial void OnSelectedPetChanged(PetVM value)
         {
-            if (value != null)
-            {
-                PetDocumentsVm.Initialize(value.Id);
-            }
+            PetDocumentsVm.SelectedPet = value;
+            PetDocumentsVm.Initialize(value is null ? 0 : value.Id);
         }
     }
 }
