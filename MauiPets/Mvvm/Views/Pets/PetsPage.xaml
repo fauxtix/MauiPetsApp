@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiPets.Mvvm.Views.Pets.PetsPage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
              xmlns:models="clr-namespace:MauiPetsApp.Core.Application.ViewModels;assembly=MauiPets.Core"
              xmlns:local="clr-namespace:MauiPets.Mvvm.ViewModels.Pets"
              xmlns:converters="clr-namespace:MauiPets.Converters"
@@ -35,16 +36,13 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <!-- Apenas o botão de adicionar pet permanece na toolbar -->
         <ToolbarItem Command="{Binding AddPetCommand}" IconImageSource="add.png" />
     </ContentPage.ToolbarItems>
 
     <AbsoluteLayout>
-        <!-- Conteúdo principal da página -->
         <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
             <ScrollView>
                 <VerticalStackLayout>
-                    <!-- ... todo o conteúdo da página igual ao original ... -->
                     <Grid RowDefinitions="Auto, Auto, *">
                         <Border Grid.Row="0" Margin="5, 5"  
                                 StrokeShape="RoundRectangle 0,0,50,50" 
@@ -66,7 +64,7 @@
                                    FontFamily="sans-serif-medium"
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center"
-                                   Text="Selecione um dos Pets abaixo, para visualizar/alterar os dados"/>
+                                   Text="{resx:Localize Key=Titulo_Main_Info}"/>
                         </Border>
                         <CollectionView Grid.Row="2" 
                                         ItemsSource="{Binding Pets}" 
@@ -118,7 +116,7 @@
                                             <Border Grid.Row="0" Grid.Column="0" Stroke="LightGray" StrokeThickness="1" 
                                                     StrokeShape="RoundRectangle 5" Margin="5,1" Padding="5, 1">
                                                 <VerticalStackLayout>
-                                                    <Label Text="Género"  FontAttributes="Bold"
+                                                    <Label Text="{resx:Localize Key=TituloSexo}"  FontAttributes="Bold"
                                                            FontFamily="PoppinsBold"
                                                            FontSize="10" TextColor="DarkGray" HorizontalTextAlignment="Center"/>
                                                     <Label Text="{Binding Genero, Converter={StaticResource GenderConverter}}"
@@ -129,7 +127,7 @@
                                             <Border Grid.Row="0" Grid.Column="1" Stroke="LightGray" StrokeThickness="1" 
                                                     StrokeShape="RoundRectangle 5" Margin="5, 1" Padding="5, 2">
                                                 <VerticalStackLayout>
-                                                    <Label Text="Idade" FontAttributes="Bold"
+                                                    <Label Text="{resx:Localize Key=TituloIdade}" FontAttributes="Bold"
                                                            FontFamily="PoppinsBold"
                                                            FontSize="10" TextColor="DarkGray" HorizontalTextAlignment="Center" />
                                                     <Label Text="{Binding DataNascimento, Converter={StaticResource IdadeConverter}}"
@@ -140,16 +138,17 @@
                                             <Border Grid.Row="1" Grid.ColumnSpan="2" Stroke="LightGray" StrokeThickness="1" 
                                                     StrokeShape="RoundRectangle 5" Padding="5, 2">
                                                 <VerticalStackLayout>
-                                                    <Label Text="Raça" FontAttributes="Bold"
+                                                    <Label Text="{resx:Localize Key=Pet_Breed}" FontAttributes="Bold"
                                                            FontFamily="PoppinsBold"
+                                                           HorizontalTextAlignment="Center"
                                                            FontSize="10" TextColor="DarkGray" />
                                                     <Label Text="{Binding RacaAnimal}"
                                                            FontSize="11" TextColor="Black" 
-                                                           HorizontalTextAlignment="Start" />
+                                                           HorizontalTextAlignment="Center" />
                                                 </VerticalStackLayout>
                                             </Border>
                                         </Grid>
-                                        <Button Text="Galeria de Fotos"
+                                        <Button Text="{resx:Localize Key=TituloGaleriaFotos}"
                                                 Command="{Binding Source={x:Reference PetsPageRoot}, Path=BindingContext.OpenGalleryCommand}"
                                                 CommandParameter="{Binding Id}"
                                                 Margin="0,5"

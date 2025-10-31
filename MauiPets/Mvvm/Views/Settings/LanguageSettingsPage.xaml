@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
              x:Class="MauiPets.Mvvm.Views.Settings.LanguageSettingsPage"
-             Title="Idiomas">
+             Title="{resx:Localize Key=TituloIdiomas}">
   <ContentPage.Resources>
     <ResourceDictionary>
       <!-- opcional: styles -->
@@ -11,17 +11,17 @@
   </ContentPage.Resources>
 
     <VerticalStackLayout Padding="16" Spacing="12">
-        <Label Text="Selecione idioma" FontAttributes="Bold" FontSize="16" />
+        <Label Text="{resx:Localize Key=TituloSelecionarIdioma}" FontAttributes="Bold" FontSize="16" />
 
         <Picker ItemsSource="{Binding Languages}"
            ItemDisplayBinding="{Binding DisplayName}"
            SelectedItem="{Binding SelectedLanguage}"
-           Title="Idioma" />
+           Title="{resx:Localize Key=TituloIdioma}" />
 
-        <Button Text="Aplicar" Command="{Binding ApplyCommand}" />
+        <Button Text="{resx:Localize Key=TituloAplicarIdioma}" Command="{Binding ApplyCommand}" />
 
-        <Label Text="A alteração aplica‑se imediatamente; reinicie a aplicação para garantir que todas as strings são atualizadas."
-          FontSize="Small"
-          TextColor="Gray" />
+        <Label Margin="0, 10, 0, 0" 
+               Text="{resx:Localize Key=TituloLabelIdioma}" 
+               FontSize="Small" TextColor="Gray" />
     </VerticalStackLayout>
 </ContentPage>

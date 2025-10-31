@@ -6,6 +6,7 @@
              xmlns:viewmodel="clr-namespace:MauiPets.Mvvm.ViewModels.Expenses"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:conv="clr-namespace:MauiPets.Converters"
+             xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
              x:DataType="viewmodel:ExpensesViewModel"
              Title="{Binding FilterText}">
 
@@ -85,19 +86,19 @@
                             AlignItems="Center"
                             Wrap="NoWrap"
                             Margin="0,0">
-                            <Button Text="Este ano"
+                            <Button Text="{resx:Localize Key=TituloEsteAno}"
                                 Command="{Binding FilterExpensesByYearCommand}"
                                 BackgroundColor="#2ECC71"
                                 Style="{StaticResource ExpensesFilterButtonStyle}"
                                 WidthRequest="100"
                                 Margin="5,0" />
-                            <Button Text="Este mês"
+                            <Button Text="{resx:Localize Key=TituloEsteMes}"
                                 Command="{Binding FilterExpensesByMonthCommand}"
                                 BackgroundColor="#3498db"
                                 Style="{StaticResource ExpensesFilterButtonStyle}"
                                 WidthRequest="100"
                                 Margin="5,0" />
-                            <Button Text="Todas"
+                            <Button Text="{resx:Localize Key=TituloTodos}"
                                 Command="{Binding GetExpensesCommand}"
                                 BackgroundColor="#f1c40f" TextColor="Black"
                                 Style="{StaticResource ExpensesFilterButtonStyle}"
@@ -109,7 +110,7 @@
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Row="1">
                     <SearchBar x:Name="searchBar"
-                               Placeholder="Pesquisar"                              
+                               Placeholder="{resx:Localize Key=TituloPesquisarContacto}"                              
                                HorizontalOptions="Start"
                                Margin=" 0, -15, 0, 0"
                                WidthRequest="300">
@@ -136,7 +137,7 @@
                                 WidthRequest="60"
                                 Source="nopets.png"
                                 VerticalOptions="Center" />
-                            <Label HorizontalOptions="Center" Padding="10">Sem dados para mostar</Label>
+                            <Label HorizontalOptions="Center" Padding="10" Text="{resx:Localize Key=TituloSemDados}"/>
                         </StackLayout>
                     </CollectionView.EmptyView>
 

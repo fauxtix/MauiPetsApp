@@ -6,8 +6,9 @@
              xmlns:behaviours="clr-namespace:MauiPets.Mvvm.Behaviours.Pickers"
              xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:conv="clr-namespace:MauiPets.Converters"
+             xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
              x:DataType="viewmodel:ExpenseAddOrEditViewModel"
-             Title="Despesas">
+             Title="{resx:Localize Key=TituloDespesas}">
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsVisible="False" IsEnabled="False" />
@@ -45,7 +46,7 @@
     </ContentPage.ToolbarItems>
 
     <VerticalStackLayout Margin="2, 10, 0, 0">
-        <VerticalStackLayout>
+        <!--<VerticalStackLayout>
             <Border Stroke="#2B0B98"
                         StrokeThickness="2"
                         StrokeShape="RoundRectangle 22"
@@ -71,7 +72,7 @@
                                     HorizontalOptions="Fill"/>
                 </HorizontalStackLayout>
             </Border>
-        </VerticalStackLayout>
+        </VerticalStackLayout>-->
 
         <Border Stroke="#2B0B98"
                     StrokeThickness="2"
@@ -94,7 +95,7 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Text="Movimento" 
+                <Label Text="{resx:Localize Key=TituloMovimento}" 
                            Grid.Row="0"
                            FontSize = "14"
 			               VerticalTextAlignment="Center">
@@ -105,7 +106,7 @@
                             FontSize = "14"
                            FontAttributes="Bold" 
 			               VerticalOptions="Center"/>
-                <Label Text="Valor"
+                <Label Text="{resx:Localize Key=TituloValor}"
                                        Grid.Row="2"
                                        FontSize = "14"
 			                           VerticalTextAlignment="Center"/>
@@ -124,25 +125,25 @@
                                             MaximumDecimalPlaces="2" />
                     </Entry.Behaviors>
                 </Entry>
-                <Label Text="Categoria" 
+                <Label Text="{resx:Localize Key=TituloCategoria}" 
                        Grid.Row="4" 
                        VerticalTextAlignment="Center"
                        FontSize = "14"/>
                 <Picker
-                    Title="Categoria"
+                    Title="{resx:Localize Key=TituloEscolhaCategoria}"
                     Grid.Row="5"
                     FontSize="14"
                     VerticalTextAlignment="Center"
                     ItemsSource="{Binding CategoriaDespesas}"
                     SelectedItem="{Binding TipoCategoriaDespesaSelecionada, Mode=TwoWay}"
                     ItemDisplayBinding="{Binding Descricao}" />
-                <Label x:Name="LabelTipoDespesa" Text="Tipo"
+                <Label x:Name="LabelTipoDespesa" Text="{resx:Localize Key=TituloTipo}"
                         IsVisible="{Binding IsEditing}"
                        Grid.Row="6" 
                        VerticalTextAlignment="Center"
                        FontSize = "14"></Label>
                 <Picker
-                    Title="Tipo"
+                    Title="{resx:Localize Key=TituloEscolhaTipo}"
                     Grid.Row="7"
                     FontSize="14"
                     VerticalTextAlignment="Center"
@@ -150,7 +151,7 @@
                     ItemsSource="{Binding TipoDespesas}"
                     SelectedItem="{Binding TipoDespesaSelecionada, Mode=TwoWay}"
                     ItemDisplayBinding="{Binding Descricao}" />
-                <Label Text="Observações"
+                <Label Text="{resx:Localize Key=TituloNotas}"
                        Grid.Row="8"
                        VerticalTextAlignment="Center"
                        FontSize = "14"/>

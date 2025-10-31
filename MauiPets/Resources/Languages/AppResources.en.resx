@@ -124,7 +124,7 @@
     <value>Save</value>
   </data>
   <data name="TituloPesquisarContacto" xml:space="preserve">
-    <value>Search contact</value>
+    <value>Search</value>
   </data>
   <data name="EditMsg" xml:space="preserve">
     <value>Edit</value>
@@ -410,5 +410,50 @@
   </data>
   <data name="TituloLabelIdioma" xml:space="preserve">
     <value>The change takes effect immediately; restart the application to ensure that all strings are updated.</value>
+  </data>
+  <data name="TituloAplicarIdioma" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="Titulo_Main_Info" xml:space="preserve">
+    <value>Select one of the Pets below to view the data.</value>
+  </data>
+  <data name="TituloGaleriaFotos" xml:space="preserve">
+    <value>Photo gallery</value>
+  </data>
+  <data name="TituloIdade" xml:space="preserve">
+    <value>Age</value>
+  </data>
+  <data name="TituloEsteAno" xml:space="preserve">
+    <value>This year</value>
+  </data>
+  <data name="TituloEsteMes" xml:space="preserve">
+    <value>This month</value>
+  </data>
+  <data name="TituloTodos" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="TituloMovimento" xml:space="preserve">
+    <value>Transaction</value>
+  </data>
+  <data name="TituloValor" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="TituloCategoria" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="TituloEscolhaTipo" xml:space="preserve">
+    <value>Select type</value>
+  </data>
+  <data name="TituloTipo" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="TituloEscolhaCategoria" xml:space="preserve">
+    <value>Select category</value>
+  </data>
+  <data name="TituloDespesasAgrupadas" xml:space="preserve">
+    <value>Grouped expenses</value>
+  </data>
+  <data name="TituloSemDados" xml:space="preserve">
+    <value>No data to view</value>
   </data>
 </root>

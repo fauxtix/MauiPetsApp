@@ -322,6 +322,33 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecione um dos Pets abaixo, para visualizar os dados.
+        /// </summary>
+        public static string Titulo_Main_Info {
+            get {
+                return ResourceManager.GetString("Titulo_Main_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aplicar.
+        /// </summary>
+        public static string TituloAplicarIdioma {
+            get {
+                return ResourceManager.GetString("TituloAplicarIdioma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Categoria.
+        /// </summary>
+        public static string TituloCategoria {
+            get {
+                return ResourceManager.GetString("TituloCategoria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chipado.
         /// </summary>
         public static string TituloChipado {
@@ -430,6 +457,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Despesas agrupadas.
+        /// </summary>
+        public static string TituloDespesasAgrupadas {
+            get {
+                return ResourceManager.GetString("TituloDespesasAgrupadas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Despesas por Categoria.
         /// </summary>
         public static string TituloDespesasPorCategoria {
@@ -502,6 +538,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecione categoria.
+        /// </summary>
+        public static string TituloEscolhaCategoria {
+            get {
+                return ResourceManager.GetString("TituloEscolhaCategoria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Escolha espécie.
         /// </summary>
         public static string TituloEscolhaEspecie {
@@ -556,6 +601,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecione tipo.
+        /// </summary>
+        public static string TituloEscolhaTipo {
+            get {
+                return ResourceManager.GetString("TituloEscolhaTipo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Espécie.
         /// </summary>
         public static string TituloEspecie {
@@ -570,6 +624,24 @@ namespace MauiPets.Resources.Languages {
         public static string TituloEstado {
             get {
                 return ResourceManager.GetString("TituloEstado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Este ano.
+        /// </summary>
+        public static string TituloEsteAno {
+            get {
+                return ResourceManager.GetString("TituloEsteAno", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Este mês.
+        /// </summary>
+        public static string TituloEsteMes {
+            get {
+                return ResourceManager.GetString("TituloEsteMes", resourceCulture);
             }
         }
         
@@ -619,11 +691,29 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Galeria de fotos.
+        /// </summary>
+        public static string TituloGaleriaFotos {
+            get {
+                return ResourceManager.GetString("TituloGaleriaFotos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tabelas.
         /// </summary>
         public static string TituloGestaoTabelas {
             get {
                 return ResourceManager.GetString("TituloGestaoTabelas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Idade.
+        /// </summary>
+        public static string TituloIdade {
+            get {
+                return ResourceManager.GetString("TituloIdade", resourceCulture);
             }
         }
         
@@ -754,6 +844,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Movimento.
+        /// </summary>
+        public static string TituloMovimento {
+            get {
+                return ResourceManager.GetString("TituloMovimento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nome.
         /// </summary>
         public static string TituloNome {
@@ -871,6 +970,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sem dados para mostrar.
+        /// </summary>
+        public static string TituloSemDados {
+            get {
+                return ResourceManager.GetString("TituloSemDados", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuração.
         /// </summary>
         public static string TituloSettings {
@@ -925,11 +1033,38 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tipo.
+        /// </summary>
+        public static string TituloTipo {
+            get {
+                return ResourceManager.GetString("TituloTipo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tipo de contacto.
         /// </summary>
         public static string TituloTipoContacto {
             get {
                 return ResourceManager.GetString("TituloTipoContacto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Todos.
+        /// </summary>
+        public static string TituloTodos {
+            get {
+                return ResourceManager.GetString("TituloTodos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valor.
+        /// </summary>
+        public static string TituloValor {
+            get {
+                return ResourceManager.GetString("TituloValor", resourceCulture);
             }
         }
         

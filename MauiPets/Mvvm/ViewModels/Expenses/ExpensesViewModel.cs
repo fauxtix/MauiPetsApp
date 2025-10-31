@@ -3,6 +3,7 @@ using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Mvvm.Views.Expenses;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels.Despesas;
 using System.Collections.ObjectModel;
@@ -34,7 +35,7 @@ namespace MauiPets.Mvvm.ViewModels.Expenses
         private string _pageInfo = string.Empty;
 
         [ObservableProperty]
-        string filterText = "Despesas";
+        string filterText = AppResources.TituloDespesas;
 
         [ObservableProperty]
         private string _searchText = string.Empty;
@@ -112,7 +113,7 @@ namespace MauiPets.Mvvm.ViewModels.Expenses
                         .ToList();
                 }
                 else
-                    FilterText = "Despesas";
+                    FilterText = AppResources.TituloDespesas;
 
                 TotalGeralDespesas = expenses.Sum(c => c.ValorPago);
 
@@ -253,7 +254,7 @@ namespace MauiPets.Mvvm.ViewModels.Expenses
                 var expenses = (await _service.GetExpensesByYearAsync(currentYear)).ToList();
                 TotalPages = (int)Math.Ceiling((double)expenses.Count / PageSize);
                 IsPaginationVisible = TotalPages > 1;
-                FilterText = "Este ano";
+                FilterText = AppResources.TituloEsteAno;
                 TotalGeralDespesas = expenses.Sum(c => c.ValorPago);
 
 
@@ -286,7 +287,7 @@ namespace MauiPets.Mvvm.ViewModels.Expenses
                 var currentYear = now.Year;
                 var currentMonth = now.Month;
                 var expenses = (await _service.GetExpensesByMonthAsync(currentYear, currentMonth)).ToList();
-                FilterText = "Este mês";
+                FilterText = AppResources.TituloEsteMes;
 
                 TotalPages = (int)Math.Ceiling((double)expenses.Count / PageSize);
                 TotalGeralDespesas = expenses.Sum(c => c.ValorPago);

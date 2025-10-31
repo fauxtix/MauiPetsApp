@@ -411,4 +411,49 @@
   <data name="TituloLabelIdioma" xml:space="preserve">
     <value>A alteração aplica‑se imediatamente; reinicie a aplicação para garantir que todas as strings são atualizadas.</value>
   </data>
+  <data name="TituloAplicarIdioma" xml:space="preserve">
+    <value>Aplicar</value>
+  </data>
+  <data name="Titulo_Main_Info" xml:space="preserve">
+    <value>Selecione um dos Pets abaixo, para visualizar os dados</value>
+  </data>
+  <data name="TituloGaleriaFotos" xml:space="preserve">
+    <value>Galeria de fotos</value>
+  </data>
+  <data name="TituloIdade" xml:space="preserve">
+    <value>Idade</value>
+  </data>
+  <data name="TituloEsteAno" xml:space="preserve">
+    <value>Este ano</value>
+  </data>
+  <data name="TituloEsteMes" xml:space="preserve">
+    <value>Este mês</value>
+  </data>
+  <data name="TituloTodos" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="TituloMovimento" xml:space="preserve">
+    <value>Movimento</value>
+  </data>
+  <data name="TituloValor" xml:space="preserve">
+    <value>Valor</value>
+  </data>
+  <data name="TituloCategoria" xml:space="preserve">
+    <value>Categoria</value>
+  </data>
+  <data name="TituloEscolhaTipo" xml:space="preserve">
+    <value>Selecione tipo</value>
+  </data>
+  <data name="TituloTipo" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="TituloEscolhaCategoria" xml:space="preserve">
+    <value>Selecione categoria</value>
+  </data>
+  <data name="TituloDespesasAgrupadas" xml:space="preserve">
+    <value>Despesas agrupadas</value>
+  </data>
+  <data name="TituloSemDados" xml:space="preserve">
+    <value>Sem dados para mostrar</value>
+  </data>
 </root>
