@@ -474,4 +474,67 @@
   <data name="Titulo_Titulo" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="TituloEstaSemana" xml:space="preserve">
+    <value>This week</value>
+  </data>
+  <data name="TituloProximaSemana" xml:space="preserve">
+    <value>Next week</value>
+  </data>
+  <data name="TituloProxMes" xml:space="preserve">
+    <value>Next month</value>
+  </data>
+  <data name="TituloTarefas_Todas" xml:space="preserve">
+    <value>All tasks</value>
+  </data>
+  <data name="TituloTarefas_Filtro" xml:space="preserve">
+    <value>Filtered by</value>
+  </data>
+  <data name="TituloPagina_Abrev" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="Titulo_De" xml:space="preserve">
+    <value>of</value>
+  </data>
+  <data name="TituloTarefas_Concluidas" xml:space="preserve">
+    <value>Completed tasks</value>
+  </data>
+  <data name="TituloTarefas_Pendentes" xml:space="preserve">
+    <value>Pending tasks</value>
+  </data>
+  <data name="TituloTarefas_EstaSemana" xml:space="preserve">
+    <value>For this week</value>
+  </data>
+  <data name="TituloTarefas_ProximaSemana" xml:space="preserve">
+    <value>For next week</value>
+  </data>
+  <data name="TituloTarefas_EsteMes" xml:space="preserve">
+    <value>For this month</value>
+  </data>
+  <data name="TituloTarefas_ProximoMes" xml:space="preserve">
+    <value>For next month</value>
+  </data>
+  <data name="TituloDescricao" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="TituloTarefa_Concluida" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="TituloErrosValidacao" xml:space="preserve">
+    <value>Validation errors</value>
+  </data>
+  <data name="TituloConfirmacao" xml:space="preserve">
+    <value>Please confirm</value>
+  </data>
+  <data name="TituloConfirmacao_Apagar" xml:space="preserve">
+    <value>Delete record?</value>
+  </data>
+  <data name="TituloBackup" xml:space="preserve">
+    <value>Backup database</value>
+  </data>
+  <data name="TituloRestore" xml:space="preserve">
+    <value>Restore database</value>
+  </data>
+  <data name="TituloInfoBackup" xml:space="preserve">
+    <value>Information about the last backup</value>
+  </data>
 </root>

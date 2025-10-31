@@ -4,10 +4,11 @@
              x:Class="MauiPets.Mvvm.Views.Todo.TodoAddOrEditPage"
              xmlns:viewmodel="clr-namespace:MauiPets.Mvvm.ViewModels.Todo"
              xmlns:behaviours="clr-namespace:MauiPets.Mvvm.Behaviours.Pickers"
+             xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
              xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:conv="clr-namespace:MauiPets.Converters"
              x:DataType="viewmodel:TodosAddOrEditViewModel"    
-             Title="Tarefas">
+             Title="{resx:Localize Key=TituloTarefas}">
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsVisible="False" IsEnabled="False" />
@@ -82,7 +83,7 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Label Text="Movimento" 
+                <Label Text="{resx:Localize Key=TituloMovimento}" 
                        Grid.Row="0"
                        FontFamily="OpenSansSemibold"
                        FontSize = "14"
@@ -94,7 +95,7 @@
                            FontFamily="OpenSansSemibold"
                             FontSize = "14"
 			               VerticalOptions="Center"/>
-                <Label Text="Descrição"
+                <Label Text="{resx:Localize Key=TituloDescricao}"
                        Grid.Row="2"
                        FontFamily="OpenSansSemibold"
                        FontSize = "14"
@@ -109,7 +110,7 @@
                         FontSize = "14"
 			            VerticalOptions="Center"/>
 
-                <Label Text="Concluída"
+                <Label Text="{resx:Localize Key=TituloTarefa_Concluida}"
                        Grid.Row="4"
                        FontFamily="OpenSansSemibold"
                        FontSize = "14"
@@ -131,10 +132,7 @@
                         BackgroundColor="Transparent"
                         Color="#03b48b"/>
                 </Grid>
-
-
             </Grid>
-
         </Border>
     </VerticalStackLayout>
 </ContentPage>

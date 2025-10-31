@@ -340,6 +340,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to de.
+        /// </summary>
+        public static string Titulo_De {
+            get {
+                return ResourceManager.GetString("Titulo_De", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selecione um dos Pets abaixo, para visualizar os dados.
         /// </summary>
         public static string Titulo_Main_Info {
@@ -363,6 +372,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloAplicarIdioma {
             get {
                 return ResourceManager.GetString("TituloAplicarIdioma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup da base de dados.
+        /// </summary>
+        public static string TituloBackup {
+            get {
+                return ResourceManager.GetString("TituloBackup", resourceCulture);
             }
         }
         
@@ -399,6 +417,24 @@ namespace MauiPets.Resources.Languages {
         public static string TituloCompra {
             get {
                 return ResourceManager.GetString("TituloCompra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirme, por favor.
+        /// </summary>
+        public static string TituloConfirmacao {
+            get {
+                return ResourceManager.GetString("TituloConfirmacao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apaga o registo?.
+        /// </summary>
+        public static string TituloConfirmacao_Apagar {
+            get {
+                return ResourceManager.GetString("TituloConfirmacao_Apagar", resourceCulture);
             }
         }
         
@@ -462,6 +498,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloDataInicio {
             get {
                 return ResourceManager.GetString("TituloDataInicio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descrição.
+        /// </summary>
+        public static string TituloDescricao {
+            get {
+                return ResourceManager.GetString("TituloDescricao", resourceCulture);
             }
         }
         
@@ -574,6 +619,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Erros na validação.
+        /// </summary>
+        public static string TituloErrosValidacao {
+            get {
+                return ResourceManager.GetString("TituloErrosValidacao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selecione categoria.
         /// </summary>
         public static string TituloEscolhaCategoria {
@@ -669,6 +723,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloEstado {
             get {
                 return ResourceManager.GetString("TituloEstado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esta semana.
+        /// </summary>
+        public static string TituloEstaSemana {
+            get {
+                return ResourceManager.GetString("TituloEstaSemana", resourceCulture);
             }
         }
         
@@ -808,6 +871,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Informação do último backup.
+        /// </summary>
+        public static string TituloInfoBackup {
+            get {
+                return ResourceManager.GetString("TituloInfoBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Início.
         /// </summary>
         public static string TituloInicio {
@@ -934,6 +1006,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pagª.
+        /// </summary>
+        public static string TituloPagina_Abrev {
+            get {
+                return ResourceManager.GetString("TituloPagina_Abrev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pendente.
         /// </summary>
         public static string TituloPendente {
@@ -979,6 +1060,24 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Próx. semana.
+        /// </summary>
+        public static string TituloProximaSemana {
+            get {
+                return ResourceManager.GetString("TituloProximaSemana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Próx. mês.
+        /// </summary>
+        public static string TituloProxMes {
+            get {
+                return ResourceManager.GetString("TituloProxMes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Qtd. diária.
         /// </summary>
         public static string TituloQtdDiaria {
@@ -993,6 +1092,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloQuantidadeAbr {
             get {
                 return ResourceManager.GetString("TituloQuantidadeAbr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restaurar base dados.
+        /// </summary>
+        public static string TituloRestore {
+            get {
+                return ResourceManager.GetString("TituloRestore", resourceCulture);
             }
         }
         
@@ -1060,11 +1168,92 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Concluída.
+        /// </summary>
+        public static string TituloTarefa_Concluida {
+            get {
+                return ResourceManager.GetString("TituloTarefa_Concluida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tarefas.
         /// </summary>
         public static string TituloTarefas {
             get {
                 return ResourceManager.GetString("TituloTarefas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarefas concluídas.
+        /// </summary>
+        public static string TituloTarefas_Concluidas {
+            get {
+                return ResourceManager.GetString("TituloTarefas_Concluidas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Para esta semana.
+        /// </summary>
+        public static string TituloTarefas_EstaSemana {
+            get {
+                return ResourceManager.GetString("TituloTarefas_EstaSemana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Para este mês.
+        /// </summary>
+        public static string TituloTarefas_EsteMes {
+            get {
+                return ResourceManager.GetString("TituloTarefas_EsteMes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtrado por.
+        /// </summary>
+        public static string TituloTarefas_Filtro {
+            get {
+                return ResourceManager.GetString("TituloTarefas_Filtro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarefas pendentes.
+        /// </summary>
+        public static string TituloTarefas_Pendentes {
+            get {
+                return ResourceManager.GetString("TituloTarefas_Pendentes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Para a próxima semana.
+        /// </summary>
+        public static string TituloTarefas_ProximaSemana {
+            get {
+                return ResourceManager.GetString("TituloTarefas_ProximaSemana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Para o próximo mês.
+        /// </summary>
+        public static string TituloTarefas_ProximoMes {
+            get {
+                return ResourceManager.GetString("TituloTarefas_ProximoMes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Todas as tarefas.
+        /// </summary>
+        public static string TituloTarefas_Todas {
+            get {
+                return ResourceManager.GetString("TituloTarefas_Todas", resourceCulture);
             }
         }
         

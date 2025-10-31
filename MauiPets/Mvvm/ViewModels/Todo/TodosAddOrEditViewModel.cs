@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using MauiPets.Core.Application.Interfaces.Services.Notifications;
 using MauiPets.Core.Application.ViewModels.Messages;
 using MauiPets.Mvvm.Views.Todo;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.Interfaces.Services.TodoManager;
 using MauiPetsApp.Core.Application.TodoManager;
@@ -84,7 +85,7 @@ public partial class TodosAddOrEditViewModel : TodoBaseViewModel, IQueryAttribut
                     sbErrors.AppendLine(error);
                 }
 
-                await Shell.Current.DisplayAlert("Erros na validação!",
+                await Shell.Current.DisplayAlert(AppResources.TituloErrosValidacao,
                     sbErrors.ToString(), "OK");
 
                 errorsFound = true;
@@ -99,14 +100,14 @@ public partial class TodosAddOrEditViewModel : TodoBaseViewModel, IQueryAttribut
                 if (insertedId == -1)
                 {
                     await Shell.Current.DisplayAlert("Error while updating",
-                        $"Please contact administrator..", "OK");
+                        "Please contact administrator..", "OK");
                     return;
                 }
 
                 await _notificationsSyncService.SyncTaskNotificationsAsync();
                 WeakReferenceMessenger.Default.Send(new UpdateUnreadNotificationsMessage());
 
-                await ShowToastMessage("Tarefa criada com sucesso");
+                await ShowToastMessage(AppResources.RegistoCriadoSucesso);
                 await Shell.Current.GoToAsync($"//{nameof(TodoPage)}", true);
             }
             else // update (Id > 0)
@@ -120,7 +121,7 @@ public partial class TodosAddOrEditViewModel : TodoBaseViewModel, IQueryAttribut
                 WeakReferenceMessenger.Default.Send(new UpdateUnreadNotificationsMessage());
 
                 await Shell.Current.GoToAsync($"//{nameof(TodoPage)}", true);
-                await ShowToastMessage("Tarefa atualizada com sucesso");
+                await ShowToastMessage(AppResources.RegistoGravadoSucesso);
             }
 
             IsBusy = false;
@@ -144,13 +145,15 @@ public partial class TodosAddOrEditViewModel : TodoBaseViewModel, IQueryAttribut
         {
             if (SelectedTodo.Id > 0)
             {
-                bool okToDelete = await Shell.Current.DisplayAlert("Confirme, por favor", $"Apaga o registo?", "Sim", "Não");
+                bool okToDelete = await Shell.Current.DisplayAlert(AppResources.TituloConfirmacao,
+                    AppResources.TituloConfirmacao_Apagar,
+                    AppResources.Sim, AppResources.Nao);
                 if (okToDelete)
                 {
                     try
                     {
                         await _todosService.DeleteAsync(SelectedTodo.Id);
-                        await ShowToastMessage($"Registo  apagado com sucesso");
+                        await ShowToastMessage(AppResources.RegistoAnuladoSucesso);
 
                         await _notificationsSyncService.DeleteNotificationsForRelatedItemAsync(SelectedTodo.Id, "task");
                         WeakReferenceMessenger.Default.Send(new UpdateUnreadNotificationsMessage());

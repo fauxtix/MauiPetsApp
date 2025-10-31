@@ -5,10 +5,11 @@
              xmlns:models="clr-namespace:MauiPetsApp.Core.Application.TodoManager;assembly=MauiPets.Core"
              xmlns:viewmodel="clr-namespace:MauiPets.Mvvm.ViewModels.Todo"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
              xmlns:local="clr-namespace:MauiPets.Mvvm.ViewModels.Todo"
              xmlns:conv="clr-namespace:MauiPets.Converters"
              x:DataType="local:TodoViewModel"
-             Title="Lista de tarefas">
+             Title="{resx:Localize Key=TituloTarefas}">
 
     <ContentPage.Resources>
         <conv:StringToDateConverter x:Key="stringToDateConverter" />
@@ -16,9 +17,9 @@
         <conv:LessThanTotalPagesConverter x:Key="LessThanTotalPagesConverter" />
 
         <Style x:Key="CommonWeekMonthButtonStyle" TargetType="Button">
-            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="CornerRadius" Value="12" />
             <Setter Property="TextColor" Value="White" />
-            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontSize" Value="12" />
             <Setter Property="FontFamily" Value="PoppinsSemiBold" />
             <Setter Property="BorderWidth" Value="1" />
             <Setter Property="HeightRequest" Value="40" />
@@ -51,30 +52,32 @@
                            FontAttributes="None" />
                 </Border>
 
-                <Frame HeightRequest="70" CornerRadius="12" HasShadow="True" Margin="10, 10, 10, 20" Padding="10"
+                <Frame HeightRequest="60" CornerRadius="12" HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       HasShadow="True" Margin="10, 10, 10, 10" Padding="5"
                        BackgroundColor="LightGray" Grid.Row="1">
                     <ScrollView Orientation="Horizontal">
                         <HorizontalStackLayout Spacing="5" Padding="3">
-                            <Button Text="Esta semana"
-                            Command="{Binding FilterThisWeekCommand}"
-                            BackgroundColor="LightSkyBlue"
-                            BorderColor="SkyBlue"
-                            Style="{StaticResource CommonWeekMonthButtonStyle}" />
-                            <Button Text="Próx. semana"
-                            Command="{Binding FilterNextWeekCommand}"
-                            BackgroundColor="LightSeaGreen"
-                            BorderColor="SeaGreen"
-                            Style="{StaticResource CommonWeekMonthButtonStyle}" />
-                            <Button Text="Este mês"
-                            Command="{Binding FilterThisMonthCommand}"
-                            BackgroundColor="Coral"
-                            BorderColor="DarkOrange"
-                            Style="{StaticResource CommonWeekMonthButtonStyle}" />
-                            <Button Text="Próx. mês"
-                            Command="{Binding FilterNextMonthCommand}"
-                            BackgroundColor="Goldenrod"
-                            BorderColor="DarkGoldenrod"
-                            Style="{StaticResource CommonWeekMonthButtonStyle}" />
+                            <Button Text="{resx:Localize Key=TituloEstaSemana}"
+                                    Command="{Binding FilterThisWeekCommand}"
+                                    BackgroundColor="LightSkyBlue"
+                                    BorderColor="SkyBlue"
+                                    Style="{StaticResource CommonWeekMonthButtonStyle}" />
+                            <Button Text="{resx:Localize Key=TituloProximaSemana}"
+                                    Command="{Binding FilterNextWeekCommand}"
+                                    BackgroundColor="LightSeaGreen"
+                                    BorderColor="SeaGreen"
+                                    Style="{StaticResource CommonWeekMonthButtonStyle}" />
+                            <Button Text="{resx:Localize Key=TituloEsteMes}"
+                                    Command="{Binding FilterThisMonthCommand}"
+                                    BackgroundColor="Coral"
+                                    BorderColor="DarkOrange"
+                                    Style="{StaticResource CommonWeekMonthButtonStyle}" />
+                            <Button Text="{resx:Localize Key=TituloProxMes}"
+                                    Command="{Binding FilterNextMonthCommand}"
+                                    BackgroundColor="Goldenrod"
+                                    BorderColor="DarkGoldenrod"
+                                    Style="{StaticResource CommonWeekMonthButtonStyle}" />
                         </HorizontalStackLayout>
                     </ScrollView>
                 </Frame>
@@ -83,7 +86,7 @@
                Grid.Row="2">
                     <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceEvenly">
                         <SearchBar x:Name="searchBar"
-                           Placeholder="Pesquisar"
+                           Placeholder="{resx:Localize Key=TituloPesquisarContacto}"
                            WidthRequest="200">
                             <SearchBar.Behaviors>
                                 <toolkit:EventToCommandBehavior EventName="TextChanged"

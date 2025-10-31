@@ -3,7 +3,8 @@
              xmlns:viewmodel="clr-namespace:MauiPets.Mvvm.ViewModels.Utilities"
              x:Class="MauiPets.Mvvm.Views.Utilities.BackupPage"
              xmlns:converters="clr-namespace:MauiPets.Converters"
-             Title="Backup e Restore">
+             xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
+             Title="Backup / Restore">
 
     <ContentPage.Resources>
         <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
@@ -15,7 +16,7 @@
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="24">
             <Button 
-            Text="Backup da Base de Dados"
+            Text="{resx:Localize Key=TituloBackup}"
             Command="{Binding BackupDatabaseCommand}" 
             IsEnabled="{Binding ShowRestorePanel, Converter={StaticResource InverseBoolConverter}}"
             BackgroundColor="#118a7e"
@@ -24,7 +25,7 @@
             CornerRadius="8"/>
 
             <Button 
-            Text="Restaurar Base de Dados"
+            Text="{resx:Localize Key=TituloRestore}"
             Command="{Binding RestoreDatabaseCommand}"
             BackgroundColor="#b71c1c"
             TextColor="White"
@@ -33,7 +34,7 @@
 
             <Frame BackgroundColor="#f3f3f3" Padding="16" Margin="0,12,0,0">
                 <VerticalStackLayout>
-                    <Label Text="Informação do último backup" FontAttributes="Bold" FontSize="14"/>
+                    <Label Text="{resx:Localize Key=TituloInfoBackup}" FontAttributes="Bold" FontSize="14"/>
                     <Label IsVisible="{Binding HasBackup}" Text="{Binding SelectedBackupName}" FontSize="13"/>
                     <Label IsVisible="{Binding HasBackup}" Text="{Binding SelectedBackupDate, StringFormat='Data do backup: {0:dd/MM/yyyy HH:mm}'}" FontSize="12" TextColor="Gray"/>
                     <Label IsVisible="{Binding HasBackup}" Text="{Binding SelectedBackupPath, StringFormat='Caminho: {0}'}" FontSize="12" TextColor="Gray"/>

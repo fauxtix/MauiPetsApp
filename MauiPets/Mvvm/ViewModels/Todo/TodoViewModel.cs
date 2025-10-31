@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Extensions;
 using MauiPets.Mvvm.Views.Todo;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.Interfaces.Services.TodoManager;
 using MauiPetsApp.Core.Application.TodoManager;
@@ -70,7 +71,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
         [RelayCommand]
         private async Task AddTodoAsync()
         {
-            EditCaption = "Novo registo";
+            EditCaption = AppResources.NewMsg;
 
             IsEditing = false;
             SelectedTodo = new()
@@ -124,7 +125,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 FilteredTodos = todos;
                 TotalPages = (int)Math.Ceiling((double)todos.Count / PageSize);
                 IsPaginationVisible = TotalPages > 1;
-                FilterText = "Todas as tarefas";
+                FilterText = AppResources.TituloTarefas_Todas;
                 CurrentPage = 1;
                 UpdatePagedData(todos);
                 UpdatePageInfo();
@@ -155,7 +156,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                     var filteredTodos = FullTodos.Where(t => t.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
                     FilteredTodos = filteredTodos;
                     RefreshTodoList(filteredTodos);
-                    FilterText = $"Filtrado por: {searchText}";
+                    FilterText = $"{AppResources.TituloTarefas_Filtro}: {searchText}";
                 }
             }
             catch (Exception ex)
@@ -188,7 +189,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
 
         private void UpdatePageInfo()
         {
-            PageInfo = $"Pagª {CurrentPage} de {TotalPages}";
+            PageInfo = $"{AppResources.TituloPagina_Abrev} {CurrentPage} {AppResources.Titulo_De} {TotalPages}";
         }
 
         private bool CanNavigatePrevious() => CurrentPage > 1;
@@ -238,7 +239,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
             try
             {
                 IsEditing = true;
-                EditCaption = "Edição de registo";
+                EditCaption = AppResources.EditMsg;
 
                 var todoId = todo.Id;
                 if (todoId > 0)
@@ -272,9 +273,9 @@ namespace MauiPets.Mvvm.ViewModels.Todo
 
                 if (!completed.Any())
                 {
-                    await Shell.Current.DisplayAlert("Tarefas concluídas", "Sem dados para mostrar", "Ok");
+                    await Shell.Current.DisplayAlert(AppResources.TituloTarefas_Concluidas, AppResources.TituloSemDados, "Ok");
                     await GetTodosAsync();
-                    FilterText = "Todas as tarefas";
+                    FilterText = AppResources.TituloTarefas_Todas;
                     FilteredTodos = FullTodos;
                     CurrentPage = 1;
                     UpdatePageInfo();
@@ -289,7 +290,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 UpdatePagedData(completed);
                 UpdatePageInfo();
 
-                FilterText = "Tarefas concluídas";
+                FilterText = AppResources.TituloTarefas_Concluidas;
             }
             catch (Exception ex)
             {
@@ -305,9 +306,9 @@ namespace MauiPets.Mvvm.ViewModels.Todo
 
                 if (!pending.Any())
                 {
-                    await Shell.Current.DisplayAlert("Tarefas pendentes", "Sem dados para mostrar", "Ok");
+                    await Shell.Current.DisplayAlert(AppResources.TituloTarefas_Pendentes, AppResources.TituloSemDados, "Ok");
                     await GetTodosAsync();
-                    FilterText = "Todas as tarefas";
+                    FilterText = AppResources.TituloTarefas_Todas;
                     FilteredTodos = FullTodos;
                     CurrentPage = 1;
                     UpdatePageInfo();
@@ -322,7 +323,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 UpdatePagedData(pending);
                 UpdatePageInfo();
 
-                FilterText = "Tarefas pendentes";
+                FilterText = AppResources.TituloTarefas_Pendentes;
             }
             catch (Exception ex)
             {
@@ -345,9 +346,9 @@ namespace MauiPets.Mvvm.ViewModels.Todo
 
                 if (!thisWeekTodos.Any())
                 {
-                    await Shell.Current.DisplayAlert("Para esta semana", "Sem dados para mostrar", "Ok");
+                    await Shell.Current.DisplayAlert(AppResources.TituloTarefas_EstaSemana, AppResources.TituloSemDados, "Ok");
                     await GetTodosAsync();
-                    FilterText = "Todas as tarefas";
+                    FilterText = AppResources.TituloTarefas_Todas;
                     FilteredTodos = FullTodos;
                     CurrentPage = 1;
                     UpdatePageInfo();
@@ -362,7 +363,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 UpdatePagedData(thisWeekTodos);
                 UpdatePageInfo();
 
-                FilterText = "Para esta semana";
+                FilterText = AppResources.TituloTarefas_EstaSemana;
             }
             catch (Exception ex)
             {
@@ -385,9 +386,9 @@ namespace MauiPets.Mvvm.ViewModels.Todo
 
                 if (!nextWeekTodos.Any())
                 {
-                    await Shell.Current.DisplayAlert("Para a próxima semana", "Sem dados para mostrar", "Ok");
+                    await Shell.Current.DisplayAlert(AppResources.TituloTarefas_ProximaSemana, AppResources.TituloSemDados, "Ok");
                     await GetTodosAsync();
-                    FilterText = "Todas as tarefas";
+                    FilterText = AppResources.TituloTarefas_Todas;
                     FilteredTodos = FullTodos;
                     CurrentPage = 1;
                     UpdatePageInfo();
@@ -402,7 +403,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 UpdatePagedData(nextWeekTodos);
                 UpdatePageInfo();
 
-                FilterText = "Para a próxima semana";
+                FilterText = AppResources.TituloTarefas_ProximaSemana;
             }
             catch (Exception ex)
             {
@@ -425,9 +426,9 @@ namespace MauiPets.Mvvm.ViewModels.Todo
 
                 if (!thisMonthTodos.Any())
                 {
-                    await Shell.Current.DisplayAlert("Para este mês", "Sem dados para mostrar", "Ok");
+                    await Shell.Current.DisplayAlert(AppResources.TituloTarefas_EsteMes, AppResources.TituloSemDados, "Ok");
                     await GetTodosAsync();
-                    FilterText = "Todas as tarefas";
+                    FilterText = AppResources.TituloTarefas_Todas;
                     FilteredTodos = FullTodos;
                     CurrentPage = 1;
                     UpdatePageInfo();
@@ -442,7 +443,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 UpdatePagedData(thisMonthTodos);
                 UpdatePageInfo();
 
-                FilterText = "Para este mês";
+                FilterText = AppResources.TituloTarefas_EsteMes;
             }
             catch (Exception ex)
             {
@@ -465,9 +466,9 @@ namespace MauiPets.Mvvm.ViewModels.Todo
 
                 if (!nextMonthTodos.Any())
                 {
-                    await Shell.Current.DisplayAlert("Para o próximo mês", "Sem dados para mostrar", "Ok");
+                    await Shell.Current.DisplayAlert(AppResources.TituloTarefas_ProximoMes, AppResources.TituloSemDados, "Ok");
                     await GetTodosAsync();
-                    FilterText = "Todas as tarefas";
+                    FilterText = AppResources.TituloTarefas_Todas;
                     FilteredTodos = FullTodos;
                     CurrentPage = 1;
                     UpdatePageInfo();
@@ -482,7 +483,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 UpdatePagedData(nextMonthTodos);
                 UpdatePageInfo();
 
-                FilterText = "Para o próximo mês";
+                FilterText = AppResources.TituloTarefas_ProximoMes;
             }
             catch (Exception ex)
             {

@@ -474,4 +474,67 @@
   <data name="Titulo_Titulo" xml:space="preserve">
     <value>Título</value>
   </data>
+  <data name="TituloEstaSemana" xml:space="preserve">
+    <value>Esta semana</value>
+  </data>
+  <data name="TituloProximaSemana" xml:space="preserve">
+    <value>Próx. semana</value>
+  </data>
+  <data name="TituloProxMes" xml:space="preserve">
+    <value>Próx. mês</value>
+  </data>
+  <data name="TituloTarefas_Todas" xml:space="preserve">
+    <value>Todas as tarefas</value>
+  </data>
+  <data name="TituloTarefas_Filtro" xml:space="preserve">
+    <value>Filtrado por</value>
+  </data>
+  <data name="TituloPagina_Abrev" xml:space="preserve">
+    <value>Pagª</value>
+  </data>
+  <data name="Titulo_De" xml:space="preserve">
+    <value>de</value>
+  </data>
+  <data name="TituloTarefas_Concluidas" xml:space="preserve">
+    <value>Tarefas concluídas</value>
+  </data>
+  <data name="TituloTarefas_Pendentes" xml:space="preserve">
+    <value>Tarefas pendentes</value>
+  </data>
+  <data name="TituloTarefas_EstaSemana" xml:space="preserve">
+    <value>Para esta semana</value>
+  </data>
+  <data name="TituloTarefas_ProximaSemana" xml:space="preserve">
+    <value>Para a próxima semana</value>
+  </data>
+  <data name="TituloTarefas_EsteMes" xml:space="preserve">
+    <value>Para este mês</value>
+  </data>
+  <data name="TituloTarefas_ProximoMes" xml:space="preserve">
+    <value>Para o próximo mês</value>
+  </data>
+  <data name="TituloDescricao" xml:space="preserve">
+    <value>Descrição</value>
+  </data>
+  <data name="TituloTarefa_Concluida" xml:space="preserve">
+    <value>Concluída</value>
+  </data>
+  <data name="TituloErrosValidacao" xml:space="preserve">
+    <value>Erros na validação</value>
+  </data>
+  <data name="TituloConfirmacao" xml:space="preserve">
+    <value>Confirme, por favor</value>
+  </data>
+  <data name="TituloConfirmacao_Apagar" xml:space="preserve">
+    <value>Apaga o registo?</value>
+  </data>
+  <data name="TituloBackup" xml:space="preserve">
+    <value>Backup da base de dados</value>
+  </data>
+  <data name="TituloRestore" xml:space="preserve">
+    <value>Restaurar base dados</value>
+  </data>
+  <data name="TituloInfoBackup" xml:space="preserve">
+    <value>Informação do último backup</value>
+  </data>
 </root>
