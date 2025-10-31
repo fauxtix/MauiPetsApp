@@ -322,6 +322,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ver no mapa.
+        /// </summary>
+        public static string TipoVerNoMapa {
+            get {
+                return ResourceManager.GetString("TipoVerNoMapa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selecione um dos Pets abaixo, para visualizar os dados.
         /// </summary>
         public static string Titulo_Main_Info {
@@ -1074,6 +1083,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloVisita {
             get {
                 return ResourceManager.GetString("TituloVisita", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voltar.
+        /// </summary>
+        public static string TituloVoltar {
+            get {
+                return ResourceManager.GetString("TituloVoltar", resourceCulture);
             }
         }
     }

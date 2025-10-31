@@ -456,4 +456,10 @@
   <data name="TituloSemDados" xml:space="preserve">
     <value>No data to view</value>
   </data>
+  <data name="TipoVerNoMapa" xml:space="preserve">
+    <value>See on map</value>
+  </data>
+  <data name="TituloVoltar" xml:space="preserve">
+    <value>Go back</value>
+  </data>
 </root>

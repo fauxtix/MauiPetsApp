@@ -8,6 +8,7 @@ using MauiPetsApp.Core.Application.ViewModels;
 using MauiPetsApp.Core.Application.ViewModels.LookupTables;
 
 
+
 namespace MauiPets.Mvvm.ViewModels.Contacts;
 
 [QueryProperty(nameof(ContactoVM), "ContactoVM")]

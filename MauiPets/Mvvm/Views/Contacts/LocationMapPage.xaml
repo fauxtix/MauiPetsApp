@@ -1,6 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mapsui="clr-namespace:Mapsui.UI.Maui;assembly=Mapsui.UI.Maui"
+             xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
              x:Class="MauiPets.Mvvm.Views.Contacts.LocationMapPage"
              Title="Local">
 
@@ -17,7 +18,7 @@
                 VerticalOptions="End"
                 FontAttributes="Bold"
                 TextTransform="Uppercase" 
-                Text="Voltar"  Clicked="Button_Clicked"/>
+                Text="{resx:Localize Key=TituloVoltar}"  Clicked="Button_Clicked"/>
 
     </Grid>
 </ContentPage>

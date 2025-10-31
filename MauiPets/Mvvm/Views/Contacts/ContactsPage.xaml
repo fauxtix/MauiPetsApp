@@ -8,7 +8,7 @@
              xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
              xmlns:local="clr-namespace:MauiPets.Mvvm.ViewModels.Contacts"
              x:DataType="local:ContactsViewModel"
-             Title="Contactos">
+             Title="{resx:Localize Key=TituloContactos}">
 
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior Command="{Binding GetContactsCommand}" EventName="Appearing" />

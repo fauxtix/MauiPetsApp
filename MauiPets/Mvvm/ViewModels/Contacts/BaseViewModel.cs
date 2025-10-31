@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Mvvm.Views.Contacts;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.ViewModels;
 using MauiPetsApp.Core.Domain;
+
 
 namespace MauiPets.Mvvm.ViewModels.Contacts
 {
@@ -68,14 +70,13 @@ namespace MauiPets.Mvvm.ViewModels.Contacts
         private void OnPickerSelected()
         {
             Contacto.IdTipoContacto = SelectedContactType.Id;
-            // Outras ações que você deseja executar após a seleção do Picker
         }
 
         [RelayCommand]
         private async Task AddContactAsync()
         {
             IsEditing = false;
-            EditCaption = "Novo contacto";
+            EditCaption = AppResources.NewMsg;
 
             ContactoVM contact = new()
             {

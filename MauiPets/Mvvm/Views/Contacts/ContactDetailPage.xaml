@@ -5,8 +5,9 @@
             xmlns:models ="clr-namespace:MauiPetsApp.Core.Application.ViewModels;assembly=MauiPets.Core"
             xmlns:viewmodel="clr-namespace:MauiPets.Mvvm.ViewModels.Contacts"
             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
             x:DataType="viewmodel:ContactDetailViewModel"
-             Title="Contacto">
+             Title="{resx:Localize Key=TituloContactos}">
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsVisible="False" IsEnabled="False" />
@@ -86,19 +87,19 @@
 
                     <Frame CornerRadius="40" HasShadow="True" BorderColor="Transparent">
                         <VerticalStackLayout Padding="1" Spacing="3" Margin="0">
-                            <Label Style="{StaticResource MediumLabel}">Morada</Label>
+                            <Label Style="{StaticResource MediumLabel}" Text="{resx:Localize Key=TituloMorada}"/>
                             <Label Style="{StaticResource MediumLabelBold}" TextColor="Green" Text="{Binding ContactoVM.Morada}" />
-                            <Label Style="{StaticResource MediumLabel}" Margin="0,2,0,0">Localidade</Label>
+                            <Label Style="{StaticResource MediumLabel}" Margin="0,2,0,0" Text="{resx:Localize Key=TituloLocalidade}"/>
                             <Label Style="{StaticResource MediumLabelBold}" TextColor="Green" Text="{Binding ContactoVM.Localidade}" />
                             <BoxView HeightRequest="1" Color="Black"></BoxView>
-                            <Label Style="{StaticResource MediumLabel}">Móvel</Label>
+                            <Label Style="{StaticResource MediumLabel}" Text="{resx:Localize Key=TituloMovel}"/>
                             <Label Style="{StaticResource MediumLabelBold}" TextColor="Green" Text="{Binding ContactoVM.Movel}" />
-                            <Label Style="{StaticResource MediumLabel}" Margin="0,2,0,0">e-Mail</Label>
+                            <Label Style="{StaticResource MediumLabel}" Margin="0,2,0,0" Text="{resx:Localize Key=TituloEmail}"/>
                             <Label Style="{StaticResource MediumLabelBold}" Text="{Binding ContactoVM.eMail}" />
                             <BoxView HeightRequest="1" Color="Black"></BoxView>
-                            <Label Style="{StaticResource MediumLabel}">Tipo Contacto</Label>
+                            <Label Style="{StaticResource MediumLabel}" Text="{resx:Localize Key=TituloTipoContacto}"/>
                             <Label Style="{StaticResource MediumBlueLabelBold}" TextColor="DarkGreen" Text="{Binding ContactoVM.DescricaoTipoContacto}" />
-                            <Label Style="{StaticResource MediumLabel}" Margin="0,2,0,0">Notas</Label>
+                            <Label Style="{StaticResource MediumLabel}" Margin="0,2,0,0" Text="{resx:Localize Key=TituloNotas}"/>
                             <Label Style="{StaticResource MediumLabelBold}" TextColor="Green" Text="{Binding ContactoVM.Notas}" />
                         </VerticalStackLayout>
                     </Frame>
@@ -128,7 +129,7 @@
                         Grid.ColumnSpan="2"
                         Command="{Binding ShowLocationOnMapCommand}" 
                         TextTransform="Uppercase" 
-                        Text="Ver no Mapa"/>
+                        Text="{resx:Localize Key=TipoVerNoMapa}"/>
                 </Grid>
             </Border>
         </VerticalStackLayout>

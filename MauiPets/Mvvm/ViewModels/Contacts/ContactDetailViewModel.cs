@@ -3,6 +3,7 @@ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Mvvm.Views.Contacts;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 
@@ -51,7 +52,7 @@ namespace MauiPets.Mvvm.ViewModels.Contacts
             }
 
             IsEditing = false;
-            EditCaption = "Editar contacto";
+            EditCaption = AppResources.EditMsg;
 
             try
             {
