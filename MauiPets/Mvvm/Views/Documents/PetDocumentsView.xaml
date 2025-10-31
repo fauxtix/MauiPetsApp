@@ -2,6 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:conv="clr-namespace:MauiPets.Converters"
+             xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
              x:Class="MauiPets.Mvvm.Views.Pets.PetDocumentsView"
              x:Name="Root">
     <ContentView.Resources>
@@ -17,7 +18,6 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!-- visible only when a pet is selected in the parent page VM -->
             <Button Text="Adicionar PDF"
                     Command="{Binding PickCommand}"
                     Grid.Column="0"
@@ -33,16 +33,16 @@
 
         <Frame IsVisible="{Binding IsEditing}" Padding="8" Margin="0,6,0,6" BorderColor="#DDD" BackgroundColor="#FFF">
             <StackLayout Spacing="4">
-                <Label Text="Editar documento" FontAttributes="Bold" />
-                <Entry Placeholder="Título" Text="{Binding TitleInput}" />
-                <Editor Placeholder="Descrição (opcional)" HeightRequest="120" Text="{Binding DescriptionInput}" />
+                <Label Text="{resx:Localize Key=EditMsg}" FontAttributes="Bold" />
+                <Entry Placeholder="{resx:Localize Key=Titulo_Titulo}" Text="{Binding TitleInput}" />
+                <Editor Placeholder="{resx:Localize Key=TituloDescricaoOpcional}" HeightRequest="120" Text="{Binding DescriptionInput}" />
                 <Grid ColumnSpacing="12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button Text="Gravar" Command="{Binding SaveCommand}" Grid.Column="0" />
-                    <Button Text="Cancelar" Command="{Binding CancelCommand}" Grid.Column="1" />
+                    <Button Text="{resx:Localize Key=Gravar}" Command="{Binding SaveCommand}" Grid.Column="0" />
+                    <Button Text="{resx:Localize Key=Cancelar}" Command="{Binding CancelCommand}" Grid.Column="1" />
                 </Grid>
             </StackLayout>
         </Frame>
@@ -50,7 +50,6 @@
         <CollectionView ItemsSource="{Binding Documents}" SelectionMode="None" HeightRequest="220">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <!-- tightened spacing and compact icons -->
                     <Grid Padding="2" ColumnSpacing="4" VerticalOptions="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -65,7 +64,6 @@
                                HorizontalOptions="Start"
                                Margin="0,0,4,0" />
 
-                        <!-- Edit -->
                         <Button Grid.Column="1"
                                 Text="✏️"
                                 FontSize="20"
@@ -79,7 +77,6 @@
                                 CommandParameter="{Binding .}"
                                 SemanticProperties.Hint="Editar documento" />
 
-                        <!-- Open -->
                         <Button Grid.Column="2"
                                 Text="📂"
                                 FontSize="20"
@@ -93,7 +90,6 @@
                                 CommandParameter="{Binding .}"
                                 SemanticProperties.Hint="Abrir documento" />
 
-                        <!-- Delete -->
                         <Button Grid.Column="3"
                                 Text="🗑️"
                                 FontSize="20"
@@ -110,7 +106,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
         <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center"/>
     </StackLayout>
 </ContentView>

@@ -61,6 +61,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancelar.
+        /// </summary>
+        public static string Cancelar {
+            get {
+                return ResourceManager.GetString("Cancelar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operação inválida / Dados inválidos ou em falta.
         /// </summary>
         public static string DadosEmFalta {
@@ -340,6 +349,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Título.
+        /// </summary>
+        public static string Titulo_Titulo {
+            get {
+                return ResourceManager.GetString("Titulo_Titulo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aplicar.
         /// </summary>
         public static string TituloAplicarIdioma {
@@ -444,6 +462,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloDataInicio {
             get {
                 return ResourceManager.GetString("TituloDataInicio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descrição (opcional).
+        /// </summary>
+        public static string TituloDescricaoOpcional {
+            get {
+                return ResourceManager.GetString("TituloDescricaoOpcional", resourceCulture);
             }
         }
         
@@ -570,6 +597,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloEscolhaImagem {
             get {
                 return ResourceManager.GetString("TituloEscolhaImagem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Escolha o Pet.
+        /// </summary>
+        public static string TituloEscolhaPet {
+            get {
+                return ResourceManager.GetString("TituloEscolhaPet", resourceCulture);
             }
         }
         

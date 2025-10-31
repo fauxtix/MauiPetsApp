@@ -462,4 +462,16 @@
   <data name="TituloVoltar" xml:space="preserve">
     <value>Go back</value>
   </data>
+  <data name="TituloEscolhaPet" xml:space="preserve">
+    <value>Select Pet</value>
+  </data>
+  <data name="Cancelar" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="TituloDescricaoOpcional" xml:space="preserve">
+    <value>Description (optional)</value>
+  </data>
+  <data name="Titulo_Titulo" xml:space="preserve">
+    <value>Title</value>
+  </data>
 </root>
