@@ -628,6 +628,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Idioma.
+        /// </summary>
+        public static string TituloIdioma {
+            get {
+                return ResourceManager.GetString("TituloIdioma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inglês.
         /// </summary>
         public static string TituloIdiomaIngles {
@@ -646,6 +655,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Idiomas.
+        /// </summary>
+        public static string TituloIdiomas {
+            get {
+                return ResourceManager.GetString("TituloIdiomas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Imagem.
         /// </summary>
         public static string TituloImagem {
@@ -660,6 +678,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloInicio {
             get {
                 return ResourceManager.GetString("TituloInicio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A alteração aplica‑se imediatamente; reinicie a aplicação para garantir que todas as strings são atualizadas..
+        /// </summary>
+        public static string TituloLabelIdioma {
+            get {
+                return ResourceManager.GetString("TituloLabelIdioma", resourceCulture);
             }
         }
         
@@ -831,6 +858,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloSeguranca {
             get {
                 return ResourceManager.GetString("TituloSeguranca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seleccione idioma.
+        /// </summary>
+        public static string TituloSelecionarIdioma {
+            get {
+                return ResourceManager.GetString("TituloSelecionarIdioma", resourceCulture);
             }
         }
         

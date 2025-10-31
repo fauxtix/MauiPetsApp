@@ -16,7 +16,7 @@
     xmlns:utilitypage="clr-namespace:MauiPets.Mvvm.Views.Utilities"
     xmlns:expensesettingspage="clr-namespace:MauiPets.Mvvm.Views.Settings.Expenses"
     FlyoutWidth="200"
-    FlyoutHeight="500"
+    FlyoutHeight="450"
     Shell.TabBarIsVisible="False"
     Shell.FlyoutBehavior="Flyout">
 
@@ -35,7 +35,7 @@
                           Offset="1.0" />
         </LinearGradientBrush>
     </Shell.FlyoutBackground>
-    
+
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
         Title="{resx:Localize Key=TituloInicio}"
@@ -53,8 +53,8 @@
                 ContentTemplate="{DataTemplate contactspage:ContactsPage}"
                 Route="ContactsPage" />
         <ShellContent
-                Title="{resx:Localize Key=TituloDocumentos}"
-                Icon="documents.png" 
+                Title="{resx:Localize Key=TituloContactos}"
+                Icon="phone.png" 
                 ContentTemplate="{DataTemplate documentspage:DocumentsPage}"
                 Route="DocumentsPage" />
 
@@ -81,10 +81,15 @@
                     Icon="expenses.png"
                     ContentTemplate="{DataTemplate expensesettingspage:ExpenseSettingsPage}"
                     Route="ExpenseSettingsPage" />
+            <ShellContent
+                    Title="{resx:Localize Key=TituloIdiomas}" 
+                    Icon="language.png"
+                    ContentTemplate="{DataTemplate settingspage:LanguageSettingsPage}"
+                    Route="LanguageSettingsPage" />
         </Tab>
 
     </FlyoutItem>
- 
+
     <ShellContent
         Title="Logs"
         Icon="icon_log.png"

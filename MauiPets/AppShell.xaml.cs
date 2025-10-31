@@ -56,6 +56,8 @@ namespace MauiPets
             Routes.Add(nameof(MainSettingsPage), typeof(MainSettingsPage));
             Routes.Add(nameof(SettingsAddOrEditPage), typeof(SettingsAddOrEditPage));
             Routes.Add(nameof(SettingsManagementPage), typeof(SettingsManagementPage));
+            Routes.Add(nameof(LanguageSettingsPage), typeof(LanguageSettingsPage));
+
             Routes.Add(nameof(ExpenseSettingsPage), typeof(ExpenseSettingsPage));
             Routes.Add(nameof(CategoriesAddOrEditPage), typeof(CategoriesAddOrEditPage));
             Routes.Add(nameof(CategoryTypesAddOrEditPage), typeof(CategoryTypesAddOrEditPage));

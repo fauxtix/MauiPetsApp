@@ -399,4 +399,16 @@
   <data name="TituloDocumentos" xml:space="preserve">
     <value>Documentos</value>
   </data>
+  <data name="TituloIdiomas" xml:space="preserve">
+    <value>Idiomas</value>
+  </data>
+  <data name="TituloSelecionarIdioma" xml:space="preserve">
+    <value>Seleccione idioma</value>
+  </data>
+  <data name="TituloIdioma" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="TituloLabelIdioma" xml:space="preserve">
+    <value>A alteração aplica‑se imediatamente; reinicie a aplicação para garantir que todas as strings são atualizadas.</value>
+  </data>
 </root>

@@ -165,10 +165,13 @@ namespace MauiPets
             builder.Services.AddTransient<VetAppointmentsViewModel>();
             builder.Services.AddTransient<VetAppointmentsAddOrEditViewModel>();
 
+            builder.Services.AddTransient<SettingsPageViewModel>();
             builder.Services.AddTransient<SettingsViewModel>();
             builder.Services.AddTransient<SettingsAddOrEditViewModel>();
             builder.Services.AddTransient<MainSettingsBaseViewModel>();
             builder.Services.AddTransient<MainSettingsViewModel>();
+            builder.Services.AddTransient<LanguageSettingsViewModel>();
+
             builder.Services.AddTransient<ExpensesSettingsViewModel>();
             builder.Services.AddTransient<ExpenseTypesSettingsViewModel>();
             builder.Services.AddTransient<SettingsPageViewModel>();
@@ -216,6 +219,8 @@ namespace MauiPets
             builder.Services.AddTransient<MainSettingsPage>();
             builder.Services.AddTransient<SettingsManagementPage>();
             builder.Services.AddTransient<SettingsAddOrEditPage>();
+            builder.Services.AddTransient<LanguageSettingsPage>();
+
             builder.Services.AddTransient<ExpenseSettingsPage>();
             builder.Services.AddTransient<CategoriesAddOrEditPage>();
             builder.Services.AddTransient<CategoryTypesAddOrEditPage>();

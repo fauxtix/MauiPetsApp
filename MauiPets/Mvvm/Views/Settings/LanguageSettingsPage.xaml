@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
+             x:Class="MauiPets.Mvvm.Views.Settings.LanguageSettingsPage"
+             Title="Idiomas">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <!-- opcional: styles -->
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+    <VerticalStackLayout Padding="16" Spacing="12">
+        <Label Text="Selecione idioma" FontAttributes="Bold" FontSize="16" />
+
+        <Picker ItemsSource="{Binding Languages}"
+           ItemDisplayBinding="{Binding DisplayName}"
+           SelectedItem="{Binding SelectedLanguage}"
+           Title="Idioma" />
+
+        <Button Text="Aplicar" Command="{Binding ApplyCommand}" />
+
+        <Label Text="A alteração aplica‑se imediatamente; reinicie a aplicação para garantir que todas as strings são atualizadas."
+          FontSize="Small"
+          TextColor="Gray" />
+    </VerticalStackLayout>
+</ContentPage>

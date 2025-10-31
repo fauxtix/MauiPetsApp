@@ -18,6 +18,7 @@ namespace MauiPets.Mvvm.ViewModels.Settings
 
             var mainSettingsPage = serviceProvider.GetRequiredService<MainSettingsPage>();
             var expenseSettingsPage = serviceProvider.GetRequiredService<ExpenseSettingsPage>();
+            var languageSettingsPage = serviceProvider.GetRequiredService<LanguageSettingsPage>();
 
             if (mainSettingsPage == null)
             {
@@ -28,8 +29,11 @@ namespace MauiPets.Mvvm.ViewModels.Settings
             {
                 throw new Exception("ExpenseSettingsPage não pôde ser resolvido");
             }
+            if (languageSettingsPage == null)
+            {
+                throw new Exception("LanguageSettingsPage não pôde ser resolvido");
+            }
 
-            // Adicionando as páginas ao ObservableCollection
             Pages.Add(new SettingsPageModel
             {
                 Title = "Main Settings",
@@ -40,15 +44,19 @@ namespace MauiPets.Mvvm.ViewModels.Settings
                 Title = "Expense Settings",
                 Page = expenseSettingsPage
             });
+            Pages.Add(new SettingsPageModel
+            {
+                Title = "Idioma",
+                Page = languageSettingsPage
+            });
 
-            // Definindo a página atual como a primeira página
             if (Pages.Count > 0)
             {
-                CurrentPage = Pages[0].Page; // Garantindo que há pelo menos uma página
+                CurrentPage = Pages[0].Page;
             }
             else
             {
-                CurrentPage = null; // Evitando erro de index
+                CurrentPage = null;
             }
         }
     }
