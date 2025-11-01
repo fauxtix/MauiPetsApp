@@ -537,4 +537,79 @@
   <data name="TituloInfoBackup" xml:space="preserve">
     <value>Informação do último backup</value>
   </data>
+  <data name="Backup_NoBackup" xml:space="preserve">
+    <value>Nenhum backup efetuado até agora.</value>
+  </data>
+  <data name="Backup_DateLabel" xml:space="preserve">
+    <value>Data do backup: </value>
+  </data>
+  <data name="Backup_PathLabel" xml:space="preserve">
+    <value>Caminho: </value>
+  </data>
+  <data name="Restore_BD_Atual" xml:space="preserve">
+    <value>Base de dados atual</value>
+  </data>
+  <data name="Restore_Registos_Alterados" xml:space="preserve">
+    <value>Registos alterados</value>
+  </data>
+  <data name="Restore_Tabelas" xml:space="preserve">
+    <value>Tabelas</value>
+  </data>
+  <data name="Restore_Registos" xml:space="preserve">
+    <value>Registos</value>
+  </data>
+  <data name="Restore_BD_Selecionada" xml:space="preserve">
+    <value>Backup selecionado</value>
+  </data>
+  <data name="Restore_Botao_Confirmacao" xml:space="preserve">
+    <value>Confirmar Restore</value>
+  </data>
+  <data name="ConfirmBackupTitle" xml:space="preserve">
+    <value>Confirmar Backup</value>
+  </data>
+  <data name="ConfirmBackupMessage" xml:space="preserve">
+    <value>Deseja realmente cria um backup da base de dados?</value>
+  </data>
+  <data name="BackupCreatedMessageFormat" xml:space="preserve">
+    <value>Backup criado em: {0}"  (format: {0} = path)</value>
+  </data>
+  <data name="NoBackupTitle" xml:space="preserve">
+    <value>Sem backup</value>
+  </data>
+  <data name="NoBackupMessage" xml:space="preserve">
+    <value>Não existe qualquer backup para restaurar</value>
+  </data>
+  <data name="NoChangesTitle" xml:space="preserve">
+    <value>Sem alterações</value>
+  </data>
+  <data name="NoChangesMessage" xml:space="preserve">
+    <value>O backup tem o mesmo número de registos em todas as tabelas. Não há necessidade de restaurar.</value>
+  </data>
+  <data name="RestoreSuccessTitle" xml:space="preserve">
+    <value>Confirmar Restore</value>
+  </data>
+  <data name="ConfirmRestoreMessage" xml:space="preserve">
+    <value>A operação irá substituir a base de dados atual pelo backup. Deseja continuar?</value>
+  </data>
+  <data name="RestoreSuccessMessage" xml:space="preserve">
+    <value>Base de dados restaurada com sucesso!</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Erro</value>
+  </data>
+  <data name="OneTableChangedFormat" xml:space="preserve">
+    <value>Foi detetada 1 tabela alterada</value>
+  </data>
+  <data name="MultipleTablesChangedHeader" xml:space="preserve">
+    <value>Várias tabelas ateradas</value>
+  </data>
+  <data name="ErrorCountingTablesHint" xml:space="preserve">
+    <value>Warning errors occurred while counting some tables (marked as ERR). Check the logs.</value>
+  </data>
+  <data name="NoTableChanged" xml:space="preserve">
+    <value>Nenhuma tabela foi alterada</value>
+  </data>
+  <data name="OneTableChangedHeader" xml:space="preserve">
+    <value>Foi detetada 1 tabela alterada</value>
+  </data>
 </root>

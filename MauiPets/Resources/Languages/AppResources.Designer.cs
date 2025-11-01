@@ -61,11 +61,74 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data do backup: .
+        /// </summary>
+        public static string Backup_DateLabel {
+            get {
+                return ResourceManager.GetString("Backup_DateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nenhum backup efetuado até agora..
+        /// </summary>
+        public static string Backup_NoBackup {
+            get {
+                return ResourceManager.GetString("Backup_NoBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Caminho: .
+        /// </summary>
+        public static string Backup_PathLabel {
+            get {
+                return ResourceManager.GetString("Backup_PathLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup criado em: {0}&quot;  (format: {0} = path).
+        /// </summary>
+        public static string BackupCreatedMessageFormat {
+            get {
+                return ResourceManager.GetString("BackupCreatedMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancelar.
         /// </summary>
         public static string Cancelar {
             get {
                 return ResourceManager.GetString("Cancelar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deseja realmente cria um backup da base de dados?.
+        /// </summary>
+        public static string ConfirmBackupMessage {
+            get {
+                return ResourceManager.GetString("ConfirmBackupMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmar Backup.
+        /// </summary>
+        public static string ConfirmBackupTitle {
+            get {
+                return ResourceManager.GetString("ConfirmBackupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A operação irá substituir a base de dados atual pelo backup. Deseja continuar?.
+        /// </summary>
+        public static string ConfirmRestoreMessage {
+            get {
+                return ResourceManager.GetString("ConfirmRestoreMessage", resourceCulture);
             }
         }
         
@@ -97,11 +160,38 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Warning errors occurred while counting some tables (marked as ERR). Check the logs..
+        /// </summary>
+        public static string ErrorCountingTablesHint {
+            get {
+                return ResourceManager.GetString("ErrorCountingTablesHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erro.
+        /// </summary>
+        public static string ErrorTitle {
+            get {
+                return ResourceManager.GetString("ErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gravar.
         /// </summary>
         public static string Gravar {
             get {
                 return ResourceManager.GetString("Gravar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Várias tabelas ateradas.
+        /// </summary>
+        public static string MultipleTablesChangedHeader {
+            get {
+                return ResourceManager.GetString("MultipleTablesChangedHeader", resourceCulture);
             }
         }
         
@@ -120,6 +210,69 @@ namespace MauiPets.Resources.Languages {
         public static string NewMsg {
             get {
                 return ResourceManager.GetString("NewMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não existe qualquer backup para restaurar.
+        /// </summary>
+        public static string NoBackupMessage {
+            get {
+                return ResourceManager.GetString("NoBackupMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sem backup.
+        /// </summary>
+        public static string NoBackupTitle {
+            get {
+                return ResourceManager.GetString("NoBackupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O backup tem o mesmo número de registos em todas as tabelas. Não há necessidade de restaurar..
+        /// </summary>
+        public static string NoChangesMessage {
+            get {
+                return ResourceManager.GetString("NoChangesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sem alterações.
+        /// </summary>
+        public static string NoChangesTitle {
+            get {
+                return ResourceManager.GetString("NoChangesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nenhuma tabela foi alterada.
+        /// </summary>
+        public static string NoTableChanged {
+            get {
+                return ResourceManager.GetString("NoTableChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foi detetada 1 tabela alterada.
+        /// </summary>
+        public static string OneTableChangedFormat {
+            get {
+                return ResourceManager.GetString("OneTableChangedFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foi detetada 1 tabela alterada.
+        /// </summary>
+        public static string OneTableChangedHeader {
+            get {
+                return ResourceManager.GetString("OneTableChangedHeader", resourceCulture);
             }
         }
         
@@ -273,6 +426,78 @@ namespace MauiPets.Resources.Languages {
         public static string RegistoGravadoSucesso {
             get {
                 return ResourceManager.GetString("RegistoGravadoSucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Base de dados atual.
+        /// </summary>
+        public static string Restore_BD_Atual {
+            get {
+                return ResourceManager.GetString("Restore_BD_Atual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup selecionado.
+        /// </summary>
+        public static string Restore_BD_Selecionada {
+            get {
+                return ResourceManager.GetString("Restore_BD_Selecionada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmar Restore.
+        /// </summary>
+        public static string Restore_Botao_Confirmacao {
+            get {
+                return ResourceManager.GetString("Restore_Botao_Confirmacao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registos.
+        /// </summary>
+        public static string Restore_Registos {
+            get {
+                return ResourceManager.GetString("Restore_Registos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registos alterados.
+        /// </summary>
+        public static string Restore_Registos_Alterados {
+            get {
+                return ResourceManager.GetString("Restore_Registos_Alterados", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tabelas.
+        /// </summary>
+        public static string Restore_Tabelas {
+            get {
+                return ResourceManager.GetString("Restore_Tabelas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Base de dados restaurada com sucesso!.
+        /// </summary>
+        public static string RestoreSuccessMessage {
+            get {
+                return ResourceManager.GetString("RestoreSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmar Restore.
+        /// </summary>
+        public static string RestoreSuccessTitle {
+            get {
+                return ResourceManager.GetString("RestoreSuccessTitle", resourceCulture);
             }
         }
         

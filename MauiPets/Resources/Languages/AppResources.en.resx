@@ -537,4 +537,79 @@
   <data name="TituloInfoBackup" xml:space="preserve">
     <value>Information about the last backup</value>
   </data>
+  <data name="Backup_NoBackup" xml:space="preserve">
+    <value>No backups made so far.</value>
+  </data>
+  <data name="Backup_DateLabel" xml:space="preserve">
+    <value>Backup date: </value>
+  </data>
+  <data name="Backup_PathLabel" xml:space="preserve">
+    <value>Path: </value>
+  </data>
+  <data name="Restore_BD_Atual" xml:space="preserve">
+    <value>Current database</value>
+  </data>
+  <data name="Restore_Registos_Alterados" xml:space="preserve">
+    <value>Updated records</value>
+  </data>
+  <data name="Restore_Tabelas" xml:space="preserve">
+    <value>Tables</value>
+  </data>
+  <data name="Restore_Registos" xml:space="preserve">
+    <value>Records</value>
+  </data>
+  <data name="Restore_BD_Selecionada" xml:space="preserve">
+    <value>Selected database</value>
+  </data>
+  <data name="Restore_Botao_Confirmacao" xml:space="preserve">
+    <value>Confirm Restore</value>
+  </data>
+  <data name="ConfirmBackupTitle" xml:space="preserve">
+    <value>Confirm Backup</value>
+  </data>
+  <data name="ConfirmBackupMessage" xml:space="preserve">
+    <value>Do you really want to create a database backup?</value>
+  </data>
+  <data name="BackupCreatedMessageFormat" xml:space="preserve">
+    <value>Backup created at: {0}"  (format: {0} = path)</value>
+  </data>
+  <data name="NoBackupTitle" xml:space="preserve">
+    <value>No backup</value>
+  </data>
+  <data name="NoBackupMessage" xml:space="preserve">
+    <value>There is no backup file to restore</value>
+  </data>
+  <data name="NoChangesTitle" xml:space="preserve">
+    <value>No changes</value>
+  </data>
+  <data name="NoChangesMessage" xml:space="preserve">
+    <value>The backup has the same number of records in all tables as the current database. No restore is necessary.</value>
+  </data>
+  <data name="RestoreSuccessTitle" xml:space="preserve">
+    <value>Confirm Restore</value>
+  </data>
+  <data name="ConfirmRestoreMessage" xml:space="preserve">
+    <value>his operation will replace the current database with the backup. Do you want to continue?</value>
+  </data>
+  <data name="RestoreSuccessMessage" xml:space="preserve">
+    <value>Database restored successfully!</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="OneTableChangedFormat" xml:space="preserve">
+    <value>1 table changed</value>
+  </data>
+  <data name="MultipleTablesChangedHeader" xml:space="preserve">
+    <value>Several tables changed</value>
+  </data>
+  <data name="ErrorCountingTablesHint" xml:space="preserve">
+    <value>Warning errors occurred while counting some tables (marked as ERR). Check the logs.</value>
+  </data>
+  <data name="NoTableChanged" xml:space="preserve">
+    <value>No table has changed</value>
+  </data>
+  <data name="OneTableChangedHeader" xml:space="preserve">
+    <value>1 table changed</value>
+  </data>
 </root>

@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Core.Application.ViewModels.Utilities;
+using MauiPets.Resources.Languages;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace MauiPets.Mvvm.ViewModels.Utilities
 {
@@ -15,7 +17,7 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
             "Pet", "CategoriaDespesa", "ConsultaVeterinario", "Contacto", "Desparasitante", "Despesa", "Especie",
             "Esterilizacao", "Idade", "MarcaRacao", "Medicacao", "Peso", "PetsLog", "Raca", "Racao", "Situacao",
             "Tamanho", "Temperamento", "TipoContacto", "TipoDesparasitanteExterno", "TipoDesparasitanteInterno",
-            "TipoDespesa", "ToDoCategories", "Todo", "Vacina"
+            "TipoDespesa", "ToDoCategories", "Todo", "Vacina", "Documento"
         };
 
         private readonly string dbPath;
@@ -125,16 +127,32 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
                     using var conn = new SqliteConnection($"Data Source={path}");
                     conn.Open();
                     info.IsAccessible = true;
+
                     foreach (var table in tables)
                     {
-                        using var cmd = conn.CreateCommand();
-                        cmd.CommandText = $"SELECT COUNT(*) FROM {table}";
-                        info.TableCounts[table] = (long)cmd.ExecuteScalar();
+                        try
+                        {
+                            using var cmd = conn.CreateCommand();
+                            // quote identifier to avoid issues with reserved words / case
+                            cmd.CommandText = $"SELECT COUNT(*) FROM \"{table}\"";
+                            var result = cmd.ExecuteScalar();
+                            long count = 0;
+                            if (result is long l) count = l;
+                            else if (result is int i) count = i;
+                            else if (result != null && long.TryParse(result.ToString(), out var parsed)) count = parsed;
+                            info.TableCounts[table] = count;
+                        }
+                        catch (Exception tex)
+                        {
+                            // mark with -1 to indicate error / table missing, but continue
+                            info.TableCounts[table] = -1;
+                            _logger.LogWarning(tex, "Error counting table {Table} in database {Path}", table, path);
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Error accessing database");
+                    _logger.LogError(ex, "Error opening database {Path}", path);
                     info.IsAccessible = false;
                 }
             }
@@ -142,22 +160,35 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
             return info;
         }
 
+
         private void AtualizaTabelasAlteradas()
         {
             AlteredCurrentTableCounts.Clear();
             AlteredBackupTableCounts.Clear();
 
             var allKeys = tablesToCount;
+
+            // build diagnostic text to log / show if needed
+            var diagLines = new List<string>();
+
             foreach (var key in allKeys)
             {
                 long currCount = CurrentDbTableCounts.FirstOrDefault(x => x.Key == key).Value;
                 long backupCount = BackupDbTableCounts.FirstOrDefault(x => x.Key == key).Value;
+
+                // if we used -1 sentinel for errors, include that in diagnostics
+                diagLines.Add($"{key}: current={(currCount == -1 ? "ERR" : currCount.ToString())}, backup={(backupCount == -1 ? "ERR" : backupCount.ToString())}");
+
                 if (currCount != backupCount)
                 {
                     AlteredCurrentTableCounts.Add(new KeyValuePair<string, long>(key, currCount));
                     AlteredBackupTableCounts.Add(new KeyValuePair<string, long>(key, backupCount));
                 }
             }
+
+            // log diagnostic lines for quick inspection
+            _logger.LogInformation("DB Comparison for current={DbCurrentPath} backup={DbBackupPath}:\n{Diag}",
+                CurrentDb?.Path ?? "(null)", BackupDb?.Path ?? "(null)", string.Join("\n", diagLines));
 
             if (BackupDb?.Path != null)
             {
@@ -185,18 +216,40 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
                     {
                         return $"{kvp.Key}: {kvp.Value} (alterado)";
                     }
-                });
-                var alteredTables = AlteredCurrentTableCounts.Count;
-                if (alteredTables == 1)
-                    ResumoAlteracoes = $"Foi detetada 1 tabela alterada:\n\n" +
-                    string.Join("\n\n", lines);
-                else
-                    ResumoAlteracoes = $"Foram detetadas {AlteredCurrentTableCounts.Count} tabelas alteradas:\n" +
-                    string.Join("\n\n", lines);
+                }).ToList();
+
+                var joined = string.Join("\n\n", lines);
+                var count = AlteredCurrentTableCounts.Count;
+
+                try
+                {
+                    if (count == 1)
+                        ResumoAlteracoes = string.Format(CultureInfo.CurrentCulture, AppResources.OneTableChangedFormat, joined);
+                    else
+                        ResumoAlteracoes = string.Format(CultureInfo.CurrentCulture, AppResources.MultipleTablesChangedHeader, count, joined);
+                }
+                catch (FormatException fe)
+                {
+                    // Log and fallback to localized header strings (no hardcoded Portuguese)
+                    _logger.LogWarning(fe, "Resource format invalid for OneTable/MultipleTablesChangedFormat. Using header fallback.");
+
+                    var header = count == 1
+                        ? AppResources.OneTableChangedHeader // e.g. "1 table changed:" / "Foi detetada 1 tabela alterada:"
+                        : string.Format(CultureInfo.CurrentCulture, AppResources.MultipleTablesChangedHeader, count);
+
+                    ResumoAlteracoes = header + "\n\n" + joined;
+                }
             }
             else
             {
-                ResumoAlteracoes = "Nenhuma tabela foi alterada.";
+                // if no differences, provide diagnostic hint
+                ResumoAlteracoes = AppResources.NoTableChanged;
+
+                // if any table had error marker (-1), append hint
+                if ((CurrentDbTableCounts.Any(kv => kv.Value == -1) || BackupDbTableCounts.Any(kv => kv.Value == -1)))
+                {
+                    ResumoAlteracoes += "\n\n" + AppResources.ErrorCountingTablesHint;
+                }
             }
         }
 
@@ -207,18 +260,35 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
             try
             {
                 bool ok = await Shell.Current.DisplayAlert(
-                    "Confirmar Backup",
-                    "Deseja realmente criar um backup da base de dados?",
-                    "Sim", "Não");
+                    AppResources.ConfirmBackupTitle,
+                    AppResources.ConfirmBackupMessage,
+                    AppResources.Sim,
+                    AppResources.Nao);
                 if (!ok)
                     return;
 
                 var destPath = GetBackupPath();
 
-                if (File.Exists(destPath))
-                    File.Delete(destPath);
+                // Ensure directory exists
+                Directory.CreateDirectory(Path.GetDirectoryName(destPath) ?? FileSystem.Current.AppDataDirectory);
 
-                File.Copy(dbPath, destPath, overwrite: true);
+                try
+                {
+                    // Use SQLite backup API for a consistent copy (handles WAL)
+                    using var source = new SqliteConnection($"Data Source={dbPath}");
+                    using var dest = new SqliteConnection($"Data Source={destPath}");
+                    source.Open();
+                    dest.Open();
+                    source.BackupDatabase(dest);
+                }
+                catch (Exception ex)
+                {
+                    // fallback to file copy if backup API fails for any reason
+                    _logger.LogWarning(ex, "SQLite backup API failed, falling back to File.Copy");
+                    if (File.Exists(destPath))
+                        File.Delete(destPath);
+                    File.Copy(dbPath, destPath, overwrite: true);
+                }
 
                 Preferences.Default.Set("LastBackupPath", destPath);
                 Preferences.Default.Set("LastBackupDate", File.GetLastWriteTime(destPath));
@@ -226,12 +296,15 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
                 SelectedBackupPath = destPath;
                 SelectedBackupDate = File.GetLastWriteTime(destPath);
 
-                await Shell.Current.DisplayAlert("Backup", $"Backup criado em:\n{destPath}", "OK");
+                await Shell.Current.DisplayAlert(
+                    AppResources.BackupCreatedMessageFormat,
+                    string.Format(CultureInfo.CurrentCulture, AppResources.BackupCreatedMessageFormat, destPath),
+                    "OK");
 
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Erro", ex.Message, "OK");
+                await Shell.Current.DisplayAlert(AppResources.ErrorTitle, ex.Message, "OK");
             }
             finally
             {
@@ -250,8 +323,8 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
                 if (!HasBackup)
                 {
                     await Shell.Current.DisplayAlert(
-                        "Sem backup",
-                        "Não existe nenhum ficheiro de backup para restaurar.",
+                        AppResources.NoBackupTitle,
+                        AppResources.NoBackupMessage,
                         "OK");
                     ShowRestorePanel = false;
                     return;
@@ -266,8 +339,8 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
                 if (registosIguais)
                 {
                     await Shell.Current.DisplayAlert(
-                        "Sem alterações",
-                        "O backup tem o mesmo número de registos em todas as tabelas que a base de dados atual. Não há necessidade de restaurar.",
+                        AppResources.NoChangesTitle,
+                        AppResources.NoChangesMessage,
                         "OK");
                     ShowRestorePanel = false;
                     return;
@@ -286,25 +359,52 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
             IsBusy = true;
             try
             {
-                var backupPath = GetBackupPath();
+                // Prefer the last chosen backup path; fall back to default GetBackupPath()
+                var backupPath = !string.IsNullOrWhiteSpace(SelectedBackupPath) && File.Exists(SelectedBackupPath)
+                    ? SelectedBackupPath
+                    : GetBackupPath();
+
+                if (!File.Exists(backupPath))
+                {
+                    await Shell.Current.DisplayAlert(AppResources.ErrorTitle, AppResources.NoBackupMessage, "OK");
+                    return;
+                }
 
                 bool ok = await Shell.Current.DisplayAlert(
-                    "Confirmar Restore",
-                    "A operação irá substituir a base de dados atual pelo backup. Deseja continuar?",
-                    "Sim", "Não");
+                    "Restore",
+                    AppResources.ConfirmRestoreMessage,
+                    AppResources.Sim,
+                    AppResources.Nao);
                 if (!ok)
                     return;
 
-                File.Copy(backupPath, dbPath, overwrite: true);
+                try
+                {
+                    // Use SQLite backup API to restore (source = backup, dest = app DB)
+                    using var source = new SqliteConnection($"Data Source={backupPath}");
+                    using var dest = new SqliteConnection($"Data Source={dbPath}");
+                    source.Open();
+                    dest.Open();
+                    source.BackupDatabase(dest);
+                }
+                catch (Exception ex)
+                {
+                    // fallback to File.Copy if necessary
+                    _logger.LogWarning(ex, "SQLite restore via backup API failed, falling back to File.Copy");
+                    File.Copy(backupPath, dbPath, overwrite: true);
+                }
+
+                // Refresh current DB info and comparisons
                 CurrentDb = GetDatabaseInfo(dbPath, tablesToCount);
                 CurrentDbTableCounts = new ObservableCollection<KeyValuePair<string, long>>(CurrentDb.TableCounts ?? new Dictionary<string, long>());
                 AtualizaTabelasAlteradas();
                 ShowRestorePanel = false;
-                await Shell.Current.DisplayAlert("Restore", "Base de dados restaurada com sucesso!", "OK");
+
+                await Shell.Current.DisplayAlert(AppResources.RestoreSuccessTitle, AppResources.RestoreSuccessMessage, "OK");
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Erro", ex.Message, "OK");
+                await Shell.Current.DisplayAlert(AppResources.ErrorTitle, ex.Message, "OK");
             }
             finally
             {
