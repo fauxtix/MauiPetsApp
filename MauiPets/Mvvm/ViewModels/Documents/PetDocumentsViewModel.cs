@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using System.Collections.ObjectModel;
+
 
 namespace MauiPets.Mvvm.ViewModels.Pets
 {
@@ -101,7 +103,7 @@ namespace MauiPets.Mvvm.ViewModels.Pets
 
                 var pickOptions = new PickOptions
                 {
-                    PickerTitle = "Selecionar ficheiro PDF",
+                    PickerTitle = AppResources.TituloSelecionarPdf,
                     FileTypes = pdfTypes
                 };
 
@@ -133,7 +135,7 @@ namespace MauiPets.Mvvm.ViewModels.Pets
             catch (Exception ex)
             {
                 TryDeleteFile(destPath);
-                await Application.Current.MainPage.DisplayAlert("Erro", $"Erro ao seleccionar ficheiro: {ex.Message}", "OK");
+                await Application.Current.MainPage.DisplayAlert(AppResources.ErrorTitle, ex.Message, "OK");
             }
             finally
             {
@@ -146,7 +148,7 @@ namespace MauiPets.Mvvm.ViewModels.Pets
         {
             if (string.IsNullOrWhiteSpace(TitleInput))
             {
-                await Application.Current.MainPage.DisplayAlert("Validação", "Indique um título para o documento.", "OK");
+                await Application.Current.MainPage.DisplayAlert(AppResources.TituloErrosValidacao, AppResources.TituloIndiqueTitulo, "OK");
                 return;
             }
 
@@ -154,7 +156,7 @@ namespace MauiPets.Mvvm.ViewModels.Pets
             {
                 if (string.IsNullOrEmpty(PendingFilePath) || !File.Exists(PendingFilePath))
                 {
-                    await Application.Current.MainPage.DisplayAlert("Erro", "Ficheiro temporário inexistente. Por favor selecione novamente.", "OK");
+                    await Application.Current.MainPage.DisplayAlert(AppResources.ErrorTitle, AppResources.TituloFicheiroInexistente, "OK");
                     IsEditing = false;
                     PendingFilePath = null;
                     _pendingFileIsNew = false;
@@ -183,7 +185,7 @@ namespace MauiPets.Mvvm.ViewModels.Pets
                         if (_pendingFileIsNew)
                             TryDeleteFile(PendingFilePath);
 
-                        await Application.Current.MainPage.DisplayAlert("Erro", "Não foi possível atualizar o documento.", "OK");
+                        await Application.Current.MainPage.DisplayAlert(AppResources.ErrorTitle, AppResources.TituloErroUpdate, "OK");
                         return;
                     }
 
@@ -213,7 +215,7 @@ namespace MauiPets.Mvvm.ViewModels.Pets
                         if (_pendingFileIsNew)
                             TryDeleteFile(PendingFilePath);
 
-                        await Application.Current.MainPage.DisplayAlert("Erro", "Não foi possível registar o documento.", "OK");
+                        await Application.Current.MainPage.DisplayAlert(AppResources.ErrorTitle, AppResources.TituloErroInsert, "OK");
                         return;
                     }
 
@@ -242,7 +244,7 @@ namespace MauiPets.Mvvm.ViewModels.Pets
                 if (_pendingFileIsNew)
                     TryDeleteFile(PendingFilePath);
 
-                await Application.Current.MainPage.DisplayAlert("Erro", $"Erro ao guardar documento: {ex.Message}", "OK");
+                await Application.Current.MainPage.DisplayAlert(AppResources.ErrorTitle, $"{AppResources.TituloErroUpdate}: {ex.Message}", "OK");
             }
             finally
             {
@@ -296,7 +298,8 @@ namespace MauiPets.Mvvm.ViewModels.Pets
         {
             try
             {
-                bool ok = await Application.Current.MainPage.DisplayAlert("Confirme", "Apaga documento?", "Sim", "Não");
+                bool ok = await Application.Current.MainPage.DisplayAlert(AppResources.TituloConfirmacao_Apagar, AppResources.TituloConfirmacao,
+                    AppResources.Sim, AppResources.Nao);
                 if (!ok) return;
 
                 IsBusy = true;

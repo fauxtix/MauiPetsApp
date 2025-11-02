@@ -61,6 +61,24 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to anos).
+        /// </summary>
+        public static string AgeCaption {
+            get {
+                return ResourceManager.GetString("AgeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Idade inválida).
+        /// </summary>
+        public static string AgeCaptionInvalid {
+            get {
+                return ResourceManager.GetString("AgeCaptionInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data do backup: .
         /// </summary>
         public static string Backup_DateLabel {
@@ -88,7 +106,7 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Backup criado em: {0}&quot;  (format: {0} = path).
+        ///   Looks up a localized string similar to Backup criado em: {0}.
         /// </summary>
         public static string BackupCreatedMessageFormat {
             get {
@@ -156,6 +174,15 @@ namespace MauiPets.Resources.Languages {
         public static string EditMsg {
             get {
                 return ResourceManager.GetString("EditMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Localização não disponível.
+        /// </summary>
+        public static string ErroLocalizacaoNaoDisponivel {
+            get {
+                return ResourceManager.GetString("ErroLocalizacaoNaoDisponivel", resourceCulture);
             }
         }
         
@@ -601,6 +628,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mensagem da App Maui Pets / Logs.
+        /// </summary>
+        public static string TituloAssuntoEMail {
+            get {
+                return ResourceManager.GetString("TituloAssuntoEMail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Backup da base de dados.
         /// </summary>
         public static string TituloBackup {
@@ -718,11 +754,29 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data no futuro.
+        /// </summary>
+        public static string TituloDataFuturo {
+            get {
+                return ResourceManager.GetString("TituloDataFuturo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data início.
         /// </summary>
         public static string TituloDataInicio {
             get {
                 return ResourceManager.GetString("TituloDataInicio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deseja descartar esta notiicação.
+        /// </summary>
+        public static string TituloDescartarNotificacao {
+            get {
+                return ResourceManager.GetString("TituloDescartarNotificacao", resourceCulture);
             }
         }
         
@@ -844,11 +898,47 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preenha os campos requeridos, p.f..
+        /// </summary>
+        public static string TituloEntradasEmFalta {
+            get {
+                return ResourceManager.GetString("TituloEntradasEmFalta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erro ao apagar registo.
+        /// </summary>
+        public static string TituloErroDelete {
+            get {
+                return ResourceManager.GetString("TituloErroDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erro ao criar registo.
+        /// </summary>
+        public static string TituloErroInsert {
+            get {
+                return ResourceManager.GetString("TituloErroInsert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erro na atualização.
+        /// </summary>
+        public static string TituloErroUpdate {
+            get {
+                return ResourceManager.GetString("TituloErroUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Erros na validação.
         /// </summary>
-        public static string TituloErrosValidacao {
+        public static string TituloErroValidacao {
             get {
-                return ResourceManager.GetString("TituloErrosValidacao", resourceCulture);
+                return ResourceManager.GetString("TituloErroValidacao", resourceCulture);
             }
         }
         
@@ -1006,6 +1096,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ficheiro temporário inexistenete. Por favor selecione novamente.
+        /// </summary>
+        public static string TituloFicheiroInexistente {
+            get {
+                return ResourceManager.GetString("TituloFicheiroInexistente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fim.
         /// </summary>
         public static string TituloFim {
@@ -1092,6 +1191,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloImagem {
             get {
                 return ResourceManager.GetString("TituloImagem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indique um título para o documento.
+        /// </summary>
+        public static string TituloIndiqueTitulo {
+            get {
+                return ResourceManager.GetString("TituloIndiqueTitulo", resourceCulture);
             }
         }
         
@@ -1321,6 +1429,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operação não permitida. Há registos associados. Verifique, por favor.
+        /// </summary>
+        public static string TituloRegistosAssociados {
+            get {
+                return ResourceManager.GetString("TituloRegistosAssociados", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restaurar base dados.
         /// </summary>
         public static string TituloRestore {
@@ -1344,6 +1461,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloSelecionarIdioma {
             get {
                 return ResourceManager.GetString("TituloSelecionarIdioma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecione Pdf.
+        /// </summary>
+        public static string TituloSelecionarPdf {
+            get {
+                return ResourceManager.GetString("TituloSelecionarPdf", resourceCulture);
             }
         }
         
@@ -1524,6 +1650,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloValor {
             get {
                 return ResourceManager.GetString("TituloValor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verifique entradas, por favor.
+        /// </summary>
+        public static string TituloVerificarEntradas {
+            get {
+                return ResourceManager.GetString("TituloVerificarEntradas", resourceCulture);
             }
         }
         

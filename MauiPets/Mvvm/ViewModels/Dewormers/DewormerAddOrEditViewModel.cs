@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using MauiPets.Core.Application.Interfaces.Services.Notifications;
 using MauiPets.Core.Application.ViewModels.Messages;
 using MauiPets.Mvvm.Views.Pets;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 
@@ -49,7 +50,7 @@ namespace MauiPets.Mvvm.ViewModels.Dewormers
             IsTypeExternal = dewormerType == "E";
 
             IsEditing = (bool)query[nameof(IsEditing)];
-            AddEditCaption = IsEditing ? "Editar desparasitante" : "Novo desparasitante";
+            AddEditCaption = IsEditing ? AppResources.EditMsg : AppResources.NewMsg;
 
             var selectedPet = await _petService.GetPetVMAsync(SelectedDewormer.IdPet);
 
@@ -105,7 +106,7 @@ namespace MauiPets.Mvvm.ViewModels.Dewormers
                 var errorMessages = _service.RegistoComErros(SelectedDewormer);
                 if (!string.IsNullOrEmpty(errorMessages))
                 {
-                    await Shell.Current.DisplayAlert("Verifique entradas, p.f.",
+                    await Shell.Current.DisplayAlert(AppResources.TituloVerificarEntradas,
                         $"{errorMessages}", "OK");
                     return;
                 }
@@ -127,7 +128,7 @@ namespace MauiPets.Mvvm.ViewModels.Dewormers
 
                     SelectedDewormer.DataProximaAplicacao = DateTime.Parse(SelectedDewormer.DataAplicacao).AddMonths(3).ToShortDateString();
 
-                    ShowToastMessage("Desparasitante criado com sucesso");
+                    ShowToastMessage(AppResources.RegistoCriadoSucesso);
 
                     await _notificationsSyncService.SyncDewormerNotificationsAsync();
                     WeakReferenceMessenger.Default.Send(new UpdateUnreadNotificationsMessage());
@@ -157,15 +158,14 @@ namespace MauiPets.Mvvm.ViewModels.Dewormers
                             {"PetVM", petVM}
                         });
 
-                    //IsBusy = false;
-                    ShowToastMessage("Desparasitante atualizado com sucesso");
+                    ShowToastMessage(AppResources.RegistoGravadoSucesso);
 
                 }
             }
             catch (Exception ex)
             {
                 IsBusy = false;
-                ShowToastMessage($"Error while creating Dewormer ({ex.Message})");
+                ShowToastMessage($"{AppResources.ErrorTitle} ({ex.Message})");
             }
         }
 

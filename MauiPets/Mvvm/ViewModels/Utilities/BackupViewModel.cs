@@ -133,7 +133,6 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
                         try
                         {
                             using var cmd = conn.CreateCommand();
-                            // quote identifier to avoid issues with reserved words / case
                             cmd.CommandText = $"SELECT COUNT(*) FROM \"{table}\"";
                             var result = cmd.ExecuteScalar();
                             long count = 0;
@@ -144,7 +143,6 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
                         }
                         catch (Exception tex)
                         {
-                            // mark with -1 to indicate error / table missing, but continue
                             info.TableCounts[table] = -1;
                             _logger.LogWarning(tex, "Error counting table {Table} in database {Path}", table, path);
                         }
@@ -168,7 +166,6 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
 
             var allKeys = tablesToCount;
 
-            // build diagnostic text to log / show if needed
             var diagLines = new List<string>();
 
             foreach (var key in allKeys)
@@ -176,7 +173,6 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
                 long currCount = CurrentDbTableCounts.FirstOrDefault(x => x.Key == key).Value;
                 long backupCount = BackupDbTableCounts.FirstOrDefault(x => x.Key == key).Value;
 
-                // if we used -1 sentinel for errors, include that in diagnostics
                 diagLines.Add($"{key}: current={(currCount == -1 ? "ERR" : currCount.ToString())}, backup={(backupCount == -1 ? "ERR" : backupCount.ToString())}");
 
                 if (currCount != backupCount)
@@ -186,7 +182,6 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
                 }
             }
 
-            // log diagnostic lines for quick inspection
             _logger.LogInformation("DB Comparison for current={DbCurrentPath} backup={DbBackupPath}:\n{Diag}",
                 CurrentDb?.Path ?? "(null)", BackupDb?.Path ?? "(null)", string.Join("\n", diagLines));
 
@@ -230,7 +225,6 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
                 }
                 catch (FormatException fe)
                 {
-                    // Log and fallback to localized header strings (no hardcoded Portuguese)
                     _logger.LogWarning(fe, "Resource format invalid for OneTable/MultipleTablesChangedFormat. Using header fallback.");
 
                     var header = count == 1
@@ -242,10 +236,8 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
             }
             else
             {
-                // if no differences, provide diagnostic hint
                 ResumoAlteracoes = AppResources.NoTableChanged;
 
-                // if any table had error marker (-1), append hint
                 if ((CurrentDbTableCounts.Any(kv => kv.Value == -1) || BackupDbTableCounts.Any(kv => kv.Value == -1)))
                 {
                     ResumoAlteracoes += "\n\n" + AppResources.ErrorCountingTablesHint;
@@ -269,12 +261,10 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
 
                 var destPath = GetBackupPath();
 
-                // Ensure directory exists
                 Directory.CreateDirectory(Path.GetDirectoryName(destPath) ?? FileSystem.Current.AppDataDirectory);
 
                 try
                 {
-                    // Use SQLite backup API for a consistent copy (handles WAL)
                     using var source = new SqliteConnection($"Data Source={dbPath}");
                     using var dest = new SqliteConnection($"Data Source={destPath}");
                     source.Open();
@@ -283,7 +273,6 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
                 }
                 catch (Exception ex)
                 {
-                    // fallback to file copy if backup API fails for any reason
                     _logger.LogWarning(ex, "SQLite backup API failed, falling back to File.Copy");
                     if (File.Exists(destPath))
                         File.Delete(destPath);
@@ -297,7 +286,7 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
                 SelectedBackupDate = File.GetLastWriteTime(destPath);
 
                 await Shell.Current.DisplayAlert(
-                    AppResources.BackupCreatedMessageFormat,
+                    AppResources.TituloBackup,
                     string.Format(CultureInfo.CurrentCulture, AppResources.BackupCreatedMessageFormat, destPath),
                     "OK");
 
@@ -359,7 +348,6 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
             IsBusy = true;
             try
             {
-                // Prefer the last chosen backup path; fall back to default GetBackupPath()
                 var backupPath = !string.IsNullOrWhiteSpace(SelectedBackupPath) && File.Exists(SelectedBackupPath)
                     ? SelectedBackupPath
                     : GetBackupPath();
@@ -380,7 +368,6 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
 
                 try
                 {
-                    // Use SQLite backup API to restore (source = backup, dest = app DB)
                     using var source = new SqliteConnection($"Data Source={backupPath}");
                     using var dest = new SqliteConnection($"Data Source={dbPath}");
                     source.Open();
@@ -389,12 +376,10 @@ namespace MauiPets.Mvvm.ViewModels.Utilities
                 }
                 catch (Exception ex)
                 {
-                    // fallback to File.Copy if necessary
                     _logger.LogWarning(ex, "SQLite restore via backup API failed, falling back to File.Copy");
                     File.Copy(backupPath, dbPath, overwrite: true);
                 }
 
-                // Refresh current DB info and comparisons
                 CurrentDb = GetDatabaseInfo(dbPath, tablesToCount);
                 CurrentDbTableCounts = new ObservableCollection<KeyValuePair<string, long>>(CurrentDb.TableCounts ?? new Dictionary<string, long>());
                 AtualizaTabelasAlteradas();

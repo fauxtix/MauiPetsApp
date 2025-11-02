@@ -519,7 +519,7 @@
   <data name="TituloTarefa_Concluida" xml:space="preserve">
     <value>Completed</value>
   </data>
-  <data name="TituloErrosValidacao" xml:space="preserve">
+  <data name="TituloErroValidacao" xml:space="preserve">
     <value>Validation errors</value>
   </data>
   <data name="TituloConfirmacao" xml:space="preserve">
@@ -571,7 +571,7 @@
     <value>Do you really want to create a database backup?</value>
   </data>
   <data name="BackupCreatedMessageFormat" xml:space="preserve">
-    <value>Backup created at: {0}"  (format: {0} = path)</value>
+    <value>Backup created at: {0}</value>
   </data>
   <data name="NoBackupTitle" xml:space="preserve">
     <value>No backup</value>
@@ -611,5 +611,50 @@
   </data>
   <data name="OneTableChangedHeader" xml:space="preserve">
     <value>1 table changed</value>
+  </data>
+  <data name="AgeCaption" xml:space="preserve">
+    <value>years)</value>
+  </data>
+  <data name="AgeCaptionInvalid" xml:space="preserve">
+    <value>(Invalid age)</value>
+  </data>
+  <data name="ErroLocalizacaoNaoDisponivel" xml:space="preserve">
+    <value>Location not available</value>
+  </data>
+  <data name="TituloVerificarEntradas" xml:space="preserve">
+    <value>Check entries, please</value>
+  </data>
+  <data name="TituloSelecionarPdf" xml:space="preserve">
+    <value>Select Pdf</value>
+  </data>
+  <data name="TituloIndiqueTitulo" xml:space="preserve">
+    <value>Enter a title for the document</value>
+  </data>
+  <data name="TituloFicheiroInexistente" xml:space="preserve">
+    <value>Temporary file does not exist. Please select again.</value>
+  </data>
+  <data name="TituloErroUpdate" xml:space="preserve">
+    <value>Update error</value>
+  </data>
+  <data name="TituloErroInsert" xml:space="preserve">
+    <value>Insert error</value>
+  </data>
+  <data name="TituloEntradasEmFalta" xml:space="preserve">
+    <value>Please fill in the required fields.</value>
+  </data>
+  <data name="TituloAssuntoEMail" xml:space="preserve">
+    <value>Message from the Maui Pets App / Logs</value>
+  </data>
+  <data name="TituloDataFuturo" xml:space="preserve">
+    <value>Date in the future</value>
+  </data>
+  <data name="TituloDescartarNotificacao" xml:space="preserve">
+    <value>Do you wish to dismiss this notification?</value>
+  </data>
+  <data name="TituloRegistosAssociados" xml:space="preserve">
+    <value>Operation not permitted. There are associated records. Please check.</value>
+  </data>
+  <data name="TituloErroDelete" xml:space="preserve">
+    <value>Error deleting record</value>
   </data>
 </root>

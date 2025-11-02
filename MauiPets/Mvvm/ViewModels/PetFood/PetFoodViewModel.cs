@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+
 
 namespace MauiPets.Mvvm.ViewModels.PetFood
 {
@@ -51,7 +53,7 @@ namespace MauiPets.Mvvm.ViewModels.PetFood
                     PetFoods.Add(petFood);
                 }
 
-                FilterText = "All Pet Food";
+                FilterText = AppResources.TituloTodos;
             }
             catch (Exception ex)
             {

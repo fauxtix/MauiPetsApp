@@ -4,6 +4,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Core.Application.ViewModels.Email;
 using MauiPets.Core.Application.ViewModels.Logs;
+using MauiPets.Resources.Languages;
+
 
 namespace MauiPets.Mvvm.ViewModels.Email
 {
@@ -31,7 +33,7 @@ namespace MauiPets.Mvvm.ViewModels.Email
                    string.IsNullOrEmpty(LogEmail.Body) ||
                    string.IsNullOrEmpty(LogEmail.TO))
                 {
-                    await Shell.Current.DisplayAlert("Erro", "Preencha os campos requeridos, p.f.", "Ok");
+                    await Shell.Current.DisplayAlert(AppResources.ErrorTitle, AppResources.TituloEntradasEmFalta, "Ok");
                     return;
                 }
 
@@ -47,17 +49,17 @@ namespace MauiPets.Mvvm.ViewModels.Email
 
                 await Microsoft.Maui.ApplicationModel.Communication.Email.Default.ComposeAsync(message);
 
-                var toast = Toast.Make($"Entrada no log de {SelectedLogEntry.TimeStamp} enviada com sucesso", ToastDuration.Short, 14);
+                var toast = Toast.Make($"Log {SelectedLogEntry.TimeStamp} {AppResources.SuccessInsert}", ToastDuration.Short, 14);
                 await toast.Show();
                 await Shell.Current.GoToAsync("..", true);
             }
             catch (FeatureNotSupportedException fbsEx)
             {
-                await Shell.Current.DisplayAlert("Erro", fbsEx.Message, "Ok");
+                await Shell.Current.DisplayAlert(AppResources.ErrorTitle, fbsEx.Message, "Ok");
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Erro", ex.Message, "Ok");
+                await Shell.Current.DisplayAlert(AppResources.ErrorTitle, ex.Message, "Ok");
             }
         }
 
@@ -73,7 +75,7 @@ namespace MauiPets.Mvvm.ViewModels.Email
             LogEmail = new()
             {
                 TO = "fauxtix.luix@hotmail.com",
-                Subject = "Mensagem da App Daisy Pets / Logs",
+                Subject = AppResources.TituloAssuntoEMail,
                 Body = SelectedLogEntry.Message
             };
         }

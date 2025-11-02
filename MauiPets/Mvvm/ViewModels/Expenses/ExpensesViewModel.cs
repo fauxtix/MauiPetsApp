@@ -8,6 +8,7 @@ using MauiPetsApp.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels.Despesas;
 using System.Collections.ObjectModel;
 
+
 namespace MauiPets.Mvvm.ViewModels.Expenses
 {
     public partial class ExpensesViewModel : ExpensesBaseViewModel
@@ -84,7 +85,7 @@ namespace MauiPets.Mvvm.ViewModels.Expenses
             if (expense?.Id > 0)
             {
                 IsEditing = true;
-                EditCaption = "Editar Despesa";
+                EditCaption = AppResources.EditMsg;
 
                 var response = await _service.GetByIdAsync(expense.Id);
                 if (response != null)
@@ -125,7 +126,7 @@ namespace MauiPets.Mvvm.ViewModels.Expenses
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await Shell.Current.DisplayAlert(AppResources.ErrorTitle, ex.Message, "OK");
             }
             finally
             {
@@ -145,7 +146,7 @@ namespace MauiPets.Mvvm.ViewModels.Expenses
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await Shell.Current.DisplayAlert(AppResources.ErrorTitle, ex.Message, "OK");
             }
             finally
             {
@@ -216,7 +217,7 @@ namespace MauiPets.Mvvm.ViewModels.Expenses
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await Shell.Current.DisplayAlert(AppResources.ErrorTitle, ex.Message, "OK");
             }
             finally
             {
@@ -236,7 +237,7 @@ namespace MauiPets.Mvvm.ViewModels.Expenses
 
         private void UpdatePageInfo()
         {
-            PageInfo = TotalPages > 0 ? $"Pagª {CurrentPage} de {TotalPages}" : "";
+            PageInfo = TotalPages > 0 ? $"{AppResources.TituloPagina_Abrev}{CurrentPage} {AppResources.Titulo_De} {TotalPages}" : "";
         }
 
         [RelayCommand]
@@ -264,7 +265,7 @@ namespace MauiPets.Mvvm.ViewModels.Expenses
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await Shell.Current.DisplayAlert(AppResources.ErrorTitle, ex.Message, "OK");
             }
             finally
             {
@@ -300,7 +301,7 @@ namespace MauiPets.Mvvm.ViewModels.Expenses
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await Shell.Current.DisplayAlert(AppResources.ErrorTitle, ex.Message, "OK");
             }
             finally
             {
@@ -320,13 +321,15 @@ namespace MauiPets.Mvvm.ViewModels.Expenses
         {
             if (expense == null) return;
 
-            bool okToDelete = await Shell.Current.DisplayAlert("Confirme, por favor", $"Apagar a despesa de {expense.DataMovimento}?", "Sim", "Não");
+            bool okToDelete = await Shell.Current.DisplayAlert(AppResources.TituloConfirmacao,
+                $"{AppResources.TituloConfirmacao_Apagar} {expense.DataMovimento}?",
+                AppResources.Sim, AppResources.Nao);
             if (okToDelete)
             {
                 IsBusy = true;
                 await _service.DeleteAsync(expense.Id);
                 await RefreshExpensesAsync();
-                await ShowToastMessage($"Despesa de {expense.DataMovimento} apagada com sucesso");
+                await ShowToastMessage(AppResources.RegistoAnuladoSucesso);
 
                 await GetTotalExpensesAsync();
 

@@ -2,10 +2,12 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Mvvm.Views.Expenses;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels.Despesas;
 using MauiPetsApp.Core.Application.ViewModels.LookupTables;
+
 
 namespace MauiPets.Mvvm.ViewModels.Expenses;
 
@@ -146,7 +148,7 @@ public partial class ExpenseAddOrEditViewModel : ExpensesBaseViewModel, IQueryAt
             var errorMessages = _service.RegistoComErros(DespesaDto);
             if (!string.IsNullOrEmpty(errorMessages))
             {
-                await Shell.Current.DisplayAlert("Verifique entradas, p.f.",
+                await Shell.Current.DisplayAlert(AppResources.TituloVerificarEntradas,
                     $"{errorMessages}", "OK");
                 return;
             }
@@ -173,7 +175,7 @@ public partial class ExpenseAddOrEditViewModel : ExpensesBaseViewModel, IQueryAt
                 }
                 catch (Exception ex)
                 {
-                    await Shell.Current.DisplayAlert("Erro ao inserir despesa", ex.Message, "OK");
+                    await Shell.Current.DisplayAlert(AppResources.TituloErroInsert, ex.Message, "OK");
                 }
                 finally
                 {
@@ -195,7 +197,7 @@ public partial class ExpenseAddOrEditViewModel : ExpensesBaseViewModel, IQueryAt
                 }
                 catch (Exception ex)
                 {
-                    await Shell.Current.DisplayAlert("Erro ao atualizar registo", ex.Message, "OK");
+                    await Shell.Current.DisplayAlert(AppResources.TituloErroUpdate, ex.Message, "OK");
                 }
                 finally
                 {
@@ -205,7 +207,7 @@ public partial class ExpenseAddOrEditViewModel : ExpensesBaseViewModel, IQueryAt
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Erro na transação", ex.Message, "OK");
+            await Shell.Current.DisplayAlert(AppResources.ErrorTitle, ex.Message, "OK");
         }
         finally
         {

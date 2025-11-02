@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using MauiPets.Resources.Languages;
+using System.Globalization;
+
 
 namespace MauiPets.Converters
 {
@@ -8,9 +10,9 @@ namespace MauiPets.Converters
         {
             if (values[0] is int idade)
             {
-                return $"({idade} anos)";
+                return $"({idade} {AppResources.AgeCaption})";
             }
-            return "(Idade inválida)";
+            return $"({AppResources.AgeCaptionInvalid})";
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

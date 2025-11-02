@@ -83,17 +83,17 @@ namespace MauiPets.Mvvm.ViewModels.Contacts
             {
                 var _contact = await _contactService.GetContactVMAsync(ContactoVM.Id);
                 string contactName = _contact.Nome;
-                bool okToDelete = await Shell.Current.DisplayAlert("Confirme, por favor", $"Apaga o contacto {contactName}?", "Sim", "Não");
+                bool okToDelete = await Shell.Current.DisplayAlert(AppResources.TituloConfirmacao, $"{AppResources.TituloConfirmacao_Apagar} {contactName}?", AppResources.Sim, AppResources.Nao);
                 if (okToDelete)
                 {
                     await _contactService.DeleteAsync(_contact.Id);
-                    await ShowToastMessage($"Contacto {contactName} apagado com sucesso");
+                    await ShowToastMessage(AppResources.SuccessDelete);
                     await Shell.Current.GoToAsync("///.///ContactsPage", true);
                 }
             }
             catch (Exception ex)
             {
-                await ShowToastMessage($"Erro ao apagar Contacto! ({ex.Message})");
+                await ShowToastMessage($"{AppResources.ErrorTitle} ({ex.Message})");
                 await Shell.Current.GoToAsync($"{nameof(ContactsPage)}", true);
             }
         }
@@ -110,7 +110,7 @@ namespace MauiPets.Mvvm.ViewModels.Contacts
             else
             {
                 // Mostra um alerta se não houver coordenadas
-                await App.Current.MainPage.DisplayAlert("Erro", "Localização não disponível.", "OK");
+                await App.Current.MainPage.DisplayAlert(AppResources.ErrorTitle, AppResources.ErroLocalizacaoNaoDisponivel, "OK");
             }
         }
 

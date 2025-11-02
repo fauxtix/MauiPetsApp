@@ -3,9 +3,11 @@ using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Mvvm.Views.Pets;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using Microsoft.Extensions.Logging;
+
 
 namespace MauiPets.Mvvm.ViewModels.PetFood
 {
@@ -46,7 +48,7 @@ namespace MauiPets.Mvvm.ViewModels.PetFood
                 SelectedPetFood = query[nameof(SelectedPetFood)] as RacaoDto;
                 IsEditing = (bool)query[nameof(IsEditing)];
 
-                EditCaption = IsEditing ? "Editar ração" : "Nova ração";
+                EditCaption = IsEditing ? AppResources.EditMsg : AppResources.NewMsg;
                 var selectedPet = await _petService.GetPetVMAsync(SelectedPetFood.IdPet);
 
                 PetPhoto = selectedPet.Foto;
@@ -100,7 +102,7 @@ namespace MauiPets.Mvvm.ViewModels.PetFood
                 var errorMessages = _petFoodService.RegistoComErros(SelectedPetFood);
                 if (!string.IsNullOrEmpty(errorMessages))
                 {
-                    await Shell.Current.DisplayAlert("Verifique entradas, p.f.",
+                    await Shell.Current.DisplayAlert(AppResources.TituloVerificarEntradas,
                         $"{errorMessages}", "OK");
                     return;
                 }
@@ -110,7 +112,7 @@ namespace MauiPets.Mvvm.ViewModels.PetFood
                     var insertedId = await _petFoodService.InsertAsync(SelectedPetFood);
                     if (insertedId == -1)
                     {
-                        await Shell.Current.DisplayAlert("Error while updating",
+                        await Shell.Current.DisplayAlert("Error while updating pet food",
                             $"Please contact administrator..", "OK");
                         return;
                     }
@@ -118,7 +120,7 @@ namespace MauiPets.Mvvm.ViewModels.PetFood
                     var _petId = SelectedPetFood.IdPet;
                     var petVM = await _petService.GetPetVMAsync(_petId);
 
-                    await ShowToastMessageAsync("Ração criada com sucesso");
+                    await ShowToastMessageAsync(AppResources.RegistoCriadoSucesso);
 
                     await Shell.Current.GoToAsync($"{nameof(PetDetailPage)}", true,
                         new Dictionary<string, object>
@@ -140,7 +142,7 @@ namespace MauiPets.Mvvm.ViewModels.PetFood
                             {"PetVM", petVM}
                         });
 
-                    await ShowToastMessageAsync("Registo atualizado com sucesso");
+                    await ShowToastMessageAsync(AppResources.SuccessUpdate);
                 }
             }
             catch (Exception ex)

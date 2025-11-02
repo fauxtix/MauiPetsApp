@@ -5,6 +5,7 @@ using MauiPets.Core.Application.Interfaces.Repositories.Notifications;
 using MauiPets.Core.Application.ViewModels.Messages;
 using MauiPets.Core.Domain.Notifications;
 using MauiPets.Mvvm.Views.Pets;
+using MauiPets.Resources.Languages;
 using System.Collections.ObjectModel;
 
 namespace MauiPets.Mvvm.ViewModels.Notifications
@@ -65,7 +66,7 @@ namespace MauiPets.Mvvm.ViewModels.Notifications
 
             if (notification.ScheduledFor.Date > DateTime.Now.Date)
             {
-                bool ok = await Shell.Current.DisplayAlert("Confirme, por favor", "Data no futuro", "Ok", "Cancelar");
+                bool ok = await Shell.Current.DisplayAlert(AppResources.TituloConfirmacao, AppResources.TituloDataFuturo, "Ok", AppResources.Cancelar);
                 if (!ok) return;
             }
 
@@ -82,13 +83,13 @@ namespace MauiPets.Mvvm.ViewModels.Notifications
             // Always perform soft-discard. do not permanently delete.
             string message = notification.IsRead
                 ? "Confirma que quer descartar esta notificação?"
-                : "Deseja descartar esta notificação?";
+                : AppResources.TituloDescartarNotificacao;
 
             bool okToDiscard = await Shell.Current.DisplayAlert(
-                "Confirmar",
+               AppResources.TituloConfirmacao,
                 message,
                 "Ok",
-                "Cancelar");
+                AppResources.Cancelar);
 
             if (!okToDiscard) return;
 

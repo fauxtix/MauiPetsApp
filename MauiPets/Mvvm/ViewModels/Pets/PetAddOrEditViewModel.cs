@@ -4,11 +4,13 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Mvvm.Models;
 using MauiPets.Mvvm.Views.Pets;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using MauiPetsApp.Core.Application.ViewModels.LookupTables;
 using Serilog;
 using System.Collections.ObjectModel;
+
 
 namespace MauiPets.Mvvm.ViewModels.Pets;
 
@@ -181,7 +183,7 @@ public partial class PetAddOrEditViewModel : BaseViewModel, IQueryAttributable
             var errorMessages = _petService.RegistoComErros(PetDto);
             if (!string.IsNullOrEmpty(errorMessages))
             {
-                await Shell.Current.DisplayAlert("Verifique entradas, p.f.",
+                await Shell.Current.DisplayAlert(AppResources.TituloVerificarEntradas,
                     $"{errorMessages}", "OK");
                 return;
             }
@@ -207,7 +209,7 @@ public partial class PetAddOrEditViewModel : BaseViewModel, IQueryAttributable
 
                 var petVM = await _petService.GetPetVMAsync(insertedId);
 
-                await ShowToastMessage("Registo criado com sucesso");
+                await ShowToastMessage(AppResources.SuccessInsert);
 
                 await Shell.Current.GoToAsync($"{nameof(PetDetailPage)}", true,
                     new Dictionary<string, object>
@@ -221,7 +223,7 @@ public partial class PetAddOrEditViewModel : BaseViewModel, IQueryAttributable
 
                 await _petService.UpdateAsync(PetDto.Id, PetDto);
                 var petVM = await _petService.GetPetVMAsync(PetDto.Id);
-                await ShowToastMessage("Registo atualizado com sucesso");
+                await ShowToastMessage(AppResources.SuccessUpdate);
                 await Shell.Current.GoToAsync($"{nameof(PetDetailPage)}", true,
                     new Dictionary<string, object>
                     {
@@ -240,17 +242,17 @@ public partial class PetAddOrEditViewModel : BaseViewModel, IQueryAttributable
     public async Task DeletePet()
     {
         var petName = PetDto.Nome;
-        bool okToDelete = await Shell.Current.DisplayAlert("Confirme, por favor", $"Apaga o registo de {petName}?", "Sim", "Não");
+        bool okToDelete = await Shell.Current.DisplayAlert(AppResources.TituloConfirmacao, $"{AppResources.TituloConfirmacao_Apagar} {petName}?", AppResources.Sim, AppResources.Nao);
         if (okToDelete)
         {
             var response = await _petService.DeleteAsync(PetDto.Id);
             if (!okToDelete)
             {
-                await Shell.Current.DisplayAlert($"Apagar registo ({PetDto.Nome})", "Operação não permitida. Há registos associados. Verifique, p.f.", "Ok");
+                await Shell.Current.DisplayAlert($"{AppResources.DeleteMsg} ({PetDto.Nome})", AppResources.TituloRegistosAssociados, "Ok");
             }
             else
             {
-                await ShowToastMessage("Registo removido com sucesso");
+                await ShowToastMessage(AppResources.SuccessDelete);
             }
         }
     }

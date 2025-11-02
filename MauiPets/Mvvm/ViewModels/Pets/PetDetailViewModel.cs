@@ -10,10 +10,12 @@ using MauiPets.Mvvm.Views.PetFood;
 using MauiPets.Mvvm.Views.Pets;
 using MauiPets.Mvvm.Views.Vaccines;
 using MauiPets.Mvvm.Views.VetAppointments;
+using MauiPets.Resources.Languages;
 using MauiPets.Services;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using System.Collections.ObjectModel;
+
 
 namespace MauiPets.Mvvm.ViewModels.Pets;
 
@@ -88,7 +90,7 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
         IsBusy = true;
 
         IsEditing = true;
-        EditCaption = "Edição de registo";
+        EditCaption = AppResources.EditMsg;
 
         try
         {
@@ -105,7 +107,7 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
         }
         catch (Exception ex)
         {
-            await ShowToastMessage($"Erro ao editar Pet ({ex.Message})");
+            await ShowToastMessage($"{AppResources.ErrorTitle} ({ex.Message})");
         }
         finally
         {
@@ -412,24 +414,25 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
         {
             var _petRecord = await _petService.GetPetVMAsync(PetVM.Id);
             string petName = _petRecord.Nome;
-            bool deletionConfirmed = await Shell.Current.DisplayAlert("Confirme, por favor", $"Apaga o Pet {petName}?", "Sim", "Não");
+            bool deletionConfirmed = await Shell.Current.DisplayAlert(AppResources.TituloConfirmacao, $"{AppResources.DeleteMsg} Pet {petName}?",
+                AppResources.Sim, AppResources.Nao);
             if (deletionConfirmed)
             {
                 var okToDelete = await _petService.DeleteAsync(_petRecord.Id);
                 if (okToDelete)
                 {
-                    await ShowToastMessage($"Pet {petName} apagado com sucesso");
+                    await ShowToastMessage($"{AppResources.DeleteMsg} {petName} {AppResources.SuccessDelete}");
                     await Shell.Current.GoToAsync($"//{nameof(PetsPage)}", true);
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("Apagar Pet", $"{petName} não pode ser apagado, uma vez que tem histórico associado.", "Ok");
+                    await Shell.Current.DisplayAlert(AppResources.DeleteMsg, $"{petName} {AppResources.TituloErroDelete}", "OK");
                 }
             }
         }
         catch (Exception ex)
         {
-            await ShowToastMessage($"Erro ao apagar Pet! ({ex.Message})");
+            await ShowToastMessage($"{AppResources.ErrorTitle} ({ex.Message})");
             await Shell.Current.GoToAsync($"{nameof(PetsPage)}", true);
         }
     }
@@ -443,12 +446,12 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
         }
         try
         {
-            bool deletionConfirmed = await Shell.Current.DisplayAlert("Confirme, por favor", $"Apaga a vacina de {vaccine.DataToma} ({vaccine.Marca})?", "Sim", "Não");
+            bool deletionConfirmed = await Shell.Current.DisplayAlert(AppResources.TituloConfirmacao, $"{AppResources.DeleteMsg} {vaccine.DataToma} ({vaccine.Marca})?", "Sim", "Não");
             if (deletionConfirmed)
             {
                 await _petVaccinesService.DeleteAsync(vaccine.Id);
 
-                await ShowToastMessage($"Vacina do dia  {vaccine.DataToma} apagada com sucesso");
+                await ShowToastMessage(AppResources.SuccessDelete);
 
                 await _notificationsSyncService.DeleteNotificationsForRelatedItemAsync(vaccine.Id, "vaccine");
                 WeakReferenceMessenger.Default.Send(new UpdateUnreadNotificationsMessage());
@@ -458,7 +461,7 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
         }
         catch (Exception ex)
         {
-            await ShowToastMessage($"Erro ao apagar Vacina ({ex.Message})");
+            await ShowToastMessage($"{AppResources.ErrorTitle} ({ex.Message})");
         }
     }
 

@@ -3,6 +3,7 @@ using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Mvvm.Views.Contacts;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using MauiPetsApp.Core.Application.ViewModels.LookupTables;
@@ -90,7 +91,7 @@ public partial class ContactAddOrEditViewModel : BaseViewModel, IQueryAttributab
 
                 var contactoVM = await _contactsService.GetContactVMAsync(insertedId);
 
-                await ShowToastMessage("Contacto criado com sucesso");
+                await ShowToastMessage(AppResources.RegistoCriadoSucesso);
 
                 await Shell.Current.GoToAsync($"{nameof(ContactDetailPage)}", true,
                     new Dictionary<string, object>
@@ -113,7 +114,7 @@ public partial class ContactAddOrEditViewModel : BaseViewModel, IQueryAttributab
                         {"ContactoVM", contactoVM }
                     });
 
-                await ShowToastMessage("Contacto atualizado com sucesso");
+                await ShowToastMessage(AppResources.RegistoGravadoSucesso);
 
             }
         }
@@ -203,11 +204,9 @@ public partial class ContactAddOrEditViewModel : BaseViewModel, IQueryAttributab
         }
         catch (Exception ex)
         {
-            // Trate exceções, como falha ao acessar o serviço de geocodificação
             Console.WriteLine($"Erro ao obter coordenadas: {ex.Message}");
         }
 
-        // Retorna 0,0 caso não seja possível obter a localização
         return (0.0, 0.0);
     }
 }
