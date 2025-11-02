@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using MauiPets.Extensions;
 using MauiPets.Mvvm.Views.Todo;
 using MauiPets.Resources.Languages;
+using MauiPetsApp.Core.Application.Formatting;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.Interfaces.Services.TodoManager;
 using MauiPetsApp.Core.Application.TodoManager;
@@ -117,8 +118,13 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 IsBusy = true;
                 await Task.Delay(200);
 
+                // Use tolerant DataFormat.DateParse to avoid culture-dependent exceptions
                 var todos = (await _service.GetAllVMAsync())
-                    .OrderByDescending(c => DateTime.Parse(c.StartDate.ToString()))
+                    .OrderByDescending(c =>
+                    {
+                        var dt = DataFormat.DateParse(c.StartDate);
+                        return dt == DateTime.MinValue ? DateTime.MinValue : dt;
+                    })
                     .ToList();
 
                 FullTodos = todos;
@@ -330,6 +336,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 await Shell.Current.DisplayAlert("Error while 'FilterPendingAsync", ex.Message, "Ok");
             }
         }
+
         [RelayCommand]
         private async Task FilterThisWeekAsync()
         {
@@ -340,9 +347,10 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 var endOfWeek = startOfWeek.AddWeeks(1).AddDays(-1);
 
                 var thisWeekTodos = FullTodos.Where(t =>
-                    DateTime.TryParse(t.StartDate, out var startDate) &&
-                    startDate >= startOfWeek && startDate <= endOfWeek
-                ).ToList();
+                {
+                    var sd = DataFormat.DateParse(t.StartDate);
+                    return sd != DateTime.MinValue && sd >= startOfWeek && sd <= endOfWeek;
+                }).ToList();
 
                 if (!thisWeekTodos.Any())
                 {
@@ -370,6 +378,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 await Shell.Current.DisplayAlert("Error while 'FilterThisWeekAsync", ex.Message, "Ok");
             }
         }
+
         [RelayCommand]
         private async Task FilterNextWeekAsync()
         {
@@ -380,9 +389,10 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 var endOfWeek = startOfWeek.AddWeeks(1).AddDays(-1);
 
                 var nextWeekTodos = FullTodos.Where(t =>
-                    DateTime.TryParse(t.StartDate, out var startDate) &&
-                    startDate >= startOfWeek && startDate <= endOfWeek
-                ).ToList();
+                {
+                    var sd = DataFormat.DateParse(t.StartDate);
+                    return sd != DateTime.MinValue && sd >= startOfWeek && sd <= endOfWeek;
+                }).ToList();
 
                 if (!nextWeekTodos.Any())
                 {
@@ -410,6 +420,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 await Shell.Current.DisplayAlert("Error while 'FilterNextWeekAsync", ex.Message, "Ok");
             }
         }
+
         [RelayCommand]
         private async Task FilterThisMonthAsync()
         {
@@ -420,9 +431,10 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 var endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
 
                 var thisMonthTodos = FullTodos.Where(t =>
-                    DateTime.TryParse(t.StartDate, out var startDate) &&
-                    startDate >= startOfMonth && startDate <= endOfMonth
-                ).ToList();
+                {
+                    var sd = DataFormat.DateParse(t.StartDate);
+                    return sd != DateTime.MinValue && sd >= startOfMonth && sd <= endOfMonth;
+                }).ToList();
 
                 if (!thisMonthTodos.Any())
                 {
@@ -450,6 +462,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 await Shell.Current.DisplayAlert("Error while 'FilterThisMonthAsync", ex.Message, "Ok");
             }
         }
+
         [RelayCommand]
         private async Task FilterNextMonthAsync()
         {
@@ -460,9 +473,10 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 var endOfNextMonth = startOfNextMonth.AddMonths(1).AddDays(-1);
 
                 var nextMonthTodos = FullTodos.Where(t =>
-                    DateTime.TryParse(t.StartDate, out var startDate) &&
-                    startDate >= startOfNextMonth && startDate <= endOfNextMonth
-                ).ToList();
+                {
+                    var sd = DataFormat.DateParse(t.StartDate);
+                    return sd != DateTime.MinValue && sd >= startOfNextMonth && sd <= endOfNextMonth;
+                }).ToList();
 
                 if (!nextMonthTodos.Any())
                 {

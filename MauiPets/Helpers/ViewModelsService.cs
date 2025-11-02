@@ -26,5 +26,4 @@ public static class ViewModelsService
 
         await toast.Show(cancellationTokenSource.Token);
     }
-
 }

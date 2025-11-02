@@ -44,18 +44,31 @@
                     <Frame Padding="4" Margin="5" BackgroundColor="#fff" CornerRadius="18" 
                            HasShadow="True" BorderColor="#C5E1A5">
                         <Grid RowDefinitions="Auto,Auto, Auto" ColumnDefinitions="*,Auto">
-                            <Image Grid.Row="0" Grid.Column="0"
-                                   Source="{Binding PhotoPath}"
-                                   Aspect="AspectFill"
-                                   HeightRequest="80"
-                                   WidthRequest="80"
-                                   Margin="0,0,10,0">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                        Command="{Binding Source={x:Reference GalleryPage}, Path=BindingContext.ShowPhotoCommand}"
-                                        CommandParameter="{Binding .}" />
-                                </Image.GestureRecognizers>
-                            </Image>
+                            <Frame Grid.Row="0" Grid.Column="0"
+                                   WidthRequest="120"
+                                   HeightRequest="120"
+                                   Padding="0"
+                                   CornerRadius="60" 
+                                   HasShadow="False"
+                                   BackgroundColor="Transparent"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Center">
+                                <Frame.Clip>
+                                    <RoundRectangleGeometry CornerRadius="60" Rect="0,0,120,120" />
+                                </Frame.Clip>
+
+                                <Image Source="{Binding PhotoPath}"
+                                       Aspect="AspectFill"
+                                       WidthRequest="120"
+                                       HeightRequest="120">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={x:Reference GalleryPage}, Path=BindingContext.ShowPhotoCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Frame>
+
                             <ImageButton Grid.Row="0" Grid.Column="1" Padding="2"
                                          Source="icon_delete.svg"
                                          Command="{Binding Source={x:Reference GalleryPage}, Path=BindingContext.DeletePhotoCommand}"

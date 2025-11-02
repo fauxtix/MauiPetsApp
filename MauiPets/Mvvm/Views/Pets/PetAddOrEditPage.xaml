@@ -57,11 +57,12 @@
                         <HorizontalStackLayout VerticalOptions="Center"
                                 Spacing="8">
                             <Image Source="tasks.png"
-                                        WidthRequest="24"  
-                                        HeightRequest="24"
-                                        VerticalOptions="Center"
-                                        HorizontalOptions="Start"
-                                        Margin="5,0,8,0"/>
+                                   WidthRequest="24"                                     
+                                   Aspect="AspectFit"
+                                   HeightRequest="24"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Start"
+                                   Margin="5,0,8,0"/>
                             <Label VerticalTextAlignment="Center"
                                     HorizontalTextAlignment="Center"
                                     FontSize="16"
@@ -73,24 +74,23 @@
                     </Border>
                 </VerticalStackLayout>
 
-                <Frame WidthRequest="220" CornerRadius="15" HeightRequest="120" Margin="0, 10, 0,0" HasShadow="True" 
-                       IsClippedToBounds="True"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center">
-
-                    <Image x:Name="PetPhoto"
-                           Source="{Binding PetPhoto, Mode=TwoWay}"
-                           Margin="0"
-                           WidthRequest="150"
-                           HeightRequest="150"
-                           VerticalOptions="Center">
-                        <Image.Shadow>
-                            <Shadow Brush="Black"
-                                    Offset="15,15"
-                                    Radius="20"
-                                    Opacity="0.9" />
-                        </Image.Shadow>
-                    </Image>
+                <Frame WidthRequest="180"
+                   HeightRequest="180"
+                   CornerRadius="90"
+                   Padding="0"
+                   HasShadow="False"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center">
+                    <Frame.Shadow>
+                        <Shadow Brush="Black" Offset="5,5" Radius="10" Opacity="0.35" />
+                    </Frame.Shadow>
+                    <Frame.Clip>
+                        <RoundRectangleGeometry CornerRadius="15" Rect="0,0,180,180" />
+                    </Frame.Clip>
+                    <Image Source="{Binding PetPhoto, Mode=TwoWay}"
+                           Aspect="AspectFill"
+                           WidthRequest="180"
+                           HeightRequest="180" />
                 </Frame>
                 <Button Margin="10, 10, 10, 5" CornerRadius="20" 
                         HeightRequest="50" WidthRequest="150" 

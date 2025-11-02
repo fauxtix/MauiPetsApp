@@ -21,14 +21,30 @@
     <ScrollView>
         <VerticalStackLayout>
             <Grid RowDefinitions="Auto,Auto,*,Auto" ColumnDefinitions="0.70*,0.30*">
-                <Border Grid.Row="0" Grid.ColumnSpan="2"
-                        StrokeShape="RoundRectangle 22,22,22,22" 
-                        StrokeThickness="1" HeightRequest="90"
-                        HorizontalOptions="Center">
-                    <Image Margin="5,5"
-                           WidthRequest="80" HeightRequest="80"
-                           Aspect="AspectFill"
-                           Source="contacts.png"/>
+                <Border Grid.Row="0"
+                        Grid.ColumnSpan="2"
+                        WidthRequest="90"
+                        HeightRequest="90"
+                        Padding="2"
+                        Stroke="#C5C5C5"
+                        StrokeThickness="2"
+                        StrokeShape="RoundRectangle 45"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                    <Frame Padding="0"
+                           CornerRadius="43"
+                           HasShadow="False"
+                           BackgroundColor="Transparent">
+                        <Frame.Clip>
+                            <RoundRectangleGeometry CornerRadius="43" Rect="0,0,86,86" />
+                        </Frame.Clip>
+
+                        <Image Source="contacts.png"
+                               Aspect="AspectFill"
+                               WidthRequest="86"
+                               HeightRequest="86" />
+                    </Frame>
                 </Border>
 
                 <SearchBar Grid.Row="1" Grid.Column="0"

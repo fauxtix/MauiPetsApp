@@ -49,4 +49,11 @@ public partial class GroupedExpensesViewModel : ObservableObject
 
         TotalGeralDespesas = groupedExpenses.Sum(g => g.SubTotal);
     }
+
+    [RelayCommand]
+    async Task GoBack()
+    {
+        await Shell.Current.GoToAsync("..");
+    }
+
 }

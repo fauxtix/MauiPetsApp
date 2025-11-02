@@ -5,7 +5,26 @@
              xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
              x:Class="MauiPets.Mvvm.Views.Documents.DocumentsPage"
              Title="{resx:Localize Key=TituloDocumentos}">
+
     <StackLayout Padding="12" Spacing="10">
+        <Frame WidthRequest="90"
+               HeightRequest="90"
+               Padding="0"
+               CornerRadius="45"
+               BackgroundColor="Transparent"
+               BorderColor="LightGray"
+               HorizontalOptions="Center"
+               VerticalOptions="Start">
+            <Frame.Clip>
+                <RoundRectangleGeometry CornerRadius="45" Rect="0,0,90,90" />
+            </Frame.Clip>
+
+            <Image Source="{Binding SelectedPet.PhotoPath, FallbackValue=documents.png}"
+                   Aspect="AspectFill"
+                   WidthRequest="90"
+                   HeightRequest="90" />
+        </Frame>
+
         <Label Text="{resx:Localize Key=TituloEscolhaPet}" FontAttributes="Bold"/>
         <Picker ItemsSource="{Binding Pets}" ItemDisplayBinding="{Binding Nome}" SelectedItem="{Binding SelectedPet}" />
         <Label Text="{resx:Localize Key=TituloDocumentos}" FontAttributes="Bold" Margin="0,8,0,0"/>

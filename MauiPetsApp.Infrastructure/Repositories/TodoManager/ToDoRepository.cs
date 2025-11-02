@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using MauiPetsApp.Core.Application.Formatting;
 using MauiPetsApp.Core.Application.Interfaces.DapperContext;
 using MauiPetsApp.Core.Application.Interfaces.Repositories.TodoManager;
 using MauiPetsApp.Core.Application.TodoManager;
@@ -18,6 +19,31 @@ namespace MauiPetsApp.Infrastructure.TodoManager
             _context = context;
         }
 
+        // Mirror vaccines approach: try to parse incoming date and store a short date string
+        string FormatToShortDateOrKeep(string? date)
+        {
+            if (string.IsNullOrWhiteSpace(date))
+                return string.Empty;
+
+            var s = date.Trim();
+
+            // Use the tolerant DataFormat helper (tries multiple formats)
+            var dt = DataFormat.DateParse(s);
+            if (dt != DateTime.MinValue)
+                return dt.ToShortDateString();
+
+            // As a last attempt, try invariant/en-US/current explicit parses
+            if (DateTime.TryParse(s, CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal | DateTimeStyles.AllowWhiteSpaces, out dt)
+                || DateTime.TryParse(s, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal | DateTimeStyles.AllowWhiteSpaces, out dt)
+                || DateTime.TryParse(s, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal | DateTimeStyles.AllowWhiteSpaces, out dt))
+            {
+                return dt.ToShortDateString();
+            }
+
+            // Unable to parse — keep the trimmed original to avoid data loss
+            return s;
+        }
+
         public async Task<int> InsertAsync(ToDo toDo)
         {
             StringBuilder sb = new StringBuilder();
@@ -33,7 +59,16 @@ namespace MauiPetsApp.Infrastructure.TodoManager
             {
                 using (var connection = _context.CreateConnection())
                 {
-                    var result = await connection.QueryFirstAsync<int>(sb.ToString(), param: toDo);
+                    var param = new
+                    {
+                        Description = toDo.Description,
+                        StartDate = FormatToShortDateOrKeep(toDo.StartDate),
+                        EndDate = FormatToShortDateOrKeep(toDo.EndDate),
+                        Completed = toDo.Completed,
+                        CategoryId = toDo.CategoryId
+                    };
+
+                    var result = await connection.QueryFirstAsync<int>(sb.ToString(), param: param);
                     return result;
                 }
 
@@ -51,8 +86,8 @@ namespace MauiPetsApp.Infrastructure.TodoManager
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", toDo.Id);
             dynamicParameters.Add("@Description", toDo.Description);
-            dynamicParameters.Add("@StartDate", toDo.StartDate);
-            dynamicParameters.Add("@EndDate", toDo.EndDate);
+            dynamicParameters.Add("@StartDate", FormatToShortDateOrKeep(toDo.StartDate));
+            dynamicParameters.Add("@EndDate", FormatToShortDateOrKeep(toDo.EndDate));
             dynamicParameters.Add("@Completed", toDo.Completed);
             dynamicParameters.Add("@CategoryId", toDo.CategoryId);
 

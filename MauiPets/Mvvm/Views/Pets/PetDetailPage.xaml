@@ -278,7 +278,7 @@
                                                             <Grid ColumnDefinitions=".3*, .4*, .3*" Margin="0,4">
                                                                 <Label FontAttributes="Bold" FontSize="11"  Grid.Column="0"  Text="{Binding DataTomaFormatada}" HorizontalOptions="Center"/>
                                                                 <Label FontAttributes="Bold" FontSize="11" LineBreakMode="WordWrap" MaxLines="3" Grid.Column="1" Text="{Binding NomeTipoVacina}"/>
-                                                                <Label FontAttributes="Bold" FontSize="11" Grid.Column="2" Text="{Binding DataProximaToma, StringFormat='{0:dd/MM/yyyy}' }" 
+                                                                <Label FontAttributes="Bold" FontSize="11" Grid.Column="2" Text="{Binding DataTomaFormatada }" 
                                                                        TextColor="{Binding DataProximaToma, Converter={StaticResource nextDoseDateConverter}}" 
                                                                        HorizontalOptions="End" Margin="0,0,12,0"/>
                                                             </Grid>

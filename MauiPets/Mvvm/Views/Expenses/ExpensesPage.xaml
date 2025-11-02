@@ -18,7 +18,7 @@
 
 
         <Style x:Key="ExpensesFilterButtonStyle" TargetType="Button">
-            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontSize" Value="13" />
             <Setter Property="FontFamily" Value="PoppinsSemiBold" />
             <Setter Property="TextColor" Value="White" />
             <Setter Property="CornerRadius" Value="30" />
