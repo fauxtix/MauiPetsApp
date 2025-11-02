@@ -1,12 +1,11 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Mvvm.Views.Expenses;
 using MauiPets.Resources.Languages;
 using MauiPetsApp.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels.Despesas;
 using System.Collections.ObjectModel;
+using static MauiPets.Helpers.ViewModelsService;
 
 
 namespace MauiPets.Mvvm.ViewModels.Expenses
@@ -352,11 +351,6 @@ namespace MauiPets.Mvvm.ViewModels.Expenses
         private async Task NavigateToGroupedExpensesAsync()
         {
             await Shell.Current.GoToAsync(nameof(GroupedExpensesPage));
-        }
-        private async Task ShowToastMessage(string text)
-        {
-            var toast = Toast.Make(text, ToastDuration.Short, 14);
-            await toast.Show();
         }
     }
 }

@@ -657,4 +657,19 @@
   <data name="TituloErroDelete" xml:space="preserve">
     <value>Erro ao apagar registo</value>
   </data>
+  <data name="TituloErroPartilha" xml:space="preserve">
+    <value>Erro na partilha de Pdf</value>
+  </data>
+  <data name="TituloFichaDe" xml:space="preserve">
+    <value>Ficha de</value>
+  </data>
+  <data name="TituloConfiracoesPrincipais" xml:space="preserve">
+    <value>Configurações principais</value>
+  </data>
+  <data name="TituloTodasVacinas" xml:space="preserve">
+    <value>Todas as vacinas</value>
+  </data>
+  <data name="TituloTodasConsultas" xml:space="preserve">
+    <value>Todas as consultas</value>
+  </data>
 </root>

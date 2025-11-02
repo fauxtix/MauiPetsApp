@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
-using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Mvvm.Views.Settings;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels.LookupTables;
+using static MauiPets.Helpers.ViewModelsService;
+
 
 namespace MauiPets.Mvvm.ViewModels.Settings;
 
@@ -63,7 +64,7 @@ public partial class SettingsAddOrEditViewModel : SettingsBaseViewModel, IQueryA
                     }
 
                     await RefreshLookupDataAsync();
-                    ShowToastMessage("Registo criado com sucesso");
+                    await ShowToastMessage(AppResources.SuccessInsert);
 
                     await Shell.Current.GoToAsync($"{nameof(SettingsManagementPage)}", true,
                         new Dictionary<string, object>
@@ -75,7 +76,7 @@ public partial class SettingsAddOrEditViewModel : SettingsBaseViewModel, IQueryA
                 }
                 catch (Exception ex)
                 {
-                    ShowToastMessage($"Erro ao inserir registo {ex.Message}");
+                    await ShowToastMessage($"{AppResources.ErrorTitle}  {ex.Message}");
                 }
             }
             else
@@ -85,7 +86,7 @@ public partial class SettingsAddOrEditViewModel : SettingsBaseViewModel, IQueryA
                     LookupRecordSelected.Tabela = TableName;
                     await _lookupTablesService.ActualizaDetalhes(LookupRecordSelected);
                     await RefreshLookupDataAsync();
-                    ShowToastMessage("Registo atualizado com sucesso");
+                    await ShowToastMessage(AppResources.SuccessUpdate);
 
                     await Shell.Current.GoToAsync($"{nameof(SettingsManagementPage)}", true,
                         new Dictionary<string, object>
@@ -97,13 +98,13 @@ public partial class SettingsAddOrEditViewModel : SettingsBaseViewModel, IQueryA
                 }
                 catch (Exception ex)
                 {
-                    ShowToastMessage($"Erro ao atualizar registo {ex.Message}");
+                    await ShowToastMessage($"{AppResources.ErrorTitle} {ex.Message}");
                 }
             }
         }
         catch (Exception ex)
         {
-            ShowToastMessage($"Erro na transação {ex.Message}");
+            await ShowToastMessage($"{AppResources.ErrorTitle} {ex.Message}");
         }
     }
 
@@ -117,17 +118,6 @@ public partial class SettingsAddOrEditViewModel : SettingsBaseViewModel, IQueryA
                     {"TableName", TableName},
                     {"Title", Title},
             });
-    }
-
-    private async void ShowToastMessage(string text)
-    {
-        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-        ToastDuration duration = ToastDuration.Short;
-        double fontSize = 14;
-
-        var toast = Toast.Make(text, duration, fontSize);
-
-        await toast.Show(cancellationTokenSource.Token);
     }
 
     private async Task RefreshLookupDataAsync()

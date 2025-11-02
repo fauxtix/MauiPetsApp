@@ -1,13 +1,13 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using MauiPets.Core.Application.Interfaces.Services.Notifications;
 using MauiPets.Core.Application.ViewModels.Messages;
 using MauiPets.Mvvm.Views.Pets;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
+using static MauiPets.Helpers.ViewModelsService;
 
 namespace MauiPets.Mvvm.ViewModels.VetAppointments
 {
@@ -46,7 +46,7 @@ namespace MauiPets.Mvvm.ViewModels.VetAppointments
             SelectedAppointment = query[nameof(SelectedAppointment)] as ConsultaVeterinarioDto;
 
             IsEditing = (bool)query[nameof(IsEditing)];
-            AddEditCaption = IsEditing ? "Editar consulta" : "Nova visita";
+            AddEditCaption = IsEditing ? AppResources.EditMsg : AppResources.NewMsg;
 
             var selectedPet = await _petService.GetPetVMAsync(SelectedAppointment.IdPet);
 
@@ -97,7 +97,7 @@ namespace MauiPets.Mvvm.ViewModels.VetAppointments
                 var errorMessages = _service.RegistoComErros(SelectedAppointment);
                 if (!string.IsNullOrEmpty(errorMessages))
                 {
-                    await Shell.Current.DisplayAlert("Verifique entradas, p.f.",
+                    await Shell.Current.DisplayAlert(AppResources.TituloVerificarEntradas,
                         $"{errorMessages}", "OK");
                     return;
                 }
@@ -120,7 +120,7 @@ namespace MauiPets.Mvvm.ViewModels.VetAppointments
                     await _notificationsSyncService.SyncVetAppointmentsNotificationsAsync();
                     WeakReferenceMessenger.Default.Send(new UpdateUnreadNotificationsMessage());
 
-                    ShowToastMessage("Consulta criada com sucesso");
+                    await ShowToastMessage(AppResources.SuccessInsert);
 
                     await Shell.Current.GoToAsync($"{nameof(PetDetailPage)}", true,
                         new Dictionary<string, object>
@@ -139,7 +139,7 @@ namespace MauiPets.Mvvm.ViewModels.VetAppointments
                     await _notificationsSyncService.SyncVetAppointmentsNotificationsAsync();
                     WeakReferenceMessenger.Default.Send(new UpdateUnreadNotificationsMessage());
 
-                    ShowToastMessage("Registo atualizado com sucesso");
+                    await ShowToastMessage(AppResources.SuccessUpdate);
 
                     await Shell.Current.GoToAsync($"{nameof(PetDetailPage)}", true,
                         new Dictionary<string, object>
@@ -154,19 +154,8 @@ namespace MauiPets.Mvvm.ViewModels.VetAppointments
             catch (Exception ex)
             {
                 IsBusy = false;
-                ShowToastMessage($"Error while creating Vaccine ({ex.Message})");
+                await ShowToastMessage($"Error while creating Vaccine ({ex.Message})");
             }
-        }
-
-        private async void ShowToastMessage(string text)
-        {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            ToastDuration duration = ToastDuration.Short;
-            double fontSize = 14;
-
-            var toast = Toast.Make(text, duration, fontSize);
-
-            await toast.Show(cancellationTokenSource.Token);
         }
     }
 }

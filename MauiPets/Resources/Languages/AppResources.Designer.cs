@@ -682,6 +682,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Configurações principais.
+        /// </summary>
+        public static string TituloConfiracoesPrincipais {
+            get {
+                return ResourceManager.GetString("TituloConfiracoesPrincipais", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirme, por favor.
         /// </summary>
         public static string TituloConfirmacao {
@@ -925,6 +934,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Erro na partilha de Pdf.
+        /// </summary>
+        public static string TituloErroPartilha {
+            get {
+                return ResourceManager.GetString("TituloErroPartilha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Erro na atualização.
         /// </summary>
         public static string TituloErroUpdate {
@@ -1092,6 +1110,15 @@ namespace MauiPets.Resources.Languages {
         public static string TituloFeminino {
             get {
                 return ResourceManager.GetString("TituloFeminino", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ficha de.
+        /// </summary>
+        public static string TituloFichaDe {
+            get {
+                return ResourceManager.GetString("TituloFichaDe", resourceCulture);
             }
         }
         
@@ -1632,6 +1659,24 @@ namespace MauiPets.Resources.Languages {
         public static string TituloTipoContacto {
             get {
                 return ResourceManager.GetString("TituloTipoContacto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Todas as consultas.
+        /// </summary>
+        public static string TituloTodasConsultas {
+            get {
+                return ResourceManager.GetString("TituloTodasConsultas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Todas as vacinas.
+        /// </summary>
+        public static string TituloTodasVacinas {
+            get {
+                return ResourceManager.GetString("TituloTodasVacinas", resourceCulture);
             }
         }
         

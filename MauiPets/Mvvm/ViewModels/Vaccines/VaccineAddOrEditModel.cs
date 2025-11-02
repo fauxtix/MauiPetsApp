@@ -1,17 +1,16 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using MauiPets.Core.Application.Interfaces.Services.Notifications;
 using MauiPets.Core.Application.ViewModels.Messages;
 using MauiPets.Mvvm.Views.Pets;
 using MauiPets.Mvvm.Views.Vaccines;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Formatting;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using System.Collections.ObjectModel;
-
+using static MauiPets.Helpers.ViewModelsService;
 namespace MauiPets.Mvvm.ViewModels.Vaccines;
 
 [QueryProperty(nameof(SelectedVaccine), "SelectedVaccine")]
@@ -59,7 +58,7 @@ public partial class VaccineAddOrEditModel : VaccineBaseViewModel, IQueryAttribu
         TipoVacinaSelecionada = TipoVacinas.FirstOrDefault(tp => tp.Id == SelectedVaccine.IdTipoVacina);
 
         IsEditing = (bool)query[nameof(IsEditing)];
-        AddEditCaption = IsEditing ? "Editar vacina" : "Nova vacina";
+        AddEditCaption = IsEditing ? AppResources.EditMsg : AppResources.NewMsg;
 
         UpdateNextDose();
 
@@ -128,7 +127,7 @@ public partial class VaccineAddOrEditModel : VaccineBaseViewModel, IQueryAttribu
             var errorMessages = _vaccinesService.RegistoComErros(SelectedVaccine);
             if (!string.IsNullOrEmpty(errorMessages))
             {
-                await Shell.Current.DisplayAlert("Verifique entradas, p.f.",
+                await Shell.Current.DisplayAlert(AppResources.TituloVerificarEntradas,
                     $"{errorMessages}", "OK");
                 return;
             }
@@ -142,15 +141,15 @@ public partial class VaccineAddOrEditModel : VaccineBaseViewModel, IQueryAttribu
                 if (insertedId == -1)
                 {
                     IsBusy = false;
-                    await Shell.Current.DisplayAlert("Error while creating",
-                        $"Please contact administrator..", "OK");
+                    await Shell.Current.DisplayAlert(AppResources.ErrorTitle,
+                        "Please contact Administrator", "OK");
                     return;
                 }
                 var vaccineCreated = await _vaccinesService.GetVacinaVMAsync(insertedId);
                 var petVM = await _petService.GetPetVMAsync(vaccineCreated.IdPet);
 
 
-                ShowToastMessage("Registo criado com sucesso");
+                await ShowToastMessage(AppResources.SuccessInsert);
                 UpdateNextDose();
                 IsBusy = false;
 
@@ -183,7 +182,7 @@ public partial class VaccineAddOrEditModel : VaccineBaseViewModel, IQueryAttribu
                         {"PetVM", petVM}
                     });
 
-                ShowToastMessage("Registo atualizado com sucesso");
+                await ShowToastMessage(AppResources.SuccessUpdate);
                 UpdateNextDose();
                 IsBusy = false;
 
@@ -193,7 +192,7 @@ public partial class VaccineAddOrEditModel : VaccineBaseViewModel, IQueryAttribu
         catch (Exception ex)
         {
             IsBusy = false;
-            ShowToastMessage($"Error while creating Vaccine ({ex.Message})");
+            await ShowToastMessage($"Error while creating Vaccine ({ex.Message})");
         }
     }
 
@@ -206,17 +205,6 @@ public partial class VaccineAddOrEditModel : VaccineBaseViewModel, IQueryAttribu
         {
             TipoVacinas.Add(vaccineType);
         }
-    }
-
-    private async void ShowToastMessage(string text)
-    {
-        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-        ToastDuration duration = ToastDuration.Short;
-        double fontSize = 14;
-
-        var toast = Toast.Make(text, duration, fontSize);
-
-        await toast.Show(cancellationTokenSource.Token);
     }
 
     private void UpdateNextDose()

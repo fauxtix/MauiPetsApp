@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+
 
 namespace MauiPets.Mvvm.ViewModels.VetAppointments
 {
@@ -51,12 +53,12 @@ namespace MauiPets.Mvvm.ViewModels.VetAppointments
                     VetAppointments.Add(appointment);
                 }
 
-                FilterText = "All Consultations";
+                FilterText = AppResources.TituloTodasConsultas;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Unable to get pet appointments: {ex.Message}");
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await Shell.Current.DisplayAlert(AppResources.ErrorTitle, ex.Message, "OK");
             }
             finally
             {

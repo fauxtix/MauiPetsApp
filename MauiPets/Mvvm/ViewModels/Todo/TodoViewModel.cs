@@ -133,7 +133,7 @@ namespace MauiPets.Mvvm.ViewModels.Todo
             catch (Exception ex)
             {
                 Debug.WriteLine($"Unable to get todos: {ex.Message}");
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await Shell.Current.DisplayAlert(AppResources.ErrorTitle, ex.Message, "OK");
             }
             finally
             {

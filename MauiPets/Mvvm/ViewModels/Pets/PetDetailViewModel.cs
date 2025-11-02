@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using MauiPets.Core.Application.Interfaces.Services.Notifications;
@@ -15,9 +13,8 @@ using MauiPets.Services;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using System.Collections.ObjectModel;
-
-
 namespace MauiPets.Mvvm.ViewModels.Pets;
+using static MauiPets.Helpers.ViewModelsService;
 
 
 [QueryProperty(nameof(PetVM), "PetVM")]
@@ -414,8 +411,7 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
         {
             var _petRecord = await _petService.GetPetVMAsync(PetVM.Id);
             string petName = _petRecord.Nome;
-            bool deletionConfirmed = await Shell.Current.DisplayAlert(AppResources.TituloConfirmacao, $"{AppResources.DeleteMsg} Pet {petName}?",
-                AppResources.Sim, AppResources.Nao);
+            bool deletionConfirmed = await ConfirmDeleteAction();
             if (deletionConfirmed)
             {
                 var okToDelete = await _petService.DeleteAsync(_petRecord.Id);
@@ -446,7 +442,7 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
         }
         try
         {
-            bool deletionConfirmed = await Shell.Current.DisplayAlert(AppResources.TituloConfirmacao, $"{AppResources.DeleteMsg} {vaccine.DataToma} ({vaccine.Marca})?", "Sim", "Não");
+            bool deletionConfirmed = await ConfirmDeleteAction();
             if (deletionConfirmed)
             {
                 await _petVaccinesService.DeleteAsync(vaccine.Id);
@@ -474,11 +470,11 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
         }
         try
         {
-            bool deletionConfirmed = await Shell.Current.DisplayAlert("Confirme, por favor", $"Apaga o registo do desparasitante de {dewormer.DataAplicacao} ({dewormer.Marca})?", "Sim", "Não");
+            bool deletionConfirmed = await ConfirmDeleteAction();
             if (deletionConfirmed)
             {
                 await _petDewormersService.DeleteAsync(dewormer.Id);
-                await ShowToastMessage($"Aplicação do desparasitante no dia  {dewormer.DataAplicacao} apagado com sucesso");
+                await ShowToastMessage(AppResources.SuccessDelete);
                 PetDewormersVM.Remove(dewormer);
 
                 await _notificationsSyncService.DeleteNotificationsForRelatedItemAsync(dewormer.Id, "dewormer");
@@ -488,7 +484,7 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
         }
         catch (Exception ex)
         {
-            await ShowToastMessage($"Erro ao apagar desparasitante ({ex.Message})");
+            await ShowToastMessage($"{AppResources.ErrorTitle} ({ex.Message})");
         }
     }
 
@@ -501,17 +497,17 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
         }
         try
         {
-            bool deletionConfirmed = await Shell.Current.DisplayAlert("Confirme, por favor", $"Apaga o registo da Ração de {petFood.DataCompra} ({petFood.Marca})?", "Sim", "Não");
+            bool deletionConfirmed = await ConfirmDeleteAction();
             if (deletionConfirmed)
             {
                 await _petFoodService.DeleteAsync(petFood.Id);
-                await ShowToastMessage($"Ração comprada em  {petFood.DataCompra} apagada com sucesso");
+                await ShowToastMessage(AppResources.SuccessDelete);
                 PetFoodVM.Remove(petFood);
             }
         }
         catch (Exception ex)
         {
-            await ShowToastMessage($"Erro ao apagar desparasitante ({ex.Message})");
+            await ShowToastMessage($"{AppResources.ErrorTitle} ({ex.Message})");
         }
     }
 
@@ -525,7 +521,7 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
         }
         try
         {
-            bool deletionConfirmed = await Shell.Current.DisplayAlert("Confirme, por favor", $"Apaga o registo da Consulya de {petAppt.DataConsulta}?", "Sim", "Não");
+            bool deletionConfirmed = await ConfirmDeleteAction();
             if (deletionConfirmed)
             {
                 await _petVeterinaryAppointmentsService.DeleteAsync(petAppt.Id);
@@ -533,13 +529,13 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
                 await _notificationsSyncService.DeleteNotificationsForRelatedItemAsync(petAppt.Id, "vet_appointment");
                 WeakReferenceMessenger.Default.Send(new UpdateUnreadNotificationsMessage());
 
-                await ShowToastMessage($"Consulta de  {petAppt.DataConsulta} apagada com sucesso");
+                await ShowToastMessage(AppResources.SuccessDelete);
                 PetConsultationsVM.Remove(petAppt);
             }
         }
         catch (Exception ex)
         {
-            await ShowToastMessage($"Erro ao apagar consulta ({ex.Message})");
+            await ShowToastMessage($"{AppResources.ErrorTitle} ({ex.Message})");
         }
     }
 
@@ -560,7 +556,7 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
                 PetConsultationsVM?.Any() == true ? PetConsultationsVM : Enumerable.Empty<ConsultaVeterinarioVM>()
             );
 
-            var filePath = Path.Combine(FileSystem.CacheDirectory, $"Ficha_{PetVM.Nome}.pdf");
+            var filePath = Path.Combine(FileSystem.CacheDirectory, $"{AppResources.TituloFichaDe}{PetVM.Nome}.pdf");
             using (var file = File.Create(filePath))
             {
                 pdfStream.Seek(0, SeekOrigin.Begin);
@@ -569,14 +565,14 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
 
             await Share.RequestAsync(new ShareFileRequest
             {
-                Title = $"Ficha de {PetVM.Nome}",
+                Title = $"{AppResources.TituloFichaDe} {PetVM.Nome}",
                 File = new ShareFile(filePath)
             });
 
         }
         catch (Exception ex)
         {
-            await ShowToastMessage($"Erro na partilha de Pdf ({ex.Message})");
+            await ShowToastMessage($"{AppResources.TituloErroPartilha} ({ex.Message})");
         }
         finally
         {
@@ -627,10 +623,10 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
             PetConsultationsVM.Add(consultation);
         }
 
-        Gender = PetVM.Genero == "M" ? "Macho" : "Fêmea";
-        GodFather = PetVM.Padrinho ? "Sim" : "Não";
-        Sterilized = PetVM.Esterilizado ? "Sim" : "Não";
-        Chipped = PetVM.Chipado ? "Sim" : "Não";
+        Gender = PetVM.Genero == "M" ? AppResources.TituloMasculino : AppResources.TituloFeminino;
+        GodFather = PetVM.Padrinho ? AppResources.Sim : AppResources.Nao;
+        Sterilized = PetVM.Esterilizado ? AppResources.Sim : AppResources.Nao;
+        Chipped = PetVM.Chipado ? AppResources.Sim : AppResources.Nao;
 
         var dNascimento = DateTime.Parse(PetVM.DataNascimento);
         DateOnly startDate = DateOnly.FromDateTime(dNascimento);
@@ -639,17 +635,6 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
         var tamanho = PetVM.IdTamanho;
         FaixaEtaria = await _petService.GetDescriptionBySizeAndMonths(tamanho, meses);
 
-    }
-
-    private async Task ShowToastMessage(string text)
-    {
-        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-        ToastDuration duration = ToastDuration.Short;
-        double fontSize = 14;
-
-        var toast = Toast.Make(text, duration, fontSize);
-
-        await toast.Show(cancellationTokenSource.Token);
     }
 
 }

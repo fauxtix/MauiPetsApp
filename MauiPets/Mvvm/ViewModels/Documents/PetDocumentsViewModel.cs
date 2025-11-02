@@ -148,7 +148,7 @@ namespace MauiPets.Mvvm.ViewModels.Pets
         {
             if (string.IsNullOrWhiteSpace(TitleInput))
             {
-                await Application.Current.MainPage.DisplayAlert(AppResources.TituloErrosValidacao, AppResources.TituloIndiqueTitulo, "OK");
+                await Application.Current.MainPage.DisplayAlert(AppResources.TituloErroValidacao, AppResources.TituloIndiqueTitulo, "OK");
                 return;
             }
 

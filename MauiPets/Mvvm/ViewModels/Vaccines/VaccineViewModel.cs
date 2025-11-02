@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+
 
 namespace MauiPets.Mvvm.ViewModels.Vaccines;
 
@@ -50,7 +52,7 @@ public partial class VaccineViewModel : VaccineBaseViewModel
                 Vaccines.Add(vaccine);
             }
 
-            FilterText = "All Vaccines";
+            FilterText = AppResources.TituloTodasVacinas;
 
 
         }

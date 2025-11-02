@@ -1,16 +1,18 @@
 ﻿using AutoMapper;
-using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Extensions;
 using MauiPets.Mvvm.Views.Settings.Expenses;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels.Despesas;
 using MauiPetsApp.Core.Application.ViewModels.LookupTables;
 using Serilog;
 using System.Collections.ObjectModel;
+using static MauiPets.Helpers.ViewModelsService;
+
 
 namespace MauiPets.Mvvm.ViewModels.Settings
 {
@@ -78,7 +80,7 @@ namespace MauiPets.Mvvm.ViewModels.Settings
         private async Task AddExpenseCategory()
         {
             IsEditing = false;
-            EditCaption = "Nova Categoria";
+            EditCaption = AppResources.NewMsg;
             TableName = "CategoriaDespesa";
             LookupTableVM newCategory = new()
             {
@@ -95,7 +97,7 @@ namespace MauiPets.Mvvm.ViewModels.Settings
         private async Task AddExpenseCategoryType()
         {
             IsEditing = false;
-            EditCaption = "Novo Tipo de Categoria";
+            EditCaption = AppResources.NewMsg;
             TableName = "CategoriaDespesa";
             TipoDespesaDto newCategoryType = new()
             {
@@ -109,7 +111,7 @@ namespace MauiPets.Mvvm.ViewModels.Settings
         }
 
         [RelayCommand]
-        async Task SaveLookupData()
+        public async Task SaveLookupData()
         {
             try
             {
@@ -125,26 +127,12 @@ namespace MauiPets.Mvvm.ViewModels.Settings
                             return;
                         }
 
-                        ShowToastMessage("Registo criado com sucesso");
+                        await ShowToastMessage(AppResources.RegistoCriadoSucesso);
                         await Shell.Current.GoToAsync("..", true);
-
-
-
-                        //LookupTableVM lookupTableVM = new LookupTableVM();
-                        //                        await Shell.Current.GoToAsync($"{nameof(ExpenseSettingsPage)}", true, new Dictionary<string, object>
-                        //                {
-                        //                    { "LookupRecordSelected", lookupTableVM },
-                        //                    { "Title", "" },
-                        //                    { "EditCaption", "Teste"},
-                        //                    { "IsEditing", false},
-                        //                    { "TableName", "CategoriaDespesa" },
-
-                        //                });
-
                     }
                     catch (Exception ex)
                     {
-                        ShowToastMessage($"Erro ao inserir registo {ex.Message}", ToastDuration.Long);
+                        await ShowToastMessage($"{AppResources.ErrorTitle} {ex.Message}", ToastDuration.Long);
                     }
                 }
                 else
@@ -153,7 +141,7 @@ namespace MauiPets.Mvvm.ViewModels.Settings
                     {
                         LookupRecordSelected.Tabela = TableName;
                         await _lookupTablesService.ActualizaDetalhes(LookupRecordSelected);
-                        ShowToastMessage("Registo atualizado com sucesso");
+                        await ShowToastMessage(AppResources.RegistoGravadoSucesso);
                         GetLookupData(TableName);
 
                         await Shell.Current.GoToAsync("..", true);
@@ -161,13 +149,13 @@ namespace MauiPets.Mvvm.ViewModels.Settings
                     }
                     catch (Exception ex)
                     {
-                        ShowToastMessage($"Erro ao atualizar registo {ex.Message}", ToastDuration.Long);
+                        await ShowToastMessage($"{AppResources.ErrorTitle} {ex.Message}", ToastDuration.Long);
                     }
                 }
             }
             catch (Exception ex)
             {
-                ShowToastMessage($"Erro na transação {ex.Message}", ToastDuration.Long);
+                await ShowToastMessage($"{AppResources.ErrorTitle} {ex.Message}", ToastDuration.Long);
             }
         }
 
@@ -179,26 +167,26 @@ namespace MauiPets.Mvvm.ViewModels.Settings
 
             try
             {
-                bool okToDelete = await Shell.Current.DisplayAlert("Confirme, por favor", $"Apaga registo '{category.Descricao}'?", "Sim", "Não");
+                bool okToDelete = await ConfirmDeleteAction();
                 if (okToDelete)
                 {
                     IsBusy = true;
                     var categoryHasChildren = await _lookupTablesService.CheckFKInUse(category.Id, "IdCategoriaDespesa", "TipoDespesa");
                     if (categoryHasChildren)
                     {
-                        ShowToastMessage($"Categoria '{category.Descricao}' tem registos associados. Operação cancelada", ToastDuration.Long);
+                        await ShowToastMessage(AppResources.TituloRegistosAssociados);
                         Log.Warning($"Tentativa de apagar Categoria '{category.Descricao}' com registos associados na tabela de Tipo de Despesas");
                         return;
                     }
                     bool categoryDeleted = await _lookupTablesService.DeleteRegisto(category.Id, "CategoriaDespesa");
                     if (categoryDeleted)
                     {
-                        ShowToastMessage($"Categoria '{category.Descricao}' apagada com sucesso");
+                        await ShowToastMessage(AppResources.RegistoAnuladoSucesso);
                         Log.Warning($"Apagada Categoria de Despesas '{category.Descricao}'");
                     }
                     else
                     {
-                        ShowToastMessage($"Erro ao apagar Categoria '{category.Descricao}'. Verifique log, p.f. ", ToastDuration.Long);
+                        await ShowToastMessage(AppResources.TituloErroDelete);
                     }
                     LookupTableVM lookupTableVM = new LookupTableVM();
                     await Shell.Current.GoToAsync($"{nameof(ExpenseSettingsPage)}", true, new Dictionary<string, object>
@@ -231,20 +219,20 @@ namespace MauiPets.Mvvm.ViewModels.Settings
         {
             if (expenseType == null) return;
 
-            bool okToDelete = await Shell.Current.DisplayAlert("Confirme, por favor", $"Apaga registo '{expenseType.Descricao}'?", "Sim", "Não");
+            bool okToDelete = await ConfirmDeleteAction();
             if (okToDelete)
             {
                 IsBusy = true;
                 var categoryTypeExistInExpenses = await _lookupTablesService.CheckFKInUse(expenseType.Id, "IdTipoDespesa", "Despesa");
                 if (categoryTypeExistInExpenses)
                 {
-                    ShowToastMessage($"Tipo de Categoria '{expenseType.Descricao}' tem registos associados em Despesas. Operação cancelada", ToastDuration.Long);
+                    await ShowToastMessage(AppResources.TituloRegistosAssociados, ToastDuration.Long);
                     Log.Warning($"Tentativa de apagar Tipo de Categoria '{expenseType.Descricao}' com registos associados na tabela de Despesas");
                     return;
                 }
 
                 await _tipoDespesaService.Delete(expenseType.Id);
-                ShowToastMessage($"Tipo de Despesa '{expenseType.Descricao}' apagada com sucesso");
+                await ShowToastMessage(AppResources.RegistoAnuladoSucesso);
                 Expand = false;
 
 
@@ -273,18 +261,6 @@ namespace MauiPets.Mvvm.ViewModels.Settings
         {
             await Shell.Current.GoToAsync($"..");
         }
-
-        private async void ShowToastMessage(string text, ToastDuration duration = ToastDuration.Short)
-        {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            double fontSize = 14;
-
-            var toast = Toast.Make(text, duration, fontSize);
-
-            await toast.Show(cancellationTokenSource.Token);
-        }
-
-
 
         private void SetupLookupTables()
         {
@@ -339,7 +315,7 @@ namespace MauiPets.Mvvm.ViewModels.Settings
             {
                 IsEditing = true;
                 TableName = "CategoriaDespesa";
-                EditCaption = "Editar Categoria";
+                EditCaption = AppResources.EditMsg;
 
                 var response = await _lookupTablesService.GetRecordById(record.Id, "CategoriaDespesa");
                 if (response != null)
@@ -357,7 +333,7 @@ namespace MauiPets.Mvvm.ViewModels.Settings
             {
                 IsEditing = true;
                 TableName = "TipoDespesa";
-                EditCaption = "Editar Tipo de Categoria";
+                EditCaption = AppResources.EditMsg;
 
                 var response = await _tipoDespesaService.Get_ById(categoryType.Id);
                 if (response != null)

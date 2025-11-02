@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
-using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels.Despesas;
 using MauiPetsApp.Core.Application.ViewModels.LookupTables;
+using static MauiPets.Helpers.ViewModelsService;
+
 
 namespace MauiPets.Mvvm.ViewModels.Settings
 {
@@ -94,14 +95,14 @@ namespace MauiPets.Mvvm.ViewModels.Settings
                             return;
                         }
 
-                        ShowToastMessage("Registo criado com sucesso");
+                        await ShowToastMessage(AppResources.SuccessInsert);
 
                         await Shell.Current.GoToAsync("..", true);
 
                     }
                     catch (Exception ex)
                     {
-                        ShowToastMessage($"Erro ao inserir registo {ex.Message}");
+                        await ShowToastMessage($"{AppResources.ErrorTitle} {ex.Message}");
                     }
                 }
                 else
@@ -116,19 +117,19 @@ namespace MauiPets.Mvvm.ViewModels.Settings
                             return;
                         }
 
-                        ShowToastMessage("Registo atualizado com sucesso");
+                        await ShowToastMessage(AppResources.SuccessUpdate);
 
                         await Shell.Current.GoToAsync("..", true);
                     }
                     catch (Exception ex)
                     {
-                        ShowToastMessage($"Erro ao atualizar registo {ex.Message}");
+                        await ShowToastMessage($"{AppResources.ErrorTitle} {ex.Message}");
                     }
                 }
             }
             catch (Exception ex)
             {
-                ShowToastMessage($"Erro na transação {ex.Message}");
+                await ShowToastMessage($"{AppResources.ErrorTitle} {ex.Message}");
             }
 
             finally
@@ -146,19 +147,5 @@ namespace MauiPets.Mvvm.ViewModels.Settings
 
 
 
-        private async void ShowToastMessage(string text)
-        {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            ToastDuration duration = ToastDuration.Short;
-            double fontSize = 14;
-
-            var toast = Toast.Make(text, duration, fontSize);
-
-            await toast.Show(cancellationTokenSource.Token);
-        }
-
-
     }
-
-
 }

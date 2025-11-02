@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using MauiPets.Core.Application.Interfaces.Services.Notifications;
@@ -11,6 +9,7 @@ using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
+using static MauiPets.Helpers.ViewModelsService;
 
 namespace MauiPets.Mvvm.ViewModels.Pets;
 
@@ -231,7 +230,7 @@ public partial class PetViewModel : BaseViewModel
 
                 var vaccineDto = await _petVaccinesService.GetPetVaccinesVMAsync(insertedId);
 
-                ShowToastMessage("Registo criado com sucesso");
+                await ShowToastMessage("Registo criado com sucesso");
 
                 await Shell.Current.GoToAsync($"//{nameof(PetDetailPage)}", true,
                     new Dictionary<string, object>
@@ -253,13 +252,13 @@ public partial class PetViewModel : BaseViewModel
                         {"SelectedVaccine", vaccineDto}
                     });
 
-                ShowToastMessage("Registo atualizado com sucesso");
+                await ShowToastMessage("Registo atualizado com sucesso");
             }
         }
         catch (Exception ex)
         {
             _logger.LogError($"Error in SaveVaccine: {ex.Message}");
-            ShowToastMessage($"Error while creating Vaccine ({ex.Message})");
+            await ShowToastMessage($"Error while creating Vaccine ({ex.Message})");
         }
         finally
         {
@@ -271,16 +270,5 @@ public partial class PetViewModel : BaseViewModel
     async Task OpenGallery(int petId)
     {
         await Shell.Current.GoToAsync($"PetGalleryPage?PetId={petId}");
-    }
-
-    private async void ShowToastMessage(string text)
-    {
-        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-        ToastDuration duration = ToastDuration.Short;
-        double fontSize = 14;
-
-        var toast = Toast.Make(text, duration, fontSize);
-
-        await toast.Show(cancellationTokenSource.Token);
     }
 }

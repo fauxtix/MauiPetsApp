@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Mvvm.Views.Contacts;
 using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
+using static MauiPets.Helpers.ViewModelsService;
 
 namespace MauiPets.Mvvm.ViewModels.Contacts
 {
@@ -113,19 +112,5 @@ namespace MauiPets.Mvvm.ViewModels.Contacts
                 await App.Current.MainPage.DisplayAlert(AppResources.ErrorTitle, AppResources.ErroLocalizacaoNaoDisponivel, "OK");
             }
         }
-
-
-        private async Task ShowToastMessage(string text)
-        {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            ToastDuration duration = ToastDuration.Short;
-            double fontSize = 14;
-
-            var toast = Toast.Make(text, duration, fontSize);
-
-            await toast.Show(cancellationTokenSource.Token);
-        }
-
-
     }
 }

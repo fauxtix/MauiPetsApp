@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using MauiPets.Core.Application.Interfaces.Services.Notifications;
@@ -9,6 +7,8 @@ using MauiPets.Mvvm.Views.Pets;
 using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
+using static MauiPets.Helpers.ViewModelsService;
+
 
 namespace MauiPets.Mvvm.ViewModels.Dewormers
 {
@@ -128,7 +128,7 @@ namespace MauiPets.Mvvm.ViewModels.Dewormers
 
                     SelectedDewormer.DataProximaAplicacao = DateTime.Parse(SelectedDewormer.DataAplicacao).AddMonths(3).ToShortDateString();
 
-                    ShowToastMessage(AppResources.RegistoCriadoSucesso);
+                    await ShowToastMessage(AppResources.RegistoCriadoSucesso);
 
                     await _notificationsSyncService.SyncDewormerNotificationsAsync();
                     WeakReferenceMessenger.Default.Send(new UpdateUnreadNotificationsMessage());
@@ -158,26 +158,15 @@ namespace MauiPets.Mvvm.ViewModels.Dewormers
                             {"PetVM", petVM}
                         });
 
-                    ShowToastMessage(AppResources.RegistoGravadoSucesso);
+                    await ShowToastMessage(AppResources.RegistoGravadoSucesso);
 
                 }
             }
             catch (Exception ex)
             {
                 IsBusy = false;
-                ShowToastMessage($"{AppResources.ErrorTitle} ({ex.Message})");
+                await ShowToastMessage($"{AppResources.ErrorTitle} ({ex.Message})");
             }
-        }
-
-        private async void ShowToastMessage(string text)
-        {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            ToastDuration duration = ToastDuration.Short;
-            double fontSize = 14;
-
-            var toast = Toast.Make(text, duration, fontSize);
-
-            await toast.Show(cancellationTokenSource.Token);
         }
 
     }

@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MauiPets.Mvvm.Views.Settings;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.ViewModels.LookupTables;
+
 
 namespace MauiPets.Mvvm.ViewModels.Settings
 {
@@ -8,7 +10,7 @@ namespace MauiPets.Mvvm.ViewModels.Settings
     {
         public MainSettingsViewModel()
         {
-            Title = "Configurações Principais";
+            Title = AppResources.TituloConfiracoesPrincipais;
         }
 
         [RelayCommand]
@@ -23,8 +25,7 @@ namespace MauiPets.Mvvm.ViewModels.Settings
             await Shell.Current.GoToAsync($"{nameof(SettingsManagementPage)}", true, new Dictionary<string, object>
                 {
                     { "Title", title },
-                     { "TableName", tableName },
-
+                    { "TableName", tableName },
                 });
         }
     }

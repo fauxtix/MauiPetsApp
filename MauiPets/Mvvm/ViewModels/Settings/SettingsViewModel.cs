@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
-using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Mvvm.Views.Settings;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Application;
 using MauiPetsApp.Core.Application.ViewModels.LookupTables;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static MauiPets.Helpers.ViewModelsService;
+
 
 namespace MauiPets.Mvvm.ViewModels.Settings
 {
@@ -87,7 +88,7 @@ namespace MauiPets.Mvvm.ViewModels.Settings
             catch (Exception ex)
             {
                 Debug.WriteLine($"Unable to get data: {ex.Message}");
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await Shell.Current.DisplayAlert(AppResources.ErrorTitle, ex.Message, "OK");
             }
             finally
             {
@@ -99,7 +100,7 @@ namespace MauiPets.Mvvm.ViewModels.Settings
         [RelayCommand]
         private async Task AddLookupTableDataAsync()
         {
-            EditCaption = "Novo registo";
+            EditCaption = AppResources.NewMsg;
             IsEditing = false;
 
             LookupRecordSelected = new()
@@ -117,7 +118,7 @@ namespace MauiPets.Mvvm.ViewModels.Settings
             if (record?.Id > 0)
             {
                 IsEditing = false;
-                EditCaption = "Editar";
+                EditCaption = AppResources.EditMsg;
 
                 var response = await _service.GetRecordById(record.Id, TableName);
                 if (response != null)
@@ -133,13 +134,13 @@ namespace MauiPets.Mvvm.ViewModels.Settings
         {
             if (recordToDelete == null) return;
 
-            bool okToDelete = await Shell.Current.DisplayAlert("Confirme, por favor", $"Apagar a entrada {recordToDelete.Descricao}?", "Sim", "Não");
+            bool okToDelete = await ConfirmDeleteAction();
             if (okToDelete)
             {
                 IsBusy = true;
                 await _service.DeleteRegisto(recordToDelete.Id, TableName);
                 await RefreshLookupDataAsync();
-                ShowToastMessage($"Entrada {recordToDelete.Descricao} apagada com sucesso");
+                await ShowToastMessage(AppResources.SuccessDelete);
 
                 await Shell.Current.GoToAsync($"{nameof(SettingsManagementPage)}", true,
                     new Dictionary<string, object>
@@ -196,15 +197,5 @@ namespace MauiPets.Mvvm.ViewModels.Settings
             Title = query[nameof(Title)] as string;
         }
 
-        private async void ShowToastMessage(string text)
-        {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            ToastDuration duration = ToastDuration.Short;
-            double fontSize = 14;
-
-            var toast = Toast.Make(text, duration, fontSize);
-
-            await toast.Show(cancellationTokenSource.Token);
-        }
     }
 }

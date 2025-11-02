@@ -657,4 +657,19 @@
   <data name="TituloErroDelete" xml:space="preserve">
     <value>Error deleting record</value>
   </data>
+  <data name="TituloErroPartilha" xml:space="preserve">
+    <value>Error sharing PDF</value>
+  </data>
+  <data name="TituloFichaDe" xml:space="preserve">
+    <value>Record of</value>
+  </data>
+  <data name="TituloConfiracoesPrincipais" xml:space="preserve">
+    <value>Main settings</value>
+  </data>
+  <data name="TituloTodasVacinas" xml:space="preserve">
+    <value>All Vaccines</value>
+  </data>
+  <data name="TituloTodasConsultas" xml:space="preserve">
+    <value>All consultations</value>
+  </data>
 </root>
