@@ -42,7 +42,7 @@ Destina-se a mensagens do sistema, lembretes de eventos, tarefas pendentes ou qu
 
 ---
 
-# 📄 Gestão de Documentos
+### 📄 Gestão de Documentos
 
 A funcionalidade de Gestão de Documentos permite ao usuário fazer upload, visualizar, editar e excluir arquivos — como registros de vacinação, certificados ou qualquer documento relevante para um pet — vinculados a cada animal.
 
