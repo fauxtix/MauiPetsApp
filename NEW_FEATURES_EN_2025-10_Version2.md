@@ -69,7 +69,7 @@ The Documents Management functionality enables users to upload, view, edit, and 
 
 ---
 
-# 🌐 Language Selection Feature
+### 🌐 Language Selection Feature
 
 A new option under **Settings** now allows you to choose the application's display language:
 
