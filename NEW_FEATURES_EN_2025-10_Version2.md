@@ -24,6 +24,67 @@ This document summarizes the main features recently added (Oct/2025).
 
 ---
 
+### 📄 Documents Management - MauiPetsApp
+
+The Documents Management functionality enables users to upload, view, edit, and delete files—such as vaccination records, certificates, or any relevant pet-related documents—linked to individual pets.
+
+## ✨ Features
+
+- ➕ **Add Documents:**  
+  Upload PDF files using a file picker, add title and description, and associate each document with a specific pet.
+
+- 👀 **View Documents:**  
+  See all documents belonging to a pet, including title, description, file location, creation date, and associated pet name.
+
+- ✏️ **Edit Documents:**  
+  Change a document's title/description or replace the uploaded file.
+
+- 🗑️ **Delete Documents:**  
+  Remove documents from both the database and local storage; includes confirmation dialogs.
+
+- 📂 **Open Documents:**  
+  Launch files using the associated file path with the system's file viewer.
+
+## 🚦 Usage Workflow
+
+1. **Add a Document:**  
+   - From a pet's profile, select "Add Document" ➕.
+   - Pick a PDF file 📄.
+   - Enter a Title and Description 📝.
+   - Save to link the document with the pet 🐾.
+
+2. **Edit or Remove a Document:**  
+   - Select a document entry from the list 📃.
+   - Edit its details ✏️ or click delete 🗑️ for confirmation and removal.
+
+3. **Open/View Document:**  
+   - Tap a document to open it with the system PDF viewer 📂.
+
+## 💡 Notes
+
+- Only PDF documents are supported for upload.
+- Files are saved locally within the app's data directory.
+- The system ensures documents are uniquely named to avoid conflicts.
+- Deleting a document also cleans up associated local storage if the file exists.
+
+---
+
+### 🌐 Language Selection Feature
+
+A new option under **Settings** now allows you to choose the application's display language:
+
+- 🇵🇹 **Portuguese**
+- 🇬🇧 **English**
+
+Easily change between Portuguese and English at any time in the Settings menu. Your preferred language is instantly applied throughout the app’s interface.
+
+**How it works:**  
+- The selected language is saved to your user preferences.
+- All screens and text labels switch seamlessly to your chosen language.
+- Available languages: `Português (pt-PT)` and `English (en-US)`.
+
+---
+
 ### 📢 Notifications
 
 **Purpose:**  
