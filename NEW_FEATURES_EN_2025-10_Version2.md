@@ -24,7 +24,7 @@ This document summarizes the main features recently added (Oct/2025).
 
 ---
 
-# 📄 Documents Management - MauiPetsApp
+### 📄 Documents Management - MauiPetsApp
 
 The Documents Management functionality enables users to upload, view, edit, and delete files—such as vaccination records, certificates, or any relevant pet-related documents—linked to individual pets.
 
