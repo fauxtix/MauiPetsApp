@@ -42,6 +42,50 @@ Destina-se a mensagens do sistema, lembretes de eventos, tarefas pendentes ou qu
 
 ---
 
+# 📄 Gestão de Documentos
+
+A funcionalidade de Gestão de Documentos permite ao usuário fazer upload, visualizar, editar e excluir arquivos — como registros de vacinação, certificados ou qualquer documento relevante para um pet — vinculados a cada animal.
+
+## ✨ Funcionalidades
+
+- ➕ **Adicionar Documento:**  
+  Faça upload de arquivos PDF usando o seletor, insira um título e descrição, e associe cada documento a um pet específico.
+
+- 👀 **Visualizar Documentos:**  
+  Veja todos os documentos de um pet, incluindo título, descrição, localização do arquivo, data de criação e nome do animal associado.
+
+- ✏️ **Editar Documento:**  
+  Altere o título, a descrição ou substitua o arquivo do documento.
+
+- 🗑️ **Excluir Documento:**  
+  Remova documentos do banco de dados e do armazenamento local; inclui confirmação antes de apagar.
+
+- 📂 **Abrir Documentos:**  
+  Abra arquivos usando o caminho associado com o visualizador de arquivos do sistema.
+
+## 🚦 Fluxo de Uso
+
+1. **Adicionar Documento:**  
+   - No perfil do pet, selecione “Adicionar Documento” ➕.
+   - Escolha um arquivo PDF 📄.
+   - Insira Título e Descrição 📝.
+   - Salve para vincular o documento ao animal 🐾.
+
+2. **Editar ou Remover Documento:**  
+   - Selecione a entrada desejada 📃.
+   - Edite seus detalhes ✏️ ou clique em excluir 🗑️, com confirmação.
+
+3. **Abrir/Visualizar Documento:**  
+   - Toque no documento para abrir no visualizador padrão do sistema 📂.
+
+## 💡 Observações
+
+- Apenas arquivos PDF são suportados para upload.
+- Os arquivos são salvos localmente no diretório de dados do app.
+- O sistema garante nomes únicos para evitar conflitos.
+- Ao excluir um documento, o armazenamento local também é limpo caso o arquivo exista.
+
+---
 ## 🔐 Backup e Restauração de Dados 
 
 - **Backup Manual**
