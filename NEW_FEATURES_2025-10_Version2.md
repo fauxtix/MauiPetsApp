@@ -105,8 +105,6 @@ A escolha é aplicada instantaneamente em toda a interface da app, proporcionand
 **Alterar Idioma:**  
    - Abra o menu Configuração 🌐.
    - Selecione entre Português 🇵🇹 e Inglês 🇬🇧 na opção de Idioma.
-     
-   A troca de idioma é aplicada instantaneamente e é memorizada para futuras utilizações.
 
 ---
 ## 🔐 Backup e Restauração de Dados 
