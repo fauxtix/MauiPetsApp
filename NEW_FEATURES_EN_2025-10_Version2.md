@@ -83,14 +83,12 @@ Easily change between Portuguese and English at any time in the Settings menu. Y
 - All screens and text labels switch seamlessly to your chosen language.
 - Available languages: `Português (pt-PT)` and `English (en-US)`.
 
----
-
-## 🛠 Technical Details
+#### 🛠 Technical Details
 
 - The selection is powered by the `LanguageSettingsViewModel`, which applies the chosen culture (`pt-PT` or `en-US`) for all texts and resources.
 - The change is immediate and will persist for future sessions.
 
-```
+---
 
 ### 📢 Notifications
 
