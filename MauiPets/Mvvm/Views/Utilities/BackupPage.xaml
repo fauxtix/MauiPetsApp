@@ -73,7 +73,7 @@
             <Frame BackgroundColor="#f3f3f3" Padding="16" Margin="0,12,0,0" IsVisible="{Binding ShowRestorePanel}">
                 <VerticalStackLayout Spacing="4">
                     <Label Text="{Binding SelectedBackupName}" FontAttributes="Bold" FontSize="14"/>
-                    <Label Text="{Binding SelectedBackupDate, StringFormat='Data do backup: {0:dd/MM/yyyy HH:mm}'}" FontSize="12" TextColor="Gray"/>
+                    <Label Text="{Binding SelectedBackupDate, StringFormat='Data do backup: {0:yyyy-MM-dd HH:mm}'}" FontSize="12" TextColor="Gray"/>
                     <!--<Label Text="{Binding ResumoAlteracoes}" FontSize="14" TextColor="#b71c1c" Margin="0,8,0,0"/>-->
                 </VerticalStackLayout>
             </Frame>

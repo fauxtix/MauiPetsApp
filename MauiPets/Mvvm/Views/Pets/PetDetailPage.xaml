@@ -117,7 +117,7 @@
                                        Style="{StaticResource MediumLabel}"/>
                                 <Label Grid.Column="1" 
                                        Style="{StaticResource MediumLabelBold}"
-                                       Text="{Binding PetVM.DataNascimento, Converter={StaticResource stringToDateConverter},  StringFormat='{0:dd/MM/yyyy}'}" />
+                                       Text="{Binding PetVM.DataNascimentoFormatada}" />
                                 <Label Grid.Column="2"
                                        FontSize="12" 
                                        FontAttributes="Bold"
@@ -181,7 +181,7 @@
                             <Label Grid.Row="2" 
                                    Grid.Column="1" 
                                    Style="{StaticResource MediumLabelBold}" 
-                                   Text="{Binding PetVM.DataChip, Converter={StaticResource stringToDateConverter},  StringFormat='{0:dd/MM/yyyy}'}" />
+                                   Text="{Binding PetVM.DataChipagemFormatada}" />
                             <Label Grid.Row="3" Margin="0,5,0,0" Grid.Column="0" Style="{StaticResource MediumLabel}" Text="{resx:Localize Key=Pet_Sterilised}" />
                             <Label Grid.Row="3" Margin="0,5,0,0" Grid.Column="1" Style="{StaticResource MediumLabelBold}" Text="{Binding Sterilized}" />
                             <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource MediumLabel}" Text="{resx:Localize Key=TituloPadrinho}"/>
@@ -278,7 +278,7 @@
                                                             <Grid ColumnDefinitions=".3*, .4*, .3*" Margin="0,4">
                                                                 <Label FontAttributes="Bold" FontSize="11"  Grid.Column="0"  Text="{Binding DataTomaFormatada}" HorizontalOptions="Center"/>
                                                                 <Label FontAttributes="Bold" FontSize="11" LineBreakMode="WordWrap" MaxLines="3" Grid.Column="1" Text="{Binding NomeTipoVacina}"/>
-                                                                <Label FontAttributes="Bold" FontSize="11" Grid.Column="2" Text="{Binding DataTomaFormatada }" 
+                                                                <Label FontAttributes="Bold" FontSize="11" Grid.Column="2" Text="{Binding DataProximaTomaFormatada }" 
                                                                        TextColor="{Binding DataProximaToma, Converter={StaticResource nextDoseDateConverter}}" 
                                                                        HorizontalOptions="End" Margin="0,0,12,0"/>
                                                             </Grid>
@@ -372,20 +372,20 @@
                                                                 CommandParameter="{Binding .}"/>
                                                             </Frame.GestureRecognizers>
                                                             <Grid ColumnSpacing="1" ColumnDefinitions=".3*, .4*, .3*" Margin="0, 1, 0, 2">
-                                                                <Label FontAttributes="Bold" FontSize="10" Grid.Column="0" Text="{Binding DataAplicacao}" HorizontalOptions="Center" />
+                                                                <Label FontAttributes="Bold" FontSize="10" Grid.Column="0" Text="{Binding DataAplicacaoFormatada}" HorizontalOptions="Center" />
                                                                 <Label FontAttributes="Bold" FontSize="10" Grid.Column="1" Text="{Binding Marca}"/>
                                                                 <Frame Padding="4"
-       CornerRadius="6"
-       HasShadow="False"
-       BorderColor="{Binding DataProximaAplicacao, Converter={StaticResource nextDoseDateBorderConverter}}"
-       BackgroundColor="Transparent"
-       Grid.Column="2"
-       HorizontalOptions="Center">
+                                                                       CornerRadius="6"
+                                                                       HasShadow="False"
+                                                                       BorderColor="{Binding DataProximaAplicacao, Converter={StaticResource nextDoseDateBorderConverter}}"
+                                                                       BackgroundColor="Transparent"
+                                                                       Grid.Column="2"
+                                                                       HorizontalOptions="Center">
                                                                     <Label FontAttributes="Bold" 
-           FontSize="10"
-           Text="{Binding DataProximaAplicacao}"
-           TextColor="{Binding DataProximaAplicacao, Converter={StaticResource nextDoseDateConverter}}"
-           HorizontalOptions="Center"/>
+                                                                           FontSize="10"
+                                                                           Text="{Binding DataProximaAplicacaoFormatada}"
+                                                                           TextColor="{Binding DataProximaAplicacao, Converter={StaticResource nextDoseDateConverter}}"
+                                                                           HorizontalOptions="Center"/>
                                                                 </Frame>
                                                             </Grid>
                                                         </Frame>
@@ -475,7 +475,7 @@
                                                                 CommandParameter="{Binding .}"/>
                                                             </Frame.GestureRecognizers>
                                                             <Grid ColumnSpacing="1" ColumnDefinitions=".3*, .4*, .3*">
-                                                                <Label Grid.Column="0" FontAttributes="Bold" FontSize="11" Text="{Binding DataCompra}" HorizontalOptions="Center"  />
+                                                                <Label Grid.Column="0" FontAttributes="Bold" FontSize="11" Text="{Binding DataCompraFormatada}" HorizontalOptions="Center"  />
                                                                 <Label Grid.Column="1" FontAttributes="Bold" FontSize="11" Text="{Binding Marca}"/>
                                                                 <Label Grid.Column="2" FontAttributes="Bold" HorizontalTextAlignment="Center" FontSize="11" Text="{Binding QuantidadeDiaria, StringFormat='{0}' }"/>
                                                             </Grid>
@@ -566,7 +566,7 @@
                                                                 CommandParameter="{Binding .}"/>
                                                             </Frame.GestureRecognizers>
                                                             <Grid ColumnSpacing="1" ColumnDefinitions=".3*, .7*">
-                                                                <Label Grid.Column="0" FontAttributes="Bold" FontSize="11" Text="{Binding DataConsulta}" HorizontalOptions="Center"/>
+                                                                <Label Grid.Column="0" FontAttributes="Bold" FontSize="11" Text="{Binding DataConsultaFormatada}" HorizontalOptions="Center"/>
                                                                 <Label Grid.Column="1" FontAttributes="Bold" FontSize="11" VerticalOptions="Start" HorizontalOptions="Start" Text="{Binding Motivo}"/>
                                                             </Grid>
                                                         </Frame>

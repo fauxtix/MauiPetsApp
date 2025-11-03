@@ -4,6 +4,7 @@ using MauiPetsApp.Core.Application.Interfaces.Repositories;
 using MauiPetsApp.Core.Application.ViewModels;
 using MauiPetsApp.Core.Domain;
 using Serilog;
+using System.Globalization;
 using System.Text;
 
 namespace MauiPetsApp.Infrastructure
@@ -17,15 +18,61 @@ namespace MauiPetsApp.Infrastructure
             _context = context;
         }
 
+        private static bool TryParseDate(string input, out DateOnly parsed)
+        {
+            parsed = default;
+            if (string.IsNullOrWhiteSpace(input))
+                return false;
+
+            // Prefer ISO (DB canonical), then pt-PT formats, then fallbacks
+            if (DateOnly.TryParseExact(input, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            if (DateOnly.TryParseExact(input, new[] { "dd/MM/yyyy", "d/M/yyyy" }, CultureInfo.GetCultureInfo("pt-PT"), DateTimeStyles.None, out parsed))
+                return true;
+
+            if (DateOnly.TryParse(input, CultureInfo.CurrentCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            if (DateOnly.TryParse(input, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            return false;
+        }
+
         public async Task<int> InsertAsync(Desparasitante desparasitante)
         {
             var petName = await GetPetName(desparasitante.IdPet);
             var description = $"{petName} - Desparasitante {desparasitante.Marca}";
-            var applicationDate = desparasitante.DataAplicacao;
-            var nextApplicationDate = desparasitante.DataProximaAplicacao;
             var categoryId = await GetDewormerTodoCategoryId("Med");
-            var startDate = !string.IsNullOrEmpty(applicationDate) ? DateTime.Parse(applicationDate).ToShortDateString() : DateTime.Now.ToShortDateString();
-            var endDate = !string.IsNullOrEmpty(nextApplicationDate) ? DateTime.Parse(nextApplicationDate).ToShortDateString() : DateTime.Now.ToShortDateString();
+
+            // Normalize dates for DB and for ToDo creation (if used)
+            string dbDataAplicacao = desparasitante.DataAplicacao ?? string.Empty;
+            string dbDataProximaAplicacao = desparasitante.DataProximaAplicacao ?? string.Empty;
+
+            string startDate;
+            string endDate;
+
+            if (TryParseDate(desparasitante.DataAplicacao, out var parsedApplication))
+            {
+                dbDataAplicacao = parsedApplication.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+                startDate = parsedApplication.ToString("d", CultureInfo.CurrentCulture);
+            }
+            else
+            {
+                startDate = DateTime.Now.ToString("d", CultureInfo.CurrentCulture);
+            }
+
+            if (TryParseDate(desparasitante.DataProximaAplicacao, out var parsedNext))
+            {
+                dbDataProximaAplicacao = parsedNext.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+                endDate = parsedNext.ToString("d", CultureInfo.CurrentCulture);
+            }
+            else
+            {
+                endDate = DateTime.Now.ToString("d", CultureInfo.CurrentCulture);
+            }
+
             int result;
 
             StringBuilder sb = new StringBuilder();
@@ -39,22 +86,6 @@ namespace MauiPetsApp.Infrastructure
             sb.Append(");");
             sb.Append("SELECT last_insert_rowid()");
 
-            //sbTodoList.Append("INSERT INTO ToDo( ");
-            //sbTodoList.Append("Description, StartDate, EndDate, Completed, CategoryId) ");
-            //sbTodoList.Append(" VALUES(");
-            //sbTodoList.Append("@Description, @StartDate, @EndDate, @Completed, @CategoryId");
-            //sbTodoList.Append(");");
-
-            //ToDo toDo = new ToDo()
-            //{
-            //    CategoryId = categoryId,
-            //    Description = description,
-            //    StartDate = startDate,
-            //    EndDate = endDate,
-            //    Completed = 0,
-            //    Generated = 1
-            //};
-
             using (var connection = _context.CreateConnection())
             {
                 connection.Open();
@@ -62,9 +93,17 @@ namespace MauiPetsApp.Infrastructure
                 {
                     try
                     {
-                        //await connection.ExecuteAsync(sbTodoList.ToString(), param: toDo, transaction: transaction);
+                        // If you want to create the ToDo now, use startDate/endDate values (they are culture-safe formatted strings).
+                        var parameters = new
+                        {
+                            Tipo = desparasitante.Tipo,
+                            Marca = desparasitante.Marca,
+                            DataAplicacao = dbDataAplicacao,
+                            DataProximaAplicacao = dbDataProximaAplicacao,
+                            IdPet = desparasitante.IdPet
+                        };
 
-                        result = await connection.QueryFirstAsync<int>(sb.ToString(), param: desparasitante);
+                        result = await connection.QueryFirstAsync<int>(sb.ToString(), param: parameters);
                         transaction.Commit();
 
                         return result;
@@ -82,10 +121,20 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task UpdateAsync(int Id, Desparasitante desparasitante)
         {
+            // Normalize dates before saving
+            string dbDataAplicacao = desparasitante.DataAplicacao ?? string.Empty;
+            string dbDataProximaAplicacao = desparasitante.DataProximaAplicacao ?? string.Empty;
+
+            if (TryParseDate(desparasitante.DataAplicacao, out var parsedApplication))
+                dbDataAplicacao = parsedApplication.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            if (TryParseDate(desparasitante.DataProximaAplicacao, out var parsedNext))
+                dbDataProximaAplicacao = parsedNext.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", desparasitante.Id);
-            dynamicParameters.Add("@DataAplicacao", desparasitante.DataAplicacao);
-            dynamicParameters.Add("@DataProximaAplicacao", desparasitante.DataProximaAplicacao);
+            dynamicParameters.Add("@DataAplicacao", dbDataAplicacao);
+            dynamicParameters.Add("@DataProximaAplicacao", dbDataProximaAplicacao);
             dynamicParameters.Add("@Marca", desparasitante.Marca);
             dynamicParameters.Add("@Tipo", desparasitante.Tipo);
             dynamicParameters.Add("@IdPet", desparasitante.IdPet);

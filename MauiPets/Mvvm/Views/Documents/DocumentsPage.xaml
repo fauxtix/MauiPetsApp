@@ -3,10 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:petViews="clr-namespace:MauiPets.Mvvm.Views.Pets"
              xmlns:resx="clr-namespace:MauiPets.Resources.Languages"
+             xmlns:converters="clr-namespace:MauiPets.Converters"
              x:Class="MauiPets.Mvvm.Views.Documents.DocumentsPage"
              Title="{resx:Localize Key=TituloDocumentos}">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <StackLayout Padding="12" Spacing="10">
+        <!-- Always show pet image -->
         <Frame WidthRequest="90"
                HeightRequest="90"
                Padding="0"
@@ -25,9 +33,42 @@
                    HeightRequest="90" />
         </Frame>
 
-        <Label Text="{resx:Localize Key=TituloEscolhaPet}" FontAttributes="Bold"/>
-        <Picker ItemsSource="{Binding Pets}" ItemDisplayBinding="{Binding Nome}" SelectedItem="{Binding SelectedPet}" />
-        <Label Text="{resx:Localize Key=TituloDocumentos}" FontAttributes="Bold" Margin="0,8,0,0"/>
-        <petViews:PetDocumentsView BindingContext="{Binding PetDocumentsVm}" />
+        <!-- shown only when there are pets -->
+        <Label Text="{resx:Localize Key=TituloEscolhaPet}"
+               FontAttributes="Bold"
+               IsVisible="{Binding HasPets}" />
+
+        <Picker 
+            ItemsSource="{Binding Pets}" 
+            ItemDisplayBinding="{Binding Nome}" 
+            SelectedItem="{Binding SelectedPet}"
+            IsVisible="{Binding HasPets}" />
+
+        <Image HorizontalOptions="Center"
+               Aspect="AspectFit"
+               HeightRequest="160"
+               Margin="0, 40, 0, 0"                                          
+               WidthRequest="160"
+               Source="nopets.png"
+               IsVisible="{Binding HasPets, Converter={StaticResource InverseBoolConverter}}"
+               VerticalOptions="Center" />
+
+        <!-- message shown only when there are no pets -->
+        <Label 
+            Text="{resx:Localize Key=Titulo_NoPets}" 
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            IsVisible="{Binding HasPets, Converter={StaticResource InverseBoolConverter}}"
+            Margin="0,20,0,0"/>
+
+        <!-- documents header and view are only visible when there are pets -->
+        <Label 
+            Text="{resx:Localize Key=TituloDocumentos}" 
+            FontAttributes="Bold" 
+            Margin="0,8,0,0"
+            IsVisible="{Binding HasPets}" />
+
+        <petViews:PetDocumentsView BindingContext="{Binding PetDocumentsVm}"
+                                   IsVisible="{Binding HasPets}" />
     </StackLayout>
 </ContentPage>

@@ -36,7 +36,14 @@ namespace MauiPetsApp.Core.Application.ViewModels
         {
             get
             {
-                return DateTime.Parse(DataToma).ToShortDateString();
+                return DateTime.Parse(DataToma).ToString("yyyy-MM-dd");
+            }
+        }
+        public string DataProximaTomaFormatada
+        {
+            get
+            {
+                return DataProximaToma.ToString("yyyy-MM-dd");
             }
         }
 

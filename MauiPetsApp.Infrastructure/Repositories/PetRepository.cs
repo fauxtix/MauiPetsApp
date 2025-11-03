@@ -4,6 +4,7 @@ using MauiPetsApp.Core.Application.Interfaces.DapperContext;
 using MauiPetsApp.Core.Application.ViewModels;
 using MauiPetsApp.Core.Domain;
 using Serilog;
+using System.Globalization;
 using System.Text;
 
 namespace MauiPetsApp.Infrastructure
@@ -18,24 +19,35 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task<int> InsertAsync(Pet pet)
         {
+            // Normalize date fields to ISO (yyyy-MM-dd) when possible
+            string dbDataChip = pet.DataChip ?? string.Empty;
+            if (TryParseDate(pet.DataChip, out var parsedChip))
+                dbDataChip = parsedChip.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            string dbDataNascimento = pet.DataNascimento ?? string.Empty;
+            if (TryParseDate(pet.DataNascimento, out var parsedNascimento))
+                dbDataNascimento = parsedNascimento.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Chip", pet.Chip);
             dynamicParameters.Add("@Chipado", pet.Chipado);
-            dynamicParameters.Add("@DataChip", pet.DataChip);
+            dynamicParameters.Add("@DataChip", dbDataChip);
             dynamicParameters.Add("@NumeroChip", pet.NumeroChip);
             dynamicParameters.Add("@Cor", pet.Cor);
             dynamicParameters.Add("@Foto", pet.Foto);
             dynamicParameters.Add("@DoencaCronica", pet.DoencaCronica);
             dynamicParameters.Add("@Esterilizado", pet.Esterilizado);
             dynamicParameters.Add("@IdEspecie", pet.IdEspecie);
-            dynamicParameters.Add("@DataNascimento", pet.DataNascimento);
+            dynamicParameters.Add("@DataNascimento", dbDataNascimento);
             dynamicParameters.Add("@Medicacao", pet.Medicacao);
             dynamicParameters.Add("@IdPeso", pet.IdPeso);
             dynamicParameters.Add("@IdRaca", pet.IdRaca);
             dynamicParameters.Add("@IdTamanho", pet.IdTamanho);
             dynamicParameters.Add("@IdSituacao", pet.IdSituacao);
             dynamicParameters.Add("@IdTemperamento", pet.IdTemperamento);
-            dynamicParameters.Add("@Genero", pet.Genero.Substring(0, 1));
+            // Guard substring to avoid exceptions
+            var generoValue = string.IsNullOrEmpty(pet.Genero) ? string.Empty : pet.Genero.Substring(0, 1);
+            dynamicParameters.Add("@Genero", generoValue);
             dynamicParameters.Add("@Nome", pet.Nome);
             dynamicParameters.Add("@Observacoes", pet.Observacoes);
             dynamicParameters.Add("@Padrinho", pet.Padrinho);
@@ -70,25 +82,35 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task UpdateAsync(int Id, Pet pet)
         {
+            // Normalize date fields to ISO (yyyy-MM-dd) when possible
+            string dbDataChip = pet.DataChip ?? string.Empty;
+            if (TryParseDate(pet.DataChip, out var parsedChip))
+                dbDataChip = parsedChip.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            string dbDataNascimento = pet.DataNascimento ?? string.Empty;
+            if (TryParseDate(pet.DataNascimento, out var parsedNascimento))
+                dbDataNascimento = parsedNascimento.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", pet.Id);
             dynamicParameters.Add("@Chip", pet.Chip);
             dynamicParameters.Add("@Chipado", pet.Chipado);
-            dynamicParameters.Add("@DataChip", pet.DataChip);
+            dynamicParameters.Add("@DataChip", dbDataChip);
             dynamicParameters.Add("@NumeroChip", pet.NumeroChip);
             dynamicParameters.Add("@Cor", pet.Cor);
             dynamicParameters.Add("@Foto", pet.Foto);
             dynamicParameters.Add("@DoencaCronica", pet.DoencaCronica);
             dynamicParameters.Add("@Esterilizado", pet.Esterilizado);
             dynamicParameters.Add("@IdEspecie", pet.IdEspecie);
-            dynamicParameters.Add("@DataNascimento", pet.DataNascimento);
+            dynamicParameters.Add("@DataNascimento", dbDataNascimento);
             dynamicParameters.Add("@Medicacao", pet.Medicacao);
             dynamicParameters.Add("@IdPeso", pet.IdPeso);
             dynamicParameters.Add("@IdRaca", pet.IdRaca);
             dynamicParameters.Add("@IdTamanho", pet.IdTamanho);
             dynamicParameters.Add("@IdSituacao", pet.IdSituacao);
             dynamicParameters.Add("@IdTemperamento", pet.IdTemperamento);
-            dynamicParameters.Add("@Genero", pet.Genero.Substring(0, 1));
+            var generoValue = string.IsNullOrEmpty(pet.Genero) ? string.Empty : pet.Genero.Substring(0, 1);
+            dynamicParameters.Add("@Genero", generoValue);
             dynamicParameters.Add("@Nome", pet.Nome);
             dynamicParameters.Add("@Observacoes", pet.Observacoes);
             dynamicParameters.Add("@Padrinho", pet.Padrinho);
@@ -136,10 +158,40 @@ namespace MauiPetsApp.Infrastructure
             StringBuilder sb = new StringBuilder();
             sb.Append("DELETE FROM Pet ");
             sb.Append("WHERE Id = @Id");
+            var notifSql = "DELETE FROM Notification";
             using (var connection = _context.CreateConnection())
             {
-                await connection.ExecuteAsync(sb.ToString(), new { Id });
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        await connection.ExecuteAsync(sb.ToString(), new { Id }, transaction);
+                        await connection.ExecuteAsync(notifSql, transaction: transaction);
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex.ToString());
+                        transaction.Rollback();
+                    }
+                }
             }
+
+            try
+            {
+                using (var vacuumConn = _context.CreateConnection())
+                {
+                    vacuumConn.Open();
+                    await vacuumConn.ExecuteAsync("VACUUM;");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log and continue — failure to vacuum shouldn't break the operation
+                Log.Warning(ex, "VACUUM failed (likely locked by another connection).");
+            }
+
         }
 
 
@@ -341,6 +393,30 @@ namespace MauiPetsApp.Infrastructure
             sb.Append("INNER JOIN Temperamento Temp ON Pet.IdTemperamento = Temp.Id");
 
             return sb.ToString();
+        }
+
+        private static bool TryParseDate(string input, out DateOnly parsed)
+        {
+            parsed = default;
+            if (string.IsNullOrWhiteSpace(input))
+                return false;
+
+            // Try ISO first (DB canonical)
+            if (DateOnly.TryParseExact(input, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            // Common user format (pt-PT)
+            if (DateOnly.TryParseExact(input, new[] { "dd/MM/yyyy", "d/M/yyyy" }, CultureInfo.GetCultureInfo("pt-PT"), DateTimeStyles.None, out parsed))
+                return true;
+
+            // Last resorts
+            if (DateOnly.TryParse(input, CultureInfo.CurrentCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            if (DateOnly.TryParse(input, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            return false;
         }
 
 

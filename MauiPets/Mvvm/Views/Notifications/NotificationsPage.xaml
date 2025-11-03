@@ -176,7 +176,7 @@
                                                IsVisible="{Binding Title, Converter={StaticResource StringNotNullOrEmptyConverter}}" />
 
                                         <Label Grid.Row="1" Grid.Column="0" Text="{Binding Description}" FontAttributes="Bold" FontFamily="Poppins" />
-                                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding ScheduledFor, StringFormat=' {0:dd/MM/yyyy}'}"
+                                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding ScheduledFor, StringFormat=' {0:yyyy-MM-dd}'}"
                                                FontFamily="PoppinsSemiBold"
                                                HorizontalTextAlignment="End"
                                                TextColor="Green" />

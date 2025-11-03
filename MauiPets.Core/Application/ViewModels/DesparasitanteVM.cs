@@ -18,6 +18,22 @@
             }
         }
 
+        public string DataAplicacaoFormatada
+        {
+            get
+            {
+                return DateTime.Parse(DataAplicacao).ToString("yyyy-MM-dd");
+            }
+        }
+        public string DataProximaAplicacaoFormatada
+        {
+            get
+            {
+                return DateTime.Parse(DataProximaAplicacao).ToString("yyyy-MM-dd");
+            }
+        }
+
+
         public DesparasitanteVM() { }
     }
 }

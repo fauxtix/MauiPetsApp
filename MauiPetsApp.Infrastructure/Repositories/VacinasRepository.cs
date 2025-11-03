@@ -6,6 +6,7 @@ using MauiPetsApp.Core.Application.ViewModels;
 using MauiPetsApp.Core.Domain;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using System.Globalization;
 using System.Text;
 
 namespace MauiPetsApp.Infrastructure
@@ -20,24 +21,44 @@ namespace MauiPetsApp.Infrastructure
             _logger = logger;
         }
 
+        private static bool TryParseDataToma(string input, out DateOnly parsed)
+        {
+            parsed = default;
+            if (string.IsNullOrWhiteSpace(input))
+                return false;
+
+            // Primary: ISO used for DB
+            if (DateOnly.TryParseExact(input, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            // Common user format (pt-PT)
+            if (DateOnly.TryParseExact(input, new[] { "dd/MM/yyyy", "d/M/yyyy" }, CultureInfo.GetCultureInfo("pt-PT"), DateTimeStyles.None, out parsed))
+                return true;
+
+            // Last resort: current culture or invariant
+            if (DateOnly.TryParse(input, CultureInfo.CurrentCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            if (DateOnly.TryParse(input, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            return false;
+        }
+
         public async Task<int> InsertAsync(Vacina vacina)
         {
             var petName = await GetPetName(vacina.IdPet);
             var description = $"{petName} - Vacina da {vacina.Marca}";
             var categoryId = await GetVaccineTodoCategoryId("Vacinação");
-            var startDate = DateTime.Parse(vacina.DataToma).ToShortDateString();
-            var endDate = DateTime.Parse(vacina.DataToma).AddMonths(vacina.ProximaTomaEmMeses).ToShortDateString();
-            int result;
 
-            //ToDo toDo = new ToDo()
-            //{
-            //    CategoryId = categoryId,
-            //    Description = description,
-            //    StartDate = startDate,
-            //    EndDate = endDate,
-            //    Completed = 0,
-            //    Generated = 1
-            //};
+            // Normalize date for DB: store as ISO yyyy-MM-dd when possible
+            string dbDataToma = vacina.DataToma ?? string.Empty;
+            if (TryParseDataToma(vacina.DataToma, out var parsedDate))
+            {
+                dbDataToma = parsedDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            }
+
+            int result;
 
             StringBuilder sb = new StringBuilder();
             StringBuilder sbTodoList = new StringBuilder();
@@ -63,9 +84,16 @@ namespace MauiPetsApp.Infrastructure
                 {
                     try
                     {
-                        //await connection.ExecuteAsync(sbTodoList.ToString(), param: toDo, transaction: transaction);
+                        var parameters = new
+                        {
+                            IdPet = vacina.IdPet,
+                            IdTipoVacina = vacina.IdTipoVacina,
+                            DataToma = dbDataToma,
+                            Marca = vacina.Marca,
+                            ProximaTomaEmMeses = vacina.ProximaTomaEmMeses
+                        };
 
-                        result = await connection.QueryFirstAsync<int>(sb.ToString(), param: vacina, transaction: transaction);
+                        result = await connection.QueryFirstAsync<int>(sb.ToString(), param: parameters, transaction: transaction);
 
                         transaction.Commit();
                         return result;
@@ -83,11 +111,17 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task UpdateAsync(int Id, Vacina vacina)
         {
+            string dbDataToma = vacina.DataToma ?? string.Empty;
+            if (TryParseDataToma(vacina.DataToma, out var parsedDate))
+            {
+                dbDataToma = parsedDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            }
+
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", vacina.Id);
             dynamicParameters.Add("@IdPet", vacina.IdPet);
             dynamicParameters.Add("@IdTipoVacina", vacina.IdTipoVacina);
-            dynamicParameters.Add("@DataToma", vacina.DataToma);
+            dynamicParameters.Add("@DataToma", dbDataToma);
             dynamicParameters.Add("@Marca", vacina.Marca);
             dynamicParameters.Add("@ProximaTomaEmMeses", vacina.ProximaTomaEmMeses);
 

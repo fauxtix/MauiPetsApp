@@ -24,5 +24,46 @@
         public string RacaAnimal { get; set; } = string.Empty;
         public string Foto { get; set; } = string.Empty;
         public string Genero { get; set; } = "M";
+
+        public string DataNascimentoFormatada
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(DataNascimento))
+                    return string.Empty;
+
+                if (DateTime.TryParseExact(DataNascimento,
+                        new[] { "dd/MM/yyyy HH:mm:ss", "dd/MM/yyyy", "yyyy-MM-ddTHH:mm:ss", "yyyy-MM-dd" },
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        System.Globalization.DateTimeStyles.None,
+                        out var dt)
+                    || DateTime.TryParse(DataNascimento, System.Globalization.CultureInfo.CurrentCulture, System.Globalization.DateTimeStyles.None, out dt))
+                {
+                    return dt.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                }
+
+                return DataNascimento;
+            }
+        }
+        public string DataChipagemFormatada
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(DataChip))
+                    return string.Empty;
+
+                if (DateTime.TryParseExact(DataChip,
+                        new[] { "dd/MM/yyyy HH:mm:ss", "dd/MM/yyyy", "yyyy-MM-ddTHH:mm:ss", "yyyy-MM-dd" },
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        System.Globalization.DateTimeStyles.None,
+                        out var dt)
+                    || DateTime.TryParse(DataChip, System.Globalization.CultureInfo.CurrentCulture, System.Globalization.DateTimeStyles.None, out dt))
+                {
+                    return dt.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                }
+
+                return DataChip;
+            }
+        }
     }
 }

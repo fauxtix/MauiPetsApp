@@ -48,14 +48,15 @@
                                 StrokeShape="RoundRectangle 0,0,50,50" 
                                 StrokeThickness="0" HeightRequest="160">
                             <Border.Shadow>
-                                <Shadow Brush="Black" Offset="-10,20" Radius="10" Opacity="0.4" />
+                                <Shadow Brush="Black" Offset="-10,20" Radius="30" Opacity="0.4" />
                             </Border.Shadow>
                             <Image Margin="5, 5"
                                    WidthRequest="250" 
                                    HeightRequest="200" Aspect="Fill"                    
                                    Source="daisypetsbing_min.png"/>
                         </Border>
-                        <Border Grid.Row="1" Margin="5, 25, 5, 35"  
+                        
+                        <!--<Border IsVisible="{Binding HasPets}" Grid.Row="1" Margin="5, 25, 5, 35"  
                                 StrokeShape="RoundRectangle 0,0,15,15" 
                                 StrokeThickness="0.5" HeightRequest="60">
                             <Label Margin="5, 2, 5, 3" 
@@ -65,7 +66,14 @@
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center"
                                    Text="{resx:Localize Key=Titulo_Main_Info}"/>
-                        </Border>
+                        </Border>-->
+                        <BoxView Grid.Row="1"
+                             HeightRequest="1"
+                             BackgroundColor="#E0E0E0"
+                             HorizontalOptions="Fill"
+                             VerticalOptions="Center"
+                             Margin="12,8,12,8" />
+                        
                         <CollectionView Grid.Row="2" 
                                         ItemsSource="{Binding Pets}" 
                                         SelectionMode="Single">
@@ -73,19 +81,26 @@
                                 <StackLayout Grid.ColumnSpan="2">
                                     <Image HorizontalOptions="Center"
                                            HeightRequest="160"
+                                           Margin="0, 40, 0, 0"                                          
                                            WidthRequest="160"
                                            Source="nopets.png"
                                            VerticalOptions="Center" />
+                                    <Label Text="{resx:Localize Key=Titulo_NoPets}" 
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           FontFamily="NotoSerifBold"
+                                           HorizontalOptions="Center" 
+                                           Margin="0, 20, 0, 0"/>
                                 </StackLayout>
                             </CollectionView.EmptyView>
                             <CollectionView.ItemsLayout>
-                                <GridItemsLayout Orientation="Vertical" Span="2"
+                                <GridItemsLayout Orientation="Vertical" Span="2" 
                                                  HorizontalItemSpacing="10"
                                                  VerticalItemSpacing="10" />
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:PetVM">
-                                    <VerticalStackLayout Margin="15, 0, 15, 0">
+                                    <VerticalStackLayout Margin="15, 30, 15, 0">
                                         <Border Stroke="Black" 
                                                 StrokeThickness="2" 
                                                 HeightRequest="140" 
@@ -96,6 +111,7 @@
                                             <Border.Shadow>
                                                 <Shadow Brush="Black" Offset="-5,5" Radius="10" Opacity="0.4" />
                                             </Border.Shadow>
+                                            
                                             <Image Source="{Binding Foto}"
                                                    Aspect="AspectFill" 
                                                    HorizontalOptions="Fill"
@@ -180,11 +196,11 @@
             AbsoluteLayout.LayoutFlags="PositionProportional">
             <!-- Ícone do sino -->
             <Image Source="bell.png"
-           WidthRequest="32"
-           HeightRequest="32"
-           VerticalOptions="Start"
-           HorizontalOptions="End"
-           Margin="0,2,7,0">
+                       WidthRequest="32"
+                       HeightRequest="32"
+                       VerticalOptions="Start"
+                       HorizontalOptions="End"
+                       Margin="0,2,7,0">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding OpenNotificationsCommand}" />
                 </Image.GestureRecognizers>

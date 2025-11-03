@@ -81,7 +81,7 @@
                                          />
 
                             <Label Grid.Row="1" Grid.ColumnSpan="2"
-                                   Text="{Binding DateAdded, StringFormat='Adicionada em: {0:dd/MM/yyyy}'}"
+                                   Text="{Binding DateAdded, StringFormat='Adicionada em: {0:yyyy-MM-dd}'}"
                                    FontSize="11"
                                    TextColor="Gray"
                                    HorizontalOptions="Center"

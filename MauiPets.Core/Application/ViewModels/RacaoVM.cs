@@ -9,5 +9,14 @@
         public int QuantidadeDiaria { get; set; }
         public string NomePet { get; set; } = string.Empty;
 
+        public string DataCompraFormatada
+        {
+            get
+            {
+                return DateTime.Parse(DataCompra).ToString("yyyy-MM-dd");
+            }
+        }
+
+
     }
 }

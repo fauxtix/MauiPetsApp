@@ -12,6 +12,7 @@ using MauiPets.Resources.Languages;
 using MauiPets.Services;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
+using Serilog;
 using System.Collections.ObjectModel;
 namespace MauiPets.Mvvm.ViewModels.Pets;
 using static MauiPets.Helpers.ViewModelsService;
@@ -60,6 +61,90 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
 
     [ObservableProperty]
     bool isRefreshing;
+
+    [ObservableProperty]
+    string ageLabel;
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        _ = ApplyQueryAttributesAsync(query);
+    }
+
+
+    public async Task ApplyQueryAttributesAsync(IDictionary<string, object> query)
+    {
+        try
+        {
+            PetVM = query[nameof(PetVM)] as PetVM;
+
+            var petId = PetVM.Id;
+
+            var vaccinesTask = _petVaccinesService.GetPetVaccinesVMAsync(petId);
+            var dewormersTask = _petDewormersService.GetDesparasitanteVMAsync(petId);
+            var foodItemsTask = _petFoodService.GetRacaoVMAsync(petId);
+            var consultationsTask = _petVeterinaryAppointmentsService.GetConsultaVMAsync(petId);
+
+            await Task.WhenAll(vaccinesTask, dewormersTask, foodItemsTask, consultationsTask);
+
+            PetVaccinesVM.Clear();
+            foreach (var vaccine in await vaccinesTask)
+            {
+                PetVaccinesVM.Add(vaccine);
+            }
+
+            PetDewormersVM.Clear();
+            foreach (var dewormer in await dewormersTask)
+            {
+                PetDewormersVM.Add(dewormer);
+            }
+
+            PetFoodVM.Clear();
+            foreach (var food in await foodItemsTask)
+            {
+                PetFoodVM.Add(food);
+            }
+
+            PetConsultationsVM.Clear();
+            foreach (var consultation in await consultationsTask)
+            {
+                PetConsultationsVM.Add(consultation);
+            }
+
+            Gender = PetVM.Genero == "M" ? AppResources.TituloMasculino : AppResources.TituloFeminino;
+
+            var dNascimento = DateTime.Parse(PetVM.DataNascimento);
+            DateOnly startDate = DateOnly.FromDateTime(dNascimento);
+            DateOnly endDate = DateOnly.FromDateTime(DateTime.Today);
+
+
+            int meses = Extensions.DateTimeExtensions.NumberOfMonths(startDate, endDate);
+
+            int anos = meses / 12;
+            int mesesRestantes = meses % 12;
+            if (anos > 0)
+            {
+                AgeLabel = mesesRestantes > 0 ? $"{anos}y {mesesRestantes}m" : $"{anos}y";
+            }
+            else
+            {
+                AgeLabel = $"{meses}m";
+            }
+
+            var tamanho = PetVM.IdTamanho;
+            FaixaEtaria = await _petService.GetDescriptionBySizeAndMonths(tamanho, meses);
+
+            Sterilized = PetVM.Esterilizado ? AppResources.Sim : AppResources.Nao;
+            Chipped = PetVM.Chipado ? AppResources.Sim : AppResources.Nao;
+            GodFather = PetVM.Padrinho ? AppResources.Sim : AppResources.Nao;
+
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Error in ApplyQueryAttributesAsync");
+            throw;
+        }
+    }
+
 
     [RelayCommand]
     async Task GoBack()
@@ -422,13 +507,13 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert(AppResources.DeleteMsg, $"{petName} {AppResources.TituloErroDelete}", "OK");
+                    await Shell.Current.DisplayAlert($"{AppResources.DeleteMsg} '{petName}'", AppResources.TituloRegistosAssociados, "OK");
                 }
             }
         }
         catch (Exception ex)
         {
-            await ShowToastMessage($"{AppResources.ErrorTitle} ({ex.Message})");
+            await ShowToastMessage($"{AppResources.ErrorTitle} ({ex.Message})", CommunityToolkit.Maui.Core.ToastDuration.Long);
             await Shell.Current.GoToAsync($"{nameof(PetsPage)}", true);
         }
     }
@@ -579,62 +664,4 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
             IsBusy = false;
         }
     }
-
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
-    {
-        _ = ApplyQueryAttributesAsync(query);
-    }
-
-
-    public async Task ApplyQueryAttributesAsync(IDictionary<string, object> query)
-    {
-        PetVM = query[nameof(PetVM)] as PetVM;
-
-        var petId = PetVM.Id;
-
-        var vaccinesTask = _petVaccinesService.GetPetVaccinesVMAsync(petId);
-        var dewormersTask = _petDewormersService.GetDesparasitanteVMAsync(petId);
-        var foodItemsTask = _petFoodService.GetRacaoVMAsync(petId);
-        var consultationsTask = _petVeterinaryAppointmentsService.GetConsultaVMAsync(petId);
-
-        await Task.WhenAll(vaccinesTask, dewormersTask, foodItemsTask, consultationsTask);
-
-        PetVaccinesVM.Clear();
-        foreach (var vaccine in await vaccinesTask)
-        {
-            PetVaccinesVM.Add(vaccine);
-        }
-
-        PetDewormersVM.Clear();
-        foreach (var dewormer in await dewormersTask)
-        {
-            PetDewormersVM.Add(dewormer);
-        }
-
-        PetFoodVM.Clear();
-        foreach (var food in await foodItemsTask)
-        {
-            PetFoodVM.Add(food);
-        }
-
-        PetConsultationsVM.Clear();
-        foreach (var consultation in await consultationsTask)
-        {
-            PetConsultationsVM.Add(consultation);
-        }
-
-        Gender = PetVM.Genero == "M" ? AppResources.TituloMasculino : AppResources.TituloFeminino;
-        GodFather = PetVM.Padrinho ? AppResources.Sim : AppResources.Nao;
-        Sterilized = PetVM.Esterilizado ? AppResources.Sim : AppResources.Nao;
-        Chipped = PetVM.Chipado ? AppResources.Sim : AppResources.Nao;
-
-        var dNascimento = DateTime.Parse(PetVM.DataNascimento);
-        DateOnly startDate = DateOnly.FromDateTime(dNascimento);
-        DateOnly endDate = DateOnly.FromDateTime(DateTime.Today);
-        int meses = Extensions.DateTimeExtensions.NumberOfMonths(startDate, endDate);
-        var tamanho = PetVM.IdTamanho;
-        FaixaEtaria = await _petService.GetDescriptionBySizeAndMonths(tamanho, meses);
-
-    }
-
 }

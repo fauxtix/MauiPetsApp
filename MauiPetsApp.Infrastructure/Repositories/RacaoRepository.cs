@@ -4,6 +4,7 @@ using MauiPetsApp.Core.Application.Interfaces.Repositories;
 using MauiPetsApp.Core.Application.ViewModels;
 using MauiPetsApp.Core.Domain;
 using Serilog;
+using System.Globalization;
 using System.Text;
 
 namespace MauiPetsApp.Infrastructure
@@ -14,6 +15,30 @@ namespace MauiPetsApp.Infrastructure
         public RacaoRepository(IDapperContext context)
         {
             _context = context;
+        }
+
+        private static bool TryParseDataCompra(string input, out DateOnly parsed)
+        {
+            parsed = default;
+            if (string.IsNullOrWhiteSpace(input))
+                return false;
+
+            // Primary: ISO (DB canonical)
+            if (DateOnly.TryParseExact(input, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            // Common user formats (pt-PT)
+            if (DateOnly.TryParseExact(input, new[] { "dd/MM/yyyy", "d/M/yyyy" }, CultureInfo.GetCultureInfo("pt-PT"), DateTimeStyles.None, out parsed))
+                return true;
+
+            // Fallbacks
+            if (DateOnly.TryParse(input, CultureInfo.CurrentCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            if (DateOnly.TryParse(input, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            return false;
         }
 
         public async Task<int> InsertAsync(Racao racao)
@@ -31,7 +56,22 @@ namespace MauiPetsApp.Infrastructure
             {
                 using (var connection = _context.CreateConnection())
                 {
-                    var result = await connection.QueryFirstAsync<int>(sb.ToString(), param: racao);
+                    // Normalize DataCompra to ISO yyyy-MM-dd when possible
+                    string dbDataCompra = racao.DataCompra ?? string.Empty;
+                    if (TryParseDataCompra(racao.DataCompra, out var parsed))
+                    {
+                        dbDataCompra = parsed.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    }
+
+                    var parameters = new
+                    {
+                        DataCompra = dbDataCompra,
+                        Marca = racao.Marca,
+                        QuantidadeDiaria = racao.QuantidadeDiaria,
+                        IdPet = racao.IdPet
+                    };
+
+                    var result = await connection.QueryFirstAsync<int>(sb.ToString(), param: parameters);
                     return result;
                 }
 
@@ -46,9 +86,16 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task UpdateAsync(int Id, Racao racao)
         {
+            // Normalize DataCompra to ISO when possible
+            string dbDataCompra = racao.DataCompra ?? string.Empty;
+            if (TryParseDataCompra(racao.DataCompra, out var parsed))
+            {
+                dbDataCompra = parsed.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            }
+
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", racao.Id);
-            dynamicParameters.Add("@DataCompra", racao.DataCompra);
+            dynamicParameters.Add("@DataCompra", dbDataCompra);
             dynamicParameters.Add("@Marca", racao.Marca);
             dynamicParameters.Add("@QuantidadeDiaria", racao.QuantidadeDiaria);
             dynamicParameters.Add("@IdPet", racao.IdPet);

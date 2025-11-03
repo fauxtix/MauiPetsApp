@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using DaisyPets.WebApi.Helpers;
+using Dapper;
 using FluentValidation;
 using MauiPets.Core.Application.Interfaces.Repositories;
 using MauiPets.Core.Application.Interfaces.Repositories.Logs;
@@ -49,6 +50,7 @@ using MauiPetsApp.Core.Application.ViewModels.Despesas;
 using MauiPetsApp.Core.Application.ViewModels.Scheduler;
 using MauiPetsApp.Infrastructure;
 using MauiPetsApp.Infrastructure.Context;
+using MauiPetsApp.Infrastructure.Migrations;
 using MauiPetsApp.Infrastructure.Repositories;
 using MauiPetsApp.Infrastructure.Repositories.Logs;
 using MauiPetsApp.Infrastructure.Repositories.Notifications;
@@ -121,6 +123,7 @@ namespace MauiPets
             builder.Configuration.AddConfiguration(config);
 #endif
 
+
             CopyDatabaseIfNeeded();
 
 #if DEBUG
@@ -184,7 +187,6 @@ namespace MauiPets
             builder.Services.AddTransient<BackupViewModel>();
 
             builder.Services.AddTransient<NotificationsViewModel>();
-
 
 
             // Views
@@ -300,7 +302,84 @@ namespace MauiPets
 
             builder.Logging.AddSerilog(dispose: true);
 
-            return builder.Build();
+            // Build the app and run one-time migration using the built service provider
+            var app = builder.Build();
+
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            {
+                try
+                {
+                    var ex = e.ExceptionObject as Exception;
+                    Serilog.Log.Error(ex, "AppDomain UnhandledException");
+                }
+                catch { }
+            };
+
+            TaskScheduler.UnobservedTaskException += (s, e) =>
+            {
+                try
+                {
+                    Serilog.Log.Error(e.Exception, "TaskScheduler UnobservedTaskException");
+                    e.SetObserved();
+                }
+                catch { }
+            };
+
+            // Run date normalization migration once at startup (backup DB first)
+            try
+            {
+                using var scope = app.Services.CreateScope();
+                var dapperContext = scope.ServiceProvider.GetService<IDapperContext>();
+                if (dapperContext != null)
+                {
+                    // Use a preference flag so we don't run repeatedly
+                    const string migrationFlagKey = "DateNormalizationMigrationDone";
+                    if (!Preferences.ContainsKey(migrationFlagKey))
+                    {
+                        using var connection = dapperContext.CreateConnection();
+                        connection.Open();
+
+                        // Quick check: are there any legacy dd/MM/yyyy values left?
+                        var legacyCount = connection.ExecuteScalar<int>(@"
+                SELECT
+                    (SELECT COUNT(1) FROM Vacina WHERE DataToma LIKE '__/__/____') +
+                    (SELECT COUNT(1) FROM Racao WHERE DataCompra LIKE '__/__/____') +
+                    (SELECT COUNT(1) FROM Desparasitante WHERE DataAplicacao LIKE '__/__/____') +
+                    (SELECT COUNT(1) FROM Desparasitante WHERE DataProximaAplicacao LIKE '__/__/____') +
+                    (SELECT COUNT(1) FROM ConsultaVeterinario WHERE DataConsulta LIKE '__/__/____') +
+                    (SELECT COUNT(1) FROM Pet WHERE DataNascimento LIKE '__/__/____') +
+                    (SELECT COUNT(1) FROM Pet WHERE DataChip LIKE '__/__/____') +
+                    (SELECT COUNT(1) FROM Despesa WHERE DataMovimento LIKE '__/__/____') +
+                    (SELECT COUNT(1) FROM Despesa WHERE DataCriacao LIKE '__/__/____');
+            ");
+
+                        if (legacyCount > 0)
+                        {
+                            DateNormalizationMigration.Run(connection); // synchronous, quick
+                            Preferences.Set(migrationFlagKey, "1");
+                            Log.Information("DateNormalizationMigration completed and flagged.");
+                        }
+                        else
+                        {
+                            Preferences.Set(migrationFlagKey, "1"); // nothing to do; mark as done
+                            Log.Information("No legacy date values found; migration skipped and flagged.");
+                        }
+                    }
+                    else
+                    {
+                        Log.Information("DateNormalizationMigration already applied; skipping.");
+                    }
+                }
+                else
+                {
+                    Log.Warning("IDapperContext not registered; skipping DateNormalizationMigration.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "DateNormalizationMigration failed. DB backup recommended.");
+            }
+            return app;
         }
 
         private static void SetupSerilog(MauiAppBuilder builder)

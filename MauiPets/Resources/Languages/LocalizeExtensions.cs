@@ -9,15 +9,57 @@ namespace MauiPets.Resources.Languages
     {
         public string Key { get; set; }
 
+        private static ResourceManager? s_resourceManager;
+
+        private static ResourceManager? GetResourceManager()
+        {
+            if (s_resourceManager != null)
+                return s_resourceManager;
+
+            try
+            {
+                s_resourceManager = new ResourceManager("MauiPets.Resources.Languages.AppResources", typeof(LocalizeExtension).GetTypeInfo().Assembly);
+            }
+            catch
+            {
+                s_resourceManager = null;
+            }
+
+            return s_resourceManager;
+        }
+
         public object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (Key == null)
-                return "";
+            if (string.IsNullOrEmpty(Key))
+                return string.Empty;
 
-            var resourceManager = new ResourceManager("MauiPets.Resources.Languages.AppResources", typeof(LocalizeExtension).GetTypeInfo().Assembly);
+            try
+            {
+                var rm = GetResourceManager();
+                if (rm is null)
+                    return $"[{Key}]";
 
-            var culture = CultureInfo.CurrentUICulture;
-            return resourceManager.GetString(Key, culture) ?? $"[{Key}]";
+                var culture = CultureInfo.CurrentUICulture ?? CultureInfo.InvariantCulture;
+                string? value;
+                try
+                {
+                    value = rm.GetString(Key, culture);
+                }
+                catch (MissingManifestResourceException)
+                {
+                    value = null;
+                }
+                catch
+                {
+                    value = null;
+                }
+
+                return value ?? $"[{Key}]";
+            }
+            catch
+            {
+                return $"[{Key}]";
+            }
         }
     }
 }

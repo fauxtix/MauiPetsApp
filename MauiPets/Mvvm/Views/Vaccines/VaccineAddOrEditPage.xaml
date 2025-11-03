@@ -140,7 +140,7 @@
                        IsVisible="{Binding IsEditing}"
                        FontSize="14"
                        Grid.Row="9"
-                       Text="{Binding DataProximaToma, StringFormat='{0:dd/MM/yyyy}' }" 
+                       Text="{Binding DataProximaToma, StringFormat='{0:yyyy-MM/dd}' }" 
                        TextColor="{Binding DataProximaToma, Converter={StaticResource nextDoseDateConverter}}" 
                        HorizontalOptions="Start"
                        VerticalOptions="Center"/>

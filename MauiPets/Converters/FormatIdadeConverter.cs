@@ -8,11 +8,20 @@ namespace MauiPets.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values[0] is int idade)
+            try
             {
-                return $"({idade} {AppResources.AgeCaption})";
+                if (values[0] is int idade)
+                {
+                    return $"({idade} {AppResources.AgeCaption})";
+                }
+                return $"({AppResources.AgeCaptionInvalid})";
+
             }
-            return $"({AppResources.AgeCaptionInvalid})";
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

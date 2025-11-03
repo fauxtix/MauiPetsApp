@@ -619,6 +619,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não há Pets para tratar....
+        /// </summary>
+        public static string Titulo_NoPets {
+            get {
+                return ResourceManager.GetString("Titulo_NoPets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Título.
         /// </summary>
         public static string Titulo_Titulo {

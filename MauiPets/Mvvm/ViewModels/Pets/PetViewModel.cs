@@ -13,8 +13,19 @@ using static MauiPets.Helpers.ViewModelsService;
 
 namespace MauiPets.Mvvm.ViewModels.Pets;
 
-public partial class PetViewModel : BaseViewModel
+public partial class PetViewModel : BaseViewModel, IDisposable
 {
+    [ObservableProperty]
+    bool isRefreshing;
+
+    [ObservableProperty] string shareStatus;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasUnreadNotifications))]
+    int unreadNotificationsCount;
+
+    public bool HasUnreadNotifications => UnreadNotificationsCount > 0;
+
     private readonly ILogger<PetViewModel> _logger;
 
     public ObservableCollection<PetVM> Pets { get; } = new();
@@ -38,19 +49,17 @@ public partial class PetViewModel : BaseViewModel
         {
             await UpdateUnreadNotificationsAsync();
         });
+
+        Pets.CollectionChanged += Pets_CollectionChanged;
     }
 
-    [ObservableProperty]
-    bool isRefreshing;
-
-    [ObservableProperty] string shareStatus;
-
-    // === PROPRIEDADES DO BADGE ===
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(HasUnreadNotifications))]
-    int unreadNotificationsCount;
-
-    public bool HasUnreadNotifications => UnreadNotificationsCount > 0;
+    private void Pets_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            HasPets = Pets?.Count > 0;
+        });
+    }
 
     [RelayCommand]
     private async Task OpenNotificationsAsync()
@@ -142,6 +151,9 @@ public partial class PetViewModel : BaseViewModel
         {
             IsBusy = true;
             await Task.Yield();
+
+            NormalizePetDateStrings(petVM);
+
             await Shell.Current.GoToAsync($"{nameof(PetDetailPage)}", true,
                 new Dictionary<string, object>
                 {
@@ -270,5 +282,65 @@ public partial class PetViewModel : BaseViewModel
     async Task OpenGallery(int petId)
     {
         await Shell.Current.GoToAsync($"PetGalleryPage?PetId={petId}");
+    }
+
+    private static void NormalizePetDateStrings(PetVM pet)
+    {
+        if (pet == null) return;
+        pet.DataNascimento = NormalizeDateString(pet.DataNascimento);
+        pet.DataChip = NormalizeDateString(pet.DataChip);
+    }
+
+    private static string NormalizeDateString(string input)
+    {
+        if (string.IsNullOrWhiteSpace(input)) return input;
+
+        var formats = new[]
+        {
+        "dd/MM/yyyy HH:mm:ss",
+        "dd/MM/yyyy",
+        "d/M/yyyy H:mm:ss",
+        "yyyy-MM-ddTHH:mm:ss",
+        "yyyy-MM-dd HH:mm:ss",
+        "yyyy-MM-dd"
+    };
+
+        // 1) Try exact known formats (invariant)
+        if (DateTime.TryParseExact(input, formats, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out var dt))
+            return dt.ToString("yyyy-MM-ddTHH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+        // 2) Try current culture
+        if (DateTime.TryParse(input, System.Globalization.CultureInfo.CurrentCulture, System.Globalization.DateTimeStyles.None, out dt))
+            return dt.ToString("yyyy-MM-ddTHH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+        // 3) Try common source cultures (pt/en variants)
+        if (TryParseWithCultures(input, new[] { "pt-PT", "pt-BR", "en-US", "en-GB" }, out dt))
+            return dt.ToString("yyyy-MM-ddTHH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+        // 4) Fallback: return original (non-throwing)
+        return input;
+    }
+
+    private static bool TryParseWithCultures(string input, string[] cultureNames, out DateTime result)
+    {
+        result = default;
+        foreach (var name in cultureNames)
+        {
+            try
+            {
+                var culture = System.Globalization.CultureInfo.GetCultureInfo(name);
+                if (DateTime.TryParse(input, culture, System.Globalization.DateTimeStyles.None, out result))
+                    return true;
+            }
+            catch { /* ignore unavailable cultures */ }
+        }
+        return false;
+    }
+
+    public void Dispose()
+    {
+        try { Pets.CollectionChanged -= Pets_CollectionChanged; } catch { }
+        try { WeakReferenceMessenger.Default.Unregister<UpdateUnreadNotificationsMessage>(this); } catch { }
+        GC.SuppressFinalize(this);
     }
 }

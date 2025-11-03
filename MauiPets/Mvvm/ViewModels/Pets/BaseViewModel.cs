@@ -108,6 +108,7 @@ namespace MauiPets.Mvvm.ViewModels.Pets
         [ObservableProperty]
         private bool isGenderFemale;
 
-
+        [ObservableProperty]
+        private bool hasPets;
     }
 }

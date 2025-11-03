@@ -675,4 +675,7 @@
   <data name="DeviceNotSupported" xml:space="preserve">
     <value>Your device isn't supported</value>
   </data>
+  <data name="Titulo_NoPets" xml:space="preserve">
+    <value>No Pets in the database</value>
+  </data>
 </root>

@@ -7,61 +7,79 @@ public class StringToDateConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var cultureToUse = culture ?? CultureInfo.CurrentCulture;
-
-        DateTime dateTime;
-
-        if (value is DateTime dt)
+        try
         {
-            dateTime = dt;
-        }
-        else if (value is string s && !string.IsNullOrWhiteSpace(s))
-        {
-            if (!DateTime.TryParse(s, cultureToUse, DateTimeStyles.AssumeLocal | DateTimeStyles.AllowWhiteSpaces, out dateTime))
+            var cultureToUse = culture ?? CultureInfo.CurrentCulture;
+
+            DateTime dateTime;
+
+            if (value is DateTime dt)
             {
-                dateTime = DataFormat.DateParse(s);
+                dateTime = dt;
             }
-        }
-        else if (value != null)
-        {
-            if (!DateTime.TryParse(value.ToString(), cultureToUse, DateTimeStyles.AssumeLocal | DateTimeStyles.AllowWhiteSpaces, out dateTime))
+            else if (value is string s && !string.IsNullOrWhiteSpace(s))
             {
-                dateTime = DateTime.MinValue;
+                if (!DateTime.TryParse(s, cultureToUse, DateTimeStyles.AssumeLocal | DateTimeStyles.AllowWhiteSpaces, out dateTime))
+                {
+                    dateTime = DataFormat.DateParse(s);
+                }
             }
+            else if (value != null)
+            {
+                if (!DateTime.TryParse(value.ToString(), cultureToUse, DateTimeStyles.AssumeLocal | DateTimeStyles.AllowWhiteSpaces, out dateTime))
+                {
+                    dateTime = DateTime.MinValue;
+                }
+            }
+            else
+            {
+                return string.Empty;
+            }
+
+            if (dateTime == DateTime.MinValue)
+                return string.Empty;
+
+            var format = parameter as string;
+            if (string.IsNullOrWhiteSpace(format))
+            {
+                format = cultureToUse.DateTimeFormat.ShortDatePattern;
+            }
+
+            return dateTime.ToString(format, cultureToUse);
+
         }
-        else
+        catch (Exception ex)
         {
-            return string.Empty;
+
+            throw;
         }
-
-        if (dateTime == DateTime.MinValue)
-            return string.Empty;
-
-        var format = parameter as string;
-        if (string.IsNullOrWhiteSpace(format))
-        {
-            format = cultureToUse.DateTimeFormat.ShortDatePattern;
-        }
-
-        return dateTime.ToString(format, cultureToUse);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var cultureToUse = culture ?? CultureInfo.CurrentCulture;
-
-        if (value is DateTime dtValue)
-            return dtValue;
-
-        var s = value?.ToString() ?? string.Empty;
-        if (DateTime.TryParse(s, cultureToUse, DateTimeStyles.AssumeLocal | DateTimeStyles.AllowWhiteSpaces, out var parsed))
+        try
         {
-            if (targetType == typeof(DateTime) || targetType == typeof(DateTime?))
-                return parsed;
+            var cultureToUse = culture ?? CultureInfo.CurrentCulture;
 
-            return parsed.ToString("yyyy-MM-dd");
+            if (value is DateTime dtValue)
+                return dtValue;
+
+            var s = value?.ToString() ?? string.Empty;
+            if (DateTime.TryParse(s, cultureToUse, DateTimeStyles.AssumeLocal | DateTimeStyles.AllowWhiteSpaces, out var parsed))
+            {
+                if (targetType == typeof(DateTime) || targetType == typeof(DateTime?))
+                    return parsed;
+
+                return parsed.ToString("yyyy-MM-dd");
+            }
+
+            return targetType == typeof(string) ? string.Empty : (object)DateTime.MinValue;
+
         }
+        catch (Exception)
+        {
 
-        return targetType == typeof(string) ? string.Empty : (object)DateTime.MinValue;
+            throw;
+        }
     }
 }

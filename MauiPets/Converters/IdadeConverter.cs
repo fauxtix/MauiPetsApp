@@ -6,12 +6,21 @@ namespace MauiPets.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string dateString && DateTime.TryParse(dateString, out DateTime birthDate))
+            try
             {
-                int age = CalculateAge(birthDate);
-                return age;
+                if (value is string dateString && DateTime.TryParse(dateString, out DateTime birthDate))
+                {
+                    int age = CalculateAge(birthDate);
+                    return age;
+                }
+                return 0; // Retorna 0 se a data não for válida
+
             }
-            return 0; // Retorna 0 se a data não for válida
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

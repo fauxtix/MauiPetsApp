@@ -4,6 +4,7 @@ using MauiPetsApp.Core.Application.Interfaces.Repositories;
 using MauiPetsApp.Core.Application.ViewModels;
 using MauiPetsApp.Core.Domain;
 using Serilog;
+using System.Globalization;
 using System.Text;
 
 namespace MauiPetsApp.Infrastructure
@@ -14,6 +15,30 @@ namespace MauiPetsApp.Infrastructure
         public ConsultaRepository(IDapperContext context)
         {
             _context = context;
+        }
+
+        private static bool TryParseDate(string input, out DateOnly parsed)
+        {
+            parsed = default;
+            if (string.IsNullOrWhiteSpace(input))
+                return false;
+
+            // DB canonical: ISO date
+            if (DateOnly.TryParseExact(input, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            // Common user formats (pt-PT)
+            if (DateOnly.TryParseExact(input, new[] { "dd/MM/yyyy", "d/M/yyyy" }, CultureInfo.GetCultureInfo("pt-PT"), DateTimeStyles.None, out parsed))
+                return true;
+
+            // Fallbacks: current culture then invariant
+            if (DateOnly.TryParse(input, CultureInfo.CurrentCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            if (DateOnly.TryParse(input, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            return false;
         }
 
         public async Task<int> InsertAsync(ConsultaVeterinario Consulta)
@@ -31,7 +56,24 @@ namespace MauiPetsApp.Infrastructure
             {
                 using (var connection = _context.CreateConnection())
                 {
-                    var result = await connection.QueryFirstAsync<int>(sb.ToString(), param: Consulta);
+                    // Normalize date to ISO (yyyy-MM-dd) if possible to avoid culture-dependent parsing later
+                    string dbDataConsulta = Consulta.DataConsulta ?? string.Empty;
+                    if (TryParseDate(Consulta.DataConsulta, out var parsed))
+                    {
+                        dbDataConsulta = parsed.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    }
+
+                    var parameters = new
+                    {
+                        DataConsulta = dbDataConsulta,
+                        Motivo = Consulta.Motivo,
+                        Diagnostico = Consulta.Diagnostico,
+                        Tratamento = Consulta.Tratamento,
+                        Notas = Consulta.Notas,
+                        IdPet = Consulta.IdPet
+                    };
+
+                    var result = await connection.QueryFirstAsync<int>(sb.ToString(), param: parameters);
                     return result;
                 }
 
@@ -46,9 +88,16 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task UpdateAsync(int Id, ConsultaVeterinario Consulta)
         {
+            // Normalize date before saving
+            string dbDataConsulta = Consulta.DataConsulta ?? string.Empty;
+            if (TryParseDate(Consulta.DataConsulta, out var parsed))
+            {
+                dbDataConsulta = parsed.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            }
+
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", Consulta.Id);
-            dynamicParameters.Add("@DataConsulta", Consulta.DataConsulta);
+            dynamicParameters.Add("@DataConsulta", dbDataConsulta);
             dynamicParameters.Add("@Motivo", Consulta.Motivo);
             dynamicParameters.Add("@Diagnostico", Consulta.Diagnostico);
             dynamicParameters.Add("@Tratamento", Consulta.Tratamento);

@@ -11,5 +11,14 @@
 
         public int IdPet { get; set; }
         public string NomePet { get; set; } = string.Empty;
+
+        public string DataConsultaFormatada
+        {
+            get
+            {
+                return DateTime.Parse(DataConsulta).ToString("yyyy-MM-dd");
+            }
+        }
+
     }
 }

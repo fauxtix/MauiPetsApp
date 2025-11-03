@@ -5,6 +5,7 @@ using MauiPetsApp.Core.Application.ViewModels.Despesas;
 using MauiPetsApp.Core.Application.ViewModels.LookupTables;
 using MauiPetsApp.Core.Domain;
 using Serilog;
+using System.Globalization;
 using System.Text;
 
 namespace MauiPetsApp.Infrastructure
@@ -16,6 +17,30 @@ namespace MauiPetsApp.Infrastructure
         public DespesaRepository(IDapperContext context)
         {
             _context = context;
+        }
+
+        private static bool TryParseDate(string input, out DateOnly parsed)
+        {
+            parsed = default;
+            if (string.IsNullOrWhiteSpace(input))
+                return false;
+
+            // Prefer ISO (DB canonical)
+            if (DateOnly.TryParseExact(input, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            // Common user formats (pt-PT)
+            if (DateOnly.TryParseExact(input, new[] { "dd/MM/yyyy", "d/M/yyyy" }, CultureInfo.GetCultureInfo("pt-PT"), DateTimeStyles.None, out parsed))
+                return true;
+
+            // Fallbacks
+            if (DateOnly.TryParse(input, CultureInfo.CurrentCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            if (DateOnly.TryParse(input, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
+                return true;
+
+            return false;
         }
 
         public async Task<int> InsertAsync(Despesa expense)
@@ -35,7 +60,37 @@ namespace MauiPetsApp.Infrastructure
             {
                 using (var connection = _context.CreateConnection())
                 {
-                    var result = await connection.QueryFirstAsync<int>(sb.ToString(), param: expense);
+                    // Normalize DataMovimento to ISO yyyy-MM-dd if possible
+                    string dbDataMovimento = expense.DataMovimento ?? string.Empty;
+                    if (TryParseDate(expense.DataMovimento, out var parsedMovimento))
+                    {
+                        dbDataMovimento = parsedMovimento.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    }
+
+                    // Normalize DataCriacao: prefer provided value, otherwise set now, stored as ISO
+                    string dbDataCriacao = expense.DataCriacao ?? string.Empty;
+                    if (TryParseDate(expense.DataCriacao, out var parsedCriacao))
+                    {
+                        dbDataCriacao = parsedCriacao.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    }
+                    else
+                    {
+                        dbDataCriacao = DateOnly.FromDateTime(DateTime.UtcNow).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    }
+
+                    var parameters = new
+                    {
+                        DataMovimento = dbDataMovimento,
+                        ValorPago = expense.ValorPago,
+                        Descricao = expense.Descricao,
+                        IdTipoDespesa = expense.IdTipoDespesa,
+                        IdCategoriaDespesa = expense.IdCategoriaDespesa,
+                        Notas = expense.Notas,
+                        DataCriacao = dbDataCriacao,
+                        TipoMovimento = expense.TipoMovimento
+                    };
+
+                    var result = await connection.QueryFirstAsync<int>(sb.ToString(), param: parameters);
                     return result;
                 }
 
@@ -51,9 +106,16 @@ namespace MauiPetsApp.Infrastructure
         public async Task<bool> UpdateAsync(int id, Despesa expense)
         {
 
+            // Normalize DataMovimento to ISO when possible
+            string dbDataMovimento = expense.DataMovimento ?? string.Empty;
+            if (TryParseDate(expense.DataMovimento, out var parsedMovimento))
+            {
+                dbDataMovimento = parsedMovimento.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            }
+
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", expense.Id);
-            dynamicParameters.Add("@DataMovimento", expense.DataMovimento);
+            dynamicParameters.Add("@DataMovimento", dbDataMovimento);
             dynamicParameters.Add("@ValorPago", expense.ValorPago);
             dynamicParameters.Add("@Descricao", expense.Descricao);
             dynamicParameters.Add("@IdTipoDespesa", expense.IdTipoDespesa);
@@ -272,15 +334,28 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task<IEnumerable<DespesaVM>?> GetExpensesByYearAsync(int year)
         {
-
             var yearExpenses = (await GetAllVMAsync())?.ToList();
-            return yearExpenses?.Where(w => DateTime.Parse(w.DataMovimento).Year == year);
+            if (yearExpenses == null) return Enumerable.Empty<DespesaVM>();
+
+            return yearExpenses.Where(w =>
+            {
+                if (TryParseDate(w.DataMovimento, out var d))
+                    return d.Year == year;
+                return false;
+            });
         }
 
         public async Task<IEnumerable<DespesaVM>?> GetExpensesByMonthAsync(int year, int month)
         {
             var yearExpenses = (await GetAllVMAsync())?.ToList();
-            return yearExpenses?.Where(w => DateTime.Parse(w.DataMovimento).Year == year && DateTime.Parse(w.DataMovimento).Month == month);
+            if (yearExpenses == null) return Enumerable.Empty<DespesaVM>();
+
+            return yearExpenses.Where(w =>
+            {
+                if (TryParseDate(w.DataMovimento, out var d))
+                    return d.Year == year && d.Month == month;
+                return false;
+            });
         }
 
         public async Task<LookupTableVM> GetDescricaoCategoriaDespesa(int Id)

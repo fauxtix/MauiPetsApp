@@ -675,4 +675,7 @@
   <data name="DeviceNotSupported" xml:space="preserve">
     <value>O seu dispositivo não é compatível.</value>
   </data>
+  <data name="Titulo_NoPets" xml:space="preserve">
+    <value>Não há Pets para tratar...</value>
+  </data>
 </root>

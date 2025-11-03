@@ -170,7 +170,7 @@
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <Label Grid.Column="0"
-                                               Text="{Binding DataMovimento, Converter={StaticResource stringToDateConverter}, StringFormat='{0:dd/MM/yyyy}'}"
+                                               Text="{Binding DataMovimento, Converter={StaticResource stringToDateConverter}, StringFormat='{0:yyyy-MM-dd}'}"
                                                    FontFamily="PoppinsSemiBold"
                                                    FontSize="12" VerticalOptions="Center"
                                                    FontAttributes="Bold" />
