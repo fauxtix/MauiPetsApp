@@ -45,18 +45,6 @@ The Documents Management functionality enables users to upload, view, edit, and 
 - 📂 **Open Documents:**  
   Launch files using the associated file path with the system's file viewer.
 
-## 🛠 Technical Details
-
-- 🧩 **MVVM Pattern:**  
-  The main ViewModel (`PetDocumentsViewModel`) manages document records per pet, handles picking/storage, editing, and deletion.
-  
-- 🔗 **Service and Repository Layer:**  
-  - The service layer (`DocumentsService`) converts between models, applies business rules, and calls the repository.
-  - The repository (`DocumentsRepository`) interfaces with the database for CRUD operations on the `Documento` table.
-
-- 🗃️ **Data Model**
-  - `Documento`/`DocumentoDto`/`DocumentoVM`: Store ID, Title, Description, DocumentPath, CreatedOn, PetId, and (for view model) PetName.
-
 ## 🚦 Usage Workflow
 
 1. **Add a Document:**  
@@ -78,14 +66,6 @@ The Documents Management functionality enables users to upload, view, edit, and 
 - Files are saved locally within the app's data directory.
 - The system ensures documents are uniquely named to avoid conflicts.
 - Deleting a document also cleans up associated local storage if the file exists.
-
----
-
-For implementation details or developer documentation, see:
-
-- [PetDocumentsViewModel.cs](https://github.com/fauxtix/MauiPetsApp/blob/main/MauiPets/Mvvm/ViewModels/Documents/PetDocumentsViewModel.cs)
-- [DocumentsService.cs](https://github.com/fauxtix/MauiPetsApp/blob/main/MauiPetsApp.Infrastructure/Services/DocumentsService.cs)
-- [DocumentsRepository.cs](https://github.com/fauxtix/MauiPetsApp/blob/main/MauiPetsApp.Infrastructure/Repositories/DocumentsRepository.cs)
 
 ---
 ### 📢 Notifications
