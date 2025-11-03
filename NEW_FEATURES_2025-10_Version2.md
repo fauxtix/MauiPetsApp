@@ -87,29 +87,6 @@ A funcionalidade de Gestão de Documentos permite ao usuário fazer upload, visu
 
 ---
 
-# 📄 Gestão de Documentos - MauiPetsApp
-
-A funcionalidade de Gestão de Documentos permite ao usuário fazer upload, visualizar, editar e excluir arquivos — como registros de vacinação, certificados ou qualquer documento relevante para um pet — vinculados a cada animal.
-
-## ✨ Funcionalidades
-
-- ➕ **Adicionar Documento:**  
-  Faça upload de arquivos PDF usando o seletor, insira um título e descrição, e associe cada documento a um pet específico.
-
-- 👀 **Visualizar Documentos:**  
-  Veja todos os documentos de um pet, incluindo título, descrição, localização do arquivo, data de criação e nome do animal associado.
-
-- ✏️ **Editar Documento:**  
-  Altere o título, a descrição ou substitua o arquivo do documento.
-
-- 🗑️ **Excluir Documento:**  
-  Remova documentos do banco de dados e do armazenamento local; inclui confirmação antes de apagar.
-
-- 📂 **Abrir Documentos:**  
-  Abra arquivos usando o caminho associado com o visualizador de arquivos do sistema.
-
----
-
 ## 🌐 Opção de Idioma
 
 Agora, na área de Configuração/Settings da aplicação, é possível escolher entre dois idiomas:
