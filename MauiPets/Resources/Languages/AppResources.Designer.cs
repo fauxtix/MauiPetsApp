@@ -169,6 +169,15 @@ namespace MauiPets.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O seu dispositivo não é compatível..
+        /// </summary>
+        public static string DeviceNotSupported {
+            get {
+                return ResourceManager.GetString("DeviceNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Editar.
         /// </summary>
         public static string EditMsg {

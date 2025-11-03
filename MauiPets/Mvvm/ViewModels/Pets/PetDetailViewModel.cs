@@ -192,8 +192,8 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
             await Shell.Current.GoToAsync($"{nameof(DewormerAddOrEditPage)}", true,
                 new Dictionary<string, object>
                 {
-                {"SelectedDewormer", SelectedDewormer},
-                {"IsEditing", IsEditing},
+                    {"SelectedDewormer", SelectedDewormer},
+                    {"IsEditing", IsEditing},
                 });
 
         }
@@ -303,8 +303,8 @@ public partial class PetDetailViewModel : BaseViewModel, IQueryAttributable
             await Shell.Current.GoToAsync($"{nameof(VetAppointmentAddOrEditPage)}", true,
                 new Dictionary<string, object>
                 {
-                {"SelectedAppointment", SelectedAppointment},
-                {"IsEditing", IsEditing},
+                    {"SelectedAppointment", SelectedAppointment},
+                    {"IsEditing", IsEditing},
                 });
 
         }

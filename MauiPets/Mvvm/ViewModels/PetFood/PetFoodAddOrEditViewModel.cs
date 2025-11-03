@@ -1,13 +1,11 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiPets.Mvvm.Views.Pets;
 using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using Microsoft.Extensions.Logging;
-
+using static MauiPets.Helpers.ViewModelsService;
 
 namespace MauiPets.Mvvm.ViewModels.PetFood
 {
@@ -78,7 +76,7 @@ namespace MauiPets.Mvvm.ViewModels.PetFood
                         await Shell.Current.GoToAsync($"{nameof(PetDetailPage)}", true,
                             new Dictionary<string, object>
                             {
-                            {"PetVM", pet },
+                                {"PetVM", pet },
                             });
                     }
                 }
@@ -120,7 +118,7 @@ namespace MauiPets.Mvvm.ViewModels.PetFood
                     var _petId = SelectedPetFood.IdPet;
                     var petVM = await _petService.GetPetVMAsync(_petId);
 
-                    await ShowToastMessageAsync(AppResources.RegistoCriadoSucesso);
+                    await ShowToastMessage(AppResources.RegistoCriadoSucesso);
 
                     await Shell.Current.GoToAsync($"{nameof(PetDetailPage)}", true,
                         new Dictionary<string, object>
@@ -142,26 +140,16 @@ namespace MauiPets.Mvvm.ViewModels.PetFood
                             {"PetVM", petVM}
                         });
 
-                    await ShowToastMessageAsync(AppResources.SuccessUpdate);
+                    await ShowToastMessage(AppResources.SuccessUpdate);
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error in SavePetFood: {ex.Message}");
                 IsBusy = false;
-                await ShowToastMessageAsync($"Error while creating Vaccine ({ex.Message})");
+                await ShowToastMessage($"Error while creating Vaccine ({ex.Message})");
             }
         }
 
-        private async Task ShowToastMessageAsync(string text)
-        {
-            CancellationTokenSource cancellationTokenSource = new();
-            ToastDuration duration = ToastDuration.Short;
-            double fontSize = 14;
-
-            var toast = Toast.Make(text, duration, fontSize);
-
-            await toast.Show(cancellationTokenSource.Token);
-        }
     }
 }

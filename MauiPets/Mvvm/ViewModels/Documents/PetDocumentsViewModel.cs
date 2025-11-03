@@ -4,6 +4,7 @@ using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using System.Collections.ObjectModel;
+using static MauiPets.Helpers.ViewModelsService;
 
 
 namespace MauiPets.Mvvm.ViewModels.Pets
@@ -197,6 +198,9 @@ namespace MauiPets.Mvvm.ViewModels.Pets
                         existing.DocumentPath = dto.DocumentPath;
                         var idx = Documents.IndexOf(existing);
                         Documents[idx] = existing;
+
+                        await ShowToastMessage(AppResources.SuccessUpdate);
+
                     }
                 }
                 else
@@ -230,6 +234,8 @@ namespace MauiPets.Mvvm.ViewModels.Pets
                     };
 
                     Documents.Insert(0, newVm);
+                    await ShowToastMessage(AppResources.SuccessInsert);
+
                 }
 
                 IsEditing = false;
@@ -307,8 +313,16 @@ namespace MauiPets.Mvvm.ViewModels.Pets
                 await _documentsService.DeleteDocument(id);
                 if (doc != null)
                 {
-                    try { if (!string.IsNullOrEmpty(doc.DocumentPath) && File.Exists(doc.DocumentPath)) File.Delete(doc.DocumentPath); } catch { }
+                    try
+                    {
+                        if (!string.IsNullOrEmpty(doc.DocumentPath) && File.Exists(doc.DocumentPath))
+                            File.Delete(doc.DocumentPath);
+                    }
+                    catch { }
+
                     Documents.Remove(doc);
+                    await ShowToastMessage(AppResources.SuccessDelete);
+
                 }
             }
             finally

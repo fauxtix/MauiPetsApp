@@ -166,10 +166,10 @@ namespace MauiPetsApp.Infrastructure
                 sb.Append("SELECT COUNT(pet.Id) ");
                 sb.Append("FROM Pet ");
                 sb.Append("WHERE (");
-                sb.Append("Pet.id IN (SELECT IdPet FROM vacina) OR ");
-                sb.Append("Pet.id IN (SELECT IdPet FROM racao) OR ");
+                sb.Append("Pet.id IN (SELECT IdPet FROM Vacina) OR ");
+                sb.Append("Pet.id IN (SELECT IdPet FROM Racao) OR ");
                 sb.Append("Pet.id in (SELECT IdPet FROM Desparasitante) OR ");
-                sb.Append("Pet.id in (SELECT PetId FROM documento) OR ");
+                sb.Append("Pet.id in (SELECT PetId FROM Documento) OR ");
                 sb.Append("Pet.id in (SELECT IdPet FROM ConsultaVeterinario)) ");
                 sb.Append("AND Pet.id = @Id");
 

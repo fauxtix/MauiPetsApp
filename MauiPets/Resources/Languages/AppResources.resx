@@ -672,4 +672,7 @@
   <data name="TituloTodasConsultas" xml:space="preserve">
     <value>Todas as consultas</value>
   </data>
+  <data name="DeviceNotSupported" xml:space="preserve">
+    <value>O seu dispositivo não é compatível.</value>
+  </data>
 </root>

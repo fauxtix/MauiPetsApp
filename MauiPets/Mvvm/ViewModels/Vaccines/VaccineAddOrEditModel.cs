@@ -10,8 +10,8 @@ using MauiPetsApp.Core.Application.Formatting;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using System.Collections.ObjectModel;
-using static MauiPets.Helpers.ViewModelsService;
 namespace MauiPets.Mvvm.ViewModels.Vaccines;
+using static MauiPets.Helpers.ViewModelsService;
 
 [QueryProperty(nameof(SelectedVaccine), "SelectedVaccine")]
 

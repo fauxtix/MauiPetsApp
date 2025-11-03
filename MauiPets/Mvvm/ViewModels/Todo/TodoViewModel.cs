@@ -118,7 +118,6 @@ namespace MauiPets.Mvvm.ViewModels.Todo
                 IsBusy = true;
                 await Task.Delay(200);
 
-                // Use tolerant DataFormat.DateParse to avoid culture-dependent exceptions
                 var todos = (await _service.GetAllVMAsync())
                     .OrderByDescending(c =>
                     {

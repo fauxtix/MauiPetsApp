@@ -7,7 +7,7 @@ using MauiPetsApp.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels.Despesas;
 using MauiPetsApp.Core.Application.ViewModels.LookupTables;
-
+using static MauiPets.Helpers.ViewModelsService;
 
 namespace MauiPets.Mvvm.ViewModels.Expenses;
 
@@ -166,6 +166,7 @@ public partial class ExpenseAddOrEditViewModel : ExpensesBaseViewModel, IQueryAt
                     }
 
                     var expenseVM = _mapper.Map<DespesaVM>(await _service.GetVMByIdAsync(insertedId));
+                    await ShowToastMessage(AppResources.SuccessInsert);
 
                     await Shell.Current.GoToAsync($"//{nameof(ExpensesPage)}", true,
                         new Dictionary<string, object>
@@ -187,7 +188,17 @@ public partial class ExpenseAddOrEditViewModel : ExpensesBaseViewModel, IQueryAt
                 try
                 {
                     await Task.Delay(200);
-                    await _service.UpdateAsync(DespesaDto.Id, DespesaDto);
+                    var updateOk = await _service.UpdateAsync(DespesaDto.Id, DespesaDto);
+
+                    if (!updateOk)
+                    {
+                        await Shell.Current.DisplayAlert("Error while updating expense",
+                            $"Please contact administrator..", "OK");
+                        return;
+
+                    }
+
+                    await ShowToastMessage(AppResources.SuccessUpdate);
 
                     await Shell.Current.GoToAsync($"//{nameof(ExpensesPage)}", true,
                         new Dictionary<string, object>

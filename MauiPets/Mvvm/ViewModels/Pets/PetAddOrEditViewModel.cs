@@ -170,6 +170,7 @@ public partial class PetAddOrEditViewModel : BaseViewModel, IQueryAttributable
         catch (Exception ex)
         {
             await Shell.Current.DisplayAlert("Error while 'GetLookupData", ex.Message, "Ok");
+            Log.Error(ex.Message, ex);
         }
     }
 
@@ -202,12 +203,14 @@ public partial class PetAddOrEditViewModel : BaseViewModel, IQueryAttributable
                 {
                     await Shell.Current.DisplayAlert("Error while inserting",
                         $"Please contact administrator..", "OK");
+                    Log.Error("Error while inserting Pet");
+
                     return;
                 }
 
-                var petVM = await _petService.GetPetVMAsync(insertedId);
-
                 await ShowToastMessage(AppResources.SuccessInsert);
+
+                var petVM = await _petService.GetPetVMAsync(insertedId);
 
                 await Shell.Current.GoToAsync($"{nameof(PetDetailPage)}", true,
                     new Dictionary<string, object>
@@ -220,8 +223,11 @@ public partial class PetAddOrEditViewModel : BaseViewModel, IQueryAttributable
                 PetDto.Genero = IsGenderMale ? "M" : "F";
 
                 await _petService.UpdateAsync(PetDto.Id, PetDto);
-                var petVM = await _petService.GetPetVMAsync(PetDto.Id);
+
                 await ShowToastMessage(AppResources.SuccessUpdate);
+
+                var petVM = await _petService.GetPetVMAsync(PetDto.Id);
+
                 await Shell.Current.GoToAsync($"{nameof(PetDetailPage)}", true,
                     new Dictionary<string, object>
                     {
@@ -233,6 +239,7 @@ public partial class PetAddOrEditViewModel : BaseViewModel, IQueryAttributable
         catch (Exception ex)
         {
             await Shell.Current.DisplayAlert("Error in 'SavePetData", ex.Message, "Ok");
+            Log.Error(ex.Message, ex);
         }
     }
 
@@ -285,10 +292,8 @@ public partial class PetAddOrEditViewModel : BaseViewModel, IQueryAttributable
             }
             else
             {
-                await Shell.Current.DisplayAlert("OOPS", "Your device isn't supported!", "OK");
+                await Shell.Current.DisplayAlert("OOPS", AppResources.DeviceNotSupported, "OK");
             }
         }
-
     }
-
 }

@@ -672,4 +672,7 @@
   <data name="TituloTodasConsultas" xml:space="preserve">
     <value>All consultations</value>
   </data>
+  <data name="DeviceNotSupported" xml:space="preserve">
+    <value>Your device isn't supported</value>
+  </data>
 </root>
