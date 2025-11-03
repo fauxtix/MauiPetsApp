@@ -86,6 +86,54 @@ A funcionalidade de Gestão de Documentos permite ao usuário fazer upload, visu
 - Ao excluir um documento, o armazenamento local também é limpo caso o arquivo exista.
 
 ---
+
+# 📄 Gestão de Documentos - MauiPetsApp
+
+A funcionalidade de Gestão de Documentos permite ao usuário fazer upload, visualizar, editar e excluir arquivos — como registros de vacinação, certificados ou qualquer documento relevante para um pet — vinculados a cada animal.
+
+## ✨ Funcionalidades
+
+- ➕ **Adicionar Documento:**  
+  Faça upload de arquivos PDF usando o seletor, insira um título e descrição, e associe cada documento a um pet específico.
+
+- 👀 **Visualizar Documentos:**  
+  Veja todos os documentos de um pet, incluindo título, descrição, localização do arquivo, data de criação e nome do animal associado.
+
+- ✏️ **Editar Documento:**  
+  Altere o título, a descrição ou substitua o arquivo do documento.
+
+- 🗑️ **Excluir Documento:**  
+  Remova documentos do banco de dados e do armazenamento local; inclui confirmação antes de apagar.
+
+- 📂 **Abrir Documentos:**  
+  Abra arquivos usando o caminho associado com o visualizador de arquivos do sistema.
+
+---
+
+## 🌐 Opção de Idioma
+
+Agora, na área de Configuração/Settings da aplicação, é possível escolher entre dois idiomas:
+
+- 🇵🇹 **Português**
+- 🇬🇧 **Inglês**
+
+O utilizador pode aceder à opção de idioma nas Configurações e alternar entre Português e Inglês.  
+A escolha é aplicada instantaneamente em toda a interface da app, proporcionando uma experiência personalizada para diferentes perfis de utilizador.
+
+**Como funciona:**  
+- O idioma selecionado é guardado nas preferências do utilizador.
+- A interface e todos os textos da aplicação são apresentados no idioma escolhido.
+- Idiomas disponíveis: `Português (pt-PT)` e `English (en-US)`.
+
+**Alterar Idioma:**  
+   - Abra o menu Configuração 🌐.
+   - Selecione entre Português 🇵🇹 e Inglês 🇬🇧 na opção de Idioma.
+   - Pronto! A interface é atualizada para o idioma selecionado.
+
+## 💡 Observações
+- A troca de idioma é aplicada instantaneamente e é memorizada para futuras utilizações.
+
+---
 ## 🔐 Backup e Restauração de Dados 
 
 - **Backup Manual**
