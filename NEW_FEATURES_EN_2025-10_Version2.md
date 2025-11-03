@@ -68,6 +68,30 @@ The Documents Management functionality enables users to upload, view, edit, and 
 - Deleting a document also cleans up associated local storage if the file exists.
 
 ---
+
+# 🌐 Language Selection Feature
+
+A new option under **Settings** now allows you to choose the application's display language:
+
+- 🇵🇹 **Portuguese**
+- 🇬🇧 **English**
+
+Easily change between Portuguese and English at any time in the Settings menu. Your preferred language is instantly applied throughout the app’s interface.
+
+**How it works:**  
+- The selected language is saved to your user preferences.
+- All screens and text labels switch seamlessly to your chosen language.
+- Available languages: `Português (pt-PT)` and `English (en-US)`.
+
+---
+
+## 🛠 Technical Details
+
+- The selection is powered by the `LanguageSettingsViewModel`, which applies the chosen culture (`pt-PT` or `en-US`) for all texts and resources.
+- The change is immediate and will persist for future sessions.
+
+```
+
 ### 📢 Notifications
 
 **Purpose:**  
