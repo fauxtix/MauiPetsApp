@@ -1,48 +1,289 @@
-# Daisy Pets - Mobile 🐶🐱
+# Daisy Pets / Mobile 🐶🐱
 
-- [Inglês](./README.md)
+...
 
-Projeto para ajudar os donos de animais atarefados, a acompanhar os cuidados diários e a longo prazo dos seus animais.
-Poderá ser utilizado, também, caso se pretenda iniciar uma operação de resgate e acolher os mesmos como FAT (família de acolhimento temporário).
+# Funcionalidades principais
 
-Utiliza C# como linguagem de desenvolvimento e foi construído usando a plataforma .Net 8.
-
-Devido à sua simplicidade, foi escolhida a base de dados SQLite para o armazenamento de dados ([Estrutura](./MauiPets/Database/PetsDB.db.sql)).
-
-O ORM escolhido para trabalhar com a base de dados foi o Dapper, devido à sua facilidade de utilização e rapidez, especialmente em consultas.
-
-# Funcionalidades Principais
-
-- Fácil de usar
-- Registar vacinas, visitas ao veterinário, aplicação de desparasitantes e dosagem de alimentação (ração) ;
-- Alertas para vacinas e aplicação de desparasitantes, que possam ocorrer dentro de 15 ou 30 dias.
-- Gestão de despesas (com seleção de categorias e subcategorias);
-- Gestão de lista de Tarefas - gerir compromissos importantes, como consultas veterinárias, administração de medicamentos, vacinas, compras de ração e produtos essenciais, entre outros;
-- Gestão de contactos, com opção de visualização em mapa;
-- Definições da app (tabelas de referência, categorias/sub-categorias de despesas);
-- Gestão de Logs (análise e resolução de problemas) - permite o envio de e-mail do erro/aviso gerado.
-
-### Novas Funcionalidades (Out/2025):
-
-[O que há de novo](NEW_FEATURES_2025-10_Version2.md)
+Abaixo estão as principais capacidades do aplicativo, detalhadas para fácil uso e referência.
 
 ---
-# Tecnologias Utilizadas
+
+### 🐾 Registo de Cuidados ao Animal  
+**Objetivo:**  
+Registe e gerencie informações vitais relacionadas aos cuidados médicos e diários dos seus animais.
+
+**Funções principais:**  
+- **Vacinas:** Registe vacinações passadas e agendadas com data, tipo e número de lote.
+- **Visitas ao Veterinário:** Documente consultas, diagnósticos, tratamentos e recomendações.
+- **Desparasitantes & Medicamentos:** Controle desparasitações, medicamentos e cronogramas de dosagem.
+- **Dosagem de Alimentação:** Defina e consulte a quantidade diária de comida e observações especiais.
+
+**Benefícios:**  
+- Histórico centralizado de saúde e cuidados para fácil acesso e compartilhamento com veterinários.
+- Garante o cumprimento dos agendamentos médicos para bem-estar dos animais.
+
+**Fluxo de trabalho:**  
+- A partir do perfil do animal, navegue até a aba de Saúde para adicionar ou consultar eventos.
+- Receba alertas visuais para ações em atraso ou próximas.
+
+---
+
+### ⏰ Alertas de Vacinas & Desparasitantes  
+**Objetivo:**  
+Notificar automaticamente o usuário quando ações médicas (vacinas, desparasitantes) estiverem próximas do vencimento.
+
+**Recursos:**  
+- Períodos de alerta personalizáveis (15 ou 30 dias antes da data).
+- Badges e notificações visuais claras dentro do aplicativo.
+
+**Uso:**  
+- O painel exibe eventos "A vencer em breve" para sua atenção.
+- Ao tocar em um alerta, abre-se o animal relacionado e a ação necessária.
+
+---
+
+### 💰 Gestão de Despesas  
+**Objetivo:**  
+Controlar e categorizar os gastos relacionados ao cuidado do animal.
+
+**Recursos:**  
+- Adicione novas despesas associadas a animais individuais.
+- Escolha entre categorias (comida, saúde, higiene) e subcategorias.
+- Veja, edite ou exclua lançamentos.
+- Resuma despesas ao longo do tempo para controle de orçamento.
+
+**Fluxo de trabalho:**  
+- Acesse “Despesas” no menu principal.
+- Adicione ou atualize gastos; filtre e ordene por categoria, data ou animal.
+
+---
+
+### ✅ Gestão de Tarefas  
+**Objetivo:**  
+Organize e monitore tarefas e eventos importantes relacionados ao animal.
+
+**Recursos:**  
+- Crie tarefas para consultas, medicamentos, compras, etc.
+- Veja todas as tarefas pendentes e concluídas.
+- Defina prazos e lembretes.
+- Marque tarefas como feitas/pendentes.
+
+**Fluxo de trabalho:**  
+- Vá até “Lista de Tarefas”.
+- Adicione, edite ou exclua tarefas; filtre por status ou animal.
+
+---
+
+### 📇 Gestão de Contactos  
+**Objetivo:**  
+Armazene contatos essenciais (veterinários, fornecedores, emergência) e acesse localizações pelo mapa.
+
+**Recursos:**  
+- Adicione detalhes dos contatos (nome, telefone, endereço, função).
+- Abra o mapa diretamente pelo registro de contato.
+- Filtre contatos por tipo (veterinário, fornecedor, etc.).
+
+---
+
+### ⚙️ Configurações do App  
+**Objetivo:**  
+Personalize tabelas e categorias operacionais do aplicativo.
+
+**Recursos:**  
+- Edite tabelas de referência (raças, cores, tratamentos médicos, etc.).
+- Gerencie categorias/subcategorias de despesas.
+- Configure preferências de notificações e backup.
+
+---
+
+### 📝 Gestão de Logs  
+**Objetivo:**  
+Monitore eventos do sistema e erros para análise técnica.
+
+**Recursos:**  
+- Veja logs cronológicos de eventos, avisos e erros.
+- Opções para excluir todos os logs ou entradas específicas.
+- Envie logs por email para suporte ou análise.
+
+**Fluxo de trabalho:**  
+- Abra a página “Logs”.
+- Revise, limpe ou compartilhe logs conforme a situação.
+
+---
+
+### 🌐 Seleção de Idioma
+
+**Objetivo:**  
+Alterne entre Português e Inglês e use o app no idioma preferido.
+
+**Recursos:**  
+- Acessível no menu de Configurações em "Idioma".
+- Escolha entre:
+  - 🇵🇹 **Português**
+  - 🇬🇧 **Inglês**
+- Atualiza todos os menus e telas do app instantaneamente.
+- Preferência de idioma vinculada ao perfil do usuário.
+
+**Fluxo de trabalho:**  
+- Vá em “Configurações” e selecione “Idioma”.
+- Escolha o idioma preferido; interface será atualizada automaticamente.
+- Idiomas suportados: `Português (pt-PT)` e `English (en-US)`.
+
+---
+
+### 📸 Galeria de Fotos do Animal
+
+- **Galeria por animal**
+  - Cada animal possui uma galeria de fotos associada.
+  - Funcionalidades:
+    - Adicionar fotos (câmera ou galeria do dispositivo).
+    - Visualizar fotos em modo galeria.
+    - Remover fotos individualmente.
+    - Ampliar foto no popup.
+  - Fotos armazenadas localmente e associadas ao animal respectivo.
+
+- **UI/UX Integrado**
+  - Acesse a galeria diretamente pelo perfil do animal.
+  - Mensagens visuais para ações do usuário (ex: exclusão de fotos).
+  - Navegação fácil entre galeria e detalhes do animal.
+
+---
+
+### 📄 Gestão de Documentos - MauiPetsApp
+
+A funcionalidade de gestão de documentos permite enviar, consultar, editar e apagar arquivos—como registros de vacinas, certificados ou qualquer documento relevante relacionado ao animal.
+
+## ✨ Recursos
+
+- ➕ **Adicionar Documentos:**  
+  Envie arquivos PDF, insira título e descrição, e vincule ao animal desejado.
+
+- 👀 **Visualizar Documentos:**  
+  Veja todos os documentos vinculados ao animal, incluindo título, descrição, local do arquivo, data de criação, nome do animal.
+
+- ✏️ **Editar Documentos:**  
+  Alterar título/descrição ou substituir o arquivo carregado.
+
+- 🗑️ **Excluir Documentos:**  
+  Remover documentos do banco de dados e armazenamento local; inclui diálogos de confirmação.
+
+- 📂 **Abrir Documentos:**  
+  Abre arquivos pelo caminho e visualizador de PDF do sistema.
+
+## 🚦 Fluxo de uso
+
+1. **Adicionar Documento:**  
+   - No perfil do animal, escolha "Adicionar Documento" ➕.
+   - Selecione um arquivo PDF 📄.
+   - Informe Título e Descrição 📝.
+   - Salve e vincule o documento ao animal 🐾.
+
+2. **Editar ou Remover Documento:**  
+   - Selecione o documento na lista 📃.
+   - Edite dados ✏️ ou exclua 🗑️ com confirmação.
+
+3. **Abrir/Visualizar Documento:**  
+   - Toque no documento para abrir no leitor de PDF 📂.
+
+## 💡 Observações
+
+- Apenas PDFs são aceitos.
+- Arquivos são salvos localmente na pasta de dados do aplicativo.
+- Documentos têm nome único para evitar conflitos.
+- Ao excluir, o arquivo é também removido do armazenamento local, se existir.
+
+---
+
+### 🌐 Seleção de Idioma
+
+Nova opção em **Configurações** permite escolher o idioma do app:
+
+- 🇵🇹 **Português**
+- 🇬🇧 **Inglês**
+
+Mude de idioma a qualquer momento no menu de configurações. Preferência aplicada instantaneamente à interface.
+
+**Como funciona:**  
+- O idioma escolhido é salvo nas preferências do usuário.
+- Todas as telas e textos mudam conforme selecionado.
+- Idiomas disponíveis: `Português (pt-PT)` e `English (en-US)`.
+
+---
+
+### 📢 Notificações
+
+**Objetivo:**  
+Alertar sobre notificações existentes no sistema que ainda não foram marcadas como lidas/processadas (mensagens, lembretes, tarefas).
+
+**Na página:**  
+- Ícone de sino no topo direito.
+- Badge vermelho com número de notificações pendentes.
+- Toque no sino para ver lista de notificações.
+- Marque individualmente como lidas/processadas, removendo da contagem.
+- Apenas não lidas aparecem no badge; lidas são desconsideradas.
+
+**Tipos de notificações:**  
+- Lembretes de eventos ou consultas.
+- Alertas de tarefas pendentes.
+- Mensagens de aviso do sistema.
+- Comunicações internas exigindo ação.
+
+---
+
+## 🔐 Backup e Restauração de Dados
+
+- **Backup Manual**
+  - Crie backups do banco de dados local via interface.
+  - Veja nome, data e local do último backup.
+  - Backup salvo como arquivo local, com indicação clara de sucesso/erro.
+  - Confirmação antes de substituir backups existentes.
+
+- **Restauração Segura**
+  - Restaure seu banco de dados a partir de um backup.
+  - Confirmação obrigatória antes de substituir os dados atuais.
+  - Informações visuais sobre diferenças com o backup.
+  - Feedback visual e mensagens de sucesso/falha.
+
+---
+
+## 📄 Exportação e Partilha de PDF do Perfil Animal
+
+- **Gerar PDF detalhado**
+  - Crie um PDF completo para qualquer animal, incluindo:
+    - Dados principais (nome, espécie, raça, idade, chip, etc.)
+    - Histórico de vacinas, desparasitantes, alimentação, consultas veterinárias.
+
+- **Partilha fácil**
+  - O PDF pode ser compartilhado via opções nativas do dispositivo (email, WhatsApp, etc.).  
+
+---
+
+## Segurança e Privacidade
+
+- **Validação e confirmação para ações críticas**
+  - Ações como backup/restauração e exclusão de fotos exigem confirmação do usuário.
+  - Mensagens claras e feedback visual para todas operações sensíveis.
+
+- **Gestão local dos dados**
+  - Fotos e backups são geridos localmente, garantindo privacidade.
+  - Nenhum dado sensível é enviado para servidores externos sem ação do usuário.
+
+---
+
+# Tecnologias usadas
 
 - **C#**
-- **.NET 8 MAUI** - Framework para construir aplicações móveis multiplataforma para Android, iOS, MacOS e Windows;
-- **SQLite** - Base de dados local para armazenar os vários objetos/entidades usados na app;
-- **CommunityToolkit.Maui/MVVM** - Bibliotecas para simplificar o desenvolvimento de aplicações móveis com MAUI;
-- **Serilog** - Biblioteca para log de informações de qualquer aplicação . NET, que trabalha com Sinks como base. 
-  O Serilog em sí, é uma estrutura que nos permite guardar quaisquer tipos de informação, de forma organizada, durante a execução da aplicação;
-- **AutoMapper** - Biblioteca que realiza a tarefa de mapeamento de um objeto (classe) para outro;
-- **FluentValidation** - Biblioteca que permite criar validações de dados de forma simples e rápida. 
-  Com ela, podemos usar expressões Lambda para “construir regras de validações” com retorno de mensagem de erro para cada propriedade das entidades.
-- Outras
+- **.NET 8 MAUI** - Framework cross-platform para Android, iOS, MacOS e Windows;
+- **SQLite** - Banco de dados local para armazenamento das entidades usadas no app;
+- **CommunityToolkit.Maui/MVVM** - Bibliotecas para simplificar desenvolvimento mobile com MAUI;
+- **Serilog** - Biblioteca de logs estruturados.
+- **AutoMapper** - Mapeamento entre classes.
+- **FluentValidation** - Validação de dados simples e rápida.
+- Outros
 
----
+ ## 🚀 1. Gerando o APK para seu Projeto MAUI (.NET MAUI)
 
-## 📦 Publicação Ad-Hoc de APK (.NET MAUI Android)
+Siga esses passos para gerar o arquivo APK e instalar em seu aparelho Android.
 
 ### 1️⃣ Pré-requisitos
 
@@ -50,104 +291,7 @@ O ORM escolhido para trabalhar com a base de dados foi o Dapper, devido à sua f
 - Projeto .NET MAUI configurado para Android
 - Android SDK e workload .NET MAUI instalados
 
----
-
-### 2️⃣ Passos Detalhados
-
-#### 🟢 2.1 Garantir o Formato do Pacote APK
-
-1. No Solution Explorer, clique com o botão direito no projeto MAUI principal (ex: `MauiPets`).
-2. Selecione **Propriedades**.
-3. Navegue até ao separador **Android > Options**.
-4. No campo **Release**, selecione **apk** (por defeito está como aab).
-   - Isto garante que o ficheiro gerado será um APK (instalável), e não um AAB (usado para Play Store).
-
----
-
-#### 🟢 2.2 Escolher o Destino de Implantação
-
-1. Na barra de ferramentas do Visual Studio, no drop-down **Debug Target**, selecione **Android Emulators** e depois o emulador pretendido (ou deixe selecionado para dispositivo físico, caso vá testar em telemóvel).
-
----
-
-#### 🟢 2.3 Selecionar a Configuração Release
-
-1. Na barra de ferramentas do Visual Studio, no drop-down **Solution Configuration**, altere de **Debug** para **Release**.
-
----
-
-#### 🟢 2.4 Criar o Arquivo de Distribuição (Archive)
-
-1. No Solution Explorer, clique com o botão direito no projeto MAUI principal.
-2. Selecione **Publish...**.
-3. O Visual Studio abre o **Archive Manager** e começa a arquivar o pacote APK.
-
----
-
-#### 🟢 2.5 Após Arquivo Criado, Distribuir o APK
-
-1. No **Archive Manager**, após o processo terminar, selecione o arquivo gerado.
-2. Clique no botão **Distribute...**.
-3. Surge o diálogo **Distribute - Select Channel**.  
-   - Selecione **Ad Hoc**.
-
----
-
-#### 🟢 2.6 Identidade de Assinatura (Keystore)
-
-1. No diálogo **Distribute - Signing Identity**, clique no botão **+** para criar uma nova identidade de assinatura (ou **Import** para usar uma já existente).
-2. Surge o diálogo **Create Android Keystore**:
-   - **Alias**: Nome identificativo para a chave.
-   - **Password**: Crie e confirme uma password segura para proteger a chave.
-   - **Validity**: Defina a validade em anos.
-   - **Full Name, Organization Unit, Organization, City or Locality, State or Province, Country Code**: Preencha os dados do responsável/organização.
-   - Clique em **Create** para criar o keystore.
-3. O keystore será guardado em:  
-   `C:\Users\{Username}\AppData\Local\Xamarin\Mono for Android\Keystore\{Alias}\{Alias}.keystore`
-
-> **Nota Importante:**  
-> O keystore e a password não ficam guardados na sua solução Visual Studio. Faça backup! Sem eles, não conseguirá assinar futuras versões com a mesma identidade.
-
----
-
-#### 🟢 2.7 Selecionar Identidade e Guardar APK
-
-1. De volta ao diálogo **Distribute - Signing Identity**, selecione a identidade de assinatura recém-criada.
-2. Clique em **Save As...** para escolher a localização e o nome do ficheiro APK.
-3. Confirme a localização e o nome no diálogo **Save As**.
-
----
-
-#### 🟢 2.8 Introduzir a Password de Assinatura
-
-1. Quando surgir o diálogo **Signing Password**, introduza a password definida para o keystore e clique em **OK**.
-
----
-
-#### 🟢 2.9 Abrir a Pasta de Distribuição
-
-1. Após a publicação, no **Archive Manager**, clique em **Open Distribution** para abrir a pasta onde o APK foi guardado.
-
----
-
-#### 🟢 2.10 Transferir e Instalar no Dispositivo
-
-1. Transfira o APK para o telemóvel (USB, email, nuvem, etc.).
-2. No Android, vá a **Definições > Segurança**.
-3. Ative **Instalar apps de fontes desconhecidas**.
-4. No gestor de ficheiros, localize o APK e toque para instalar.
-5. Siga as instruções do Android.
-
----
-
-### ⚠️ Notas Importantes
-
-- O APK Ad-Hoc é para distribuição manual/testes fora da Play Store.
-- O keystore e password são essenciais para futuras atualizações.
-- O mesmo APK pode ser instalado em múltiplos dispositivos.
-- Faça sempre backup do keystore e password.
-
----
+...
 
 # Screenshots
 
@@ -188,7 +332,7 @@ O ORM escolhido para trabalhar com a base de dados foi o Dapper, devido à sua f
 ![TodoListEditPage](https://github.com/user-attachments/assets/b54614d3-74c5-4af9-b831-ab78e035f81f)
 ![TodoListPendingPage](https://github.com/user-attachments/assets/8222bd72-1e9e-4e39-82ff-fe877c93fb05)
 
-### Configuração
+### Configurações
 
 ![SettingsPage_1](https://github.com/user-attachments/assets/1bafe3dc-e6e3-4e4b-80ef-63ca8a95a574)
 ![SettingsPage_2](https://github.com/user-attachments/assets/4d9802c5-0802-4618-ab50-fb9418786677)
@@ -204,32 +348,31 @@ O ORM escolhido para trabalhar com a base de dados foi o Dapper, devido à sua f
 ![Logs_3_SendEmail_Android_Page](https://github.com/user-attachments/assets/6fd7a63a-b87d-478e-8e4b-4825af9c6e4b)
 ![Logs_3_GMail_Entry](https://github.com/user-attachments/assets/b84271c1-a1de-4fd8-8012-129e72cf7215)
 
+## 🌟 Contribuindo
 
-## 🌟 Contribuir
-
-As contribuições para o projeto **MauiPets** são bem-vindas! Se encontrar algum problema ou tiver sugestões de melhorias, por favor, abra uma issue no repositório do GitHub: https://github.com/fauxtix/DaisyPets/issues
+Contribuições para o Daisy Pets são bem-vindas! Se encontrar problemas ou tiver sugestões, abra uma issue em https://github.com/fauxtix/DaisyPets/issues
 
 Faça um fork do projeto (https://github.com/fauxtix/DaisyPets/fork)
 
-Crie um ramo para a sua modificação (git checkout -b fauxtix/DaisyPets(MauiPetsApp)
+Crie um branch para sua modificação (git checkout -b fauxtix/DaisyPets)
 
 Commit (git commit -am 'Adicionar algum fooBar')
 
-Push_ (git push origin fauxtix/DaisyPets)
+Push (git push origin fauxtix/DaisyPets)
 
 Crie um novo Pull Request
 
-Ao contribuir com código, por favor siga o estilo de código existente e submeta um pull request com as suas alterações.
+Ao contribuir, siga o estilo de código existente.
 
 ## ⚖ Licença
 
-O projeto MauiPetsApp está licenciado sob a Licença MIT. Pode encontrar mais informações no ficheiro [LICENSE]((https://github.com/fauxtix/DaisyPets/blob/master/MauiPetsApp/LICENSE.md).
+Licenciado sob MIT. Veja [LICENSE](https://github.com/fauxtix/DaisyPets/blob/master/MauiPetsApp/LICENSE.md).
 
-## 📞 Contacto
+## 📞 Contato
 
-Se tiver alguma dúvida ou precisar de mais assistência, pode contactar o gestor do projeto:
+Para dúvidas ou assistência, contate o mantenedor:
 
-- 👨‍💻 Autor: Fausto Luís
-- ✉ E-mail: fauxtix.luix@hotmail.com
+- 👨‍💻 Fausto Luís
+- ✉ fauxtix.luix@hotmail.com
 
-Sinta-se à vontade para contactar-me com qualquer feedback ou questão.
+Envie feedback ou perguntas à vontade!
