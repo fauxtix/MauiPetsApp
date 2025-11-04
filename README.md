@@ -58,6 +58,11 @@ Track and categorize spending associated with pet care.
 
 ---
 
+### 📄 Documents Management  
+> _See complete documentation below in [Documents Management - MauiPetsApp](#documents-management---mauipetsapp)_
+
+---
+
 ### ✅ ToDo List Management  
 **Purpose:**  
 Organize and monitor important tasks and events related to pet care.
@@ -108,6 +113,26 @@ Track system events and errors for troubleshooting and analysis.
 **Workflow:**  
 - Open “Logs” page.
 - Review, clean, or share logs based on situation.
+
+---
+
+### 🌐 Language Selection Feature
+
+**Purpose:**  
+Switch between Portuguese and English to use the app in your preferred language.
+
+**Features:**  
+- Accessible in the Settings menu under "Language".
+- Choose between:
+  - 🇵🇹 **Portuguese**
+  - 🇬🇧 **English**
+- Instantly updates all app screens and menus to your selected idiom.
+- Language preference is saved to your user profile for convenience.
+
+**Workflow:**  
+- Go to “Settings” and select “Language”.
+- Pick your preferred idiom; app interface updates automatically.
+- Supported locales: `Português (pt-PT)` and `English (en-US)`.
 
 ---
 
