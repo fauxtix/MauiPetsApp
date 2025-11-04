@@ -58,11 +58,6 @@ Track and categorize spending associated with pet care.
 
 ---
 
-### 📄 Documents Management  
-> _See complete documentation below in [Documents Management - MauiPetsApp](#documents-management---mauipetsapp)_
-
----
-
 ### ✅ ToDo List Management  
 **Purpose:**  
 Organize and monitor important tasks and events related to pet care.
