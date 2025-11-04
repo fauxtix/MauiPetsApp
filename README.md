@@ -18,12 +18,13 @@ The ORM chosen to work with the database was Dapper, due to its ease of use and 
 - Record vaccinations, visits to the vet, applying dewormers and feed dosage;
 - Alerts for vaccinations and deworming treatments that are due within 15 or 30 days.
 - Expense management (with category and subcategory selection);
+- Documents management
 - ToDo lists management - manage important commitments such as vet appointments, medication administration, vaccinations, food purchases, and essential products, among others;
 - Contact management, with an option to view the location on a map;
 - App settings (reference tables, expense categories/subcategories);
 - Log management (analysis and problem resolution) - with options to delete and send an e-mail with the generated error/alert.
 
-  ## 📸 Pet Photo Gallery
+## 📸 Pet Photo Gallery
 
 - **Per-Pet Photo Gallery**
   - Each pet now has an associated photo gallery.
