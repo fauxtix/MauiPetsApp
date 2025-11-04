@@ -1,30 +1,117 @@
 # Daisy Pets / Mobile 🐶🐱
 
-
-- [Portuguese](./PORTUGUESE.MD)
-
-A project for helping busy pet owners keep track of the daily, and long-term routine care of their pets.
-It can also be used if you want to start a rescue operation and take them in as a temporary family host.
-
-It uses C# as the development language, and was built using the .Net 8 platform.
-
-Due to its simplicity, the SQLite database was chosen for data storage ([Structure](./MauiPets/Database/PetsDB.db.sql)). 
-
-The ORM chosen to work with the database was Dapper, due to its ease of use and speed, especially in queries.
+...
 
 # Key Features
 
-- Easy to use
-- Record vaccinations, visits to the vet, applying dewormers and feed dosage;
-- Alerts for vaccinations and deworming treatments that are due within 15 or 30 days.
-- Expense management (with category and subcategory selection);
-- Documents management
-- ToDo lists management - manage important commitments such as vet appointments, medication administration, vaccinations, food purchases, and essential products, among others;
-- Contact management, with an option to view the location on a map;
-- App settings (reference tables, expense categories/subcategories);
-- Log management (analysis and problem resolution) - with options to delete and send an e-mail with the generated error/alert.
+Below are the main capabilities of the app, detailed for easy use and reference.
 
-## 📸 Pet Photo Gallery
+---
+
+### 🐾 Pet Care Records  
+**Purpose:**  
+Record and manage vital information related to your pets’ medical and daily care.
+
+**Main Functions:**  
+- **Vaccinations:** Log past and scheduled vaccinations with date, type, and batch numbers.
+- **Vet Visits:** Document vet appointments, diagnoses, treatments, and recommendations.
+- **Dewormers & Medication:** Track deworming, medications, and dosage schedules.
+- **Feed Dosage:** Set and review daily feed amounts and special dietary notes.
+
+**Benefits:**  
+- Centralized health & care history for quick access and sharing with veterinarians.
+- Ensures compliance with medical schedules to maintain pet wellness.
+
+**Workflow:**  
+- From each Pet Profile, navigate to Health tab to add or review events.
+- Receive visual alerts for overdue or upcoming care actions.
+
+---
+
+### ⏰ Vaccination & Dewormer Alerts  
+**Purpose:**  
+Automatically notify users when medical actions (vaccinations, dewormers) are due soon.
+
+**Features:**  
+- Customizable alert periods (15 or 30 days before due date).
+- Clear visual badges and notifications within the app.
+
+**Usage:**  
+- The dashboard surfaces “Due Soon” events for your attention.
+- Tapping an alert brings up the related pet and required action.
+
+---
+
+### 💰 Expense Management  
+**Purpose:**  
+Track and categorize spending associated with pet care.
+
+**Features:**  
+- Add new expenses linked to individual pets.
+- Choose from categories (food, medical, grooming) and subcategories.
+- View, edit, or delete entries.
+- Summarize expenses over time for budget insight.
+
+**Workflow:**  
+- Access “Expenses” from main menu.
+- Add or update expenses; filter and sort by category, date, or pet.
+
+---
+
+### ✅ ToDo List Management  
+**Purpose:**  
+Organize and monitor important tasks and events related to pet care.
+
+**Features:**  
+- Create ToDo items for vet visits, medications, purchases, etc.
+- View all outstanding and completed tasks.
+- Set due dates and reminders.
+- Mark tasks as done/pending.
+
+**Workflow:**  
+- Go to “ToDo List” section.
+- Add, edit, or delete tasks; filter by status or pet.
+
+---
+
+### 📇 Contact Management  
+**Purpose:**  
+Store essential contacts (vets, suppliers, emergency numbers) and access map location info.
+
+**Features:**  
+- Add contact details (name, phone, address, role).
+- Directly open map to location from contact record.
+- Filter contacts by type (vet, supplier, etc.).
+
+---
+
+### ⚙️ App Settings  
+**Purpose:**  
+Personalize app tables and operational categories.
+
+**Features:**  
+- Edit reference tables (breeds, colors, medical treatments, etc.).
+- Manage expense categories/subcategories for better organization.
+- Configure notification and backup preferences.
+
+---
+
+### 📝 Log Management  
+**Purpose:**  
+Track system events and errors for troubleshooting and analysis.
+
+**Features:**  
+- View chronological logs of application events, warnings, and errors.
+- Options to delete all logs or specific entries.
+- Send log files via email for support or analysis.
+
+**Workflow:**  
+- Open “Logs” page.
+- Review, clean, or share logs based on situation.
+
+---
+
+### 📸 Pet Photo Gallery
 
 - **Per-Pet Photo Gallery**
   - Each pet now has an associated photo gallery.
