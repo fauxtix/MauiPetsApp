@@ -20,6 +20,7 @@ While spreadsheets work for basic tracking, **Daisy Pets** offers advantages tha
 ✅ **Shareable Profiles** - Generate and share complete PDF pet profiles with vets or pet sitters instantly  
 ✅ **Mobile-First Design** - Quick access on your phone when at the vet or pet store  
 ✅ **Expense Tracking** - Understand your pet care costs with categorized spending reports  
+✅ **Situation Filtering** - Ideal for shelters and associations: filter animals by status (adopted, in kennel, on street, etc.)  
 ✅ **Offline Access** - All data stored locally; no internet required  
 ✅ **Data Security** - Built-in backup and restore features protect your pet's history
 
@@ -29,10 +30,10 @@ While spreadsheets work for basic tracking, **Daisy Pets** offers advantages tha
 *"I use Daisy Pets to track my dog's vaccination schedule. The app alerts me 30 days before shots are due, and I can share his complete medical PDF with the boarding kennel with one tap."*
 
 **Small Rescue Organization (10-20 animals):**  
-*"We manage medical records for all our rescue cats. When adopters come, we can instantly show them the complete care history and share a PDF profile."*
+*"We manage medical records for all our rescue cats. When adopters come, we can instantly show them the complete care history and share a PDF profile. We use the situation filter to quickly see which animals are 'Available for adoption' vs. 'Already adopted'."*
 
 **Large Shelter (50+ animals):**  
-*"Daisy Pets helps us coordinate care across multiple staff members. Everyone can see upcoming appointments, expenses, and health status at a glance."*
+*"Daisy Pets helps us coordinate care across multiple staff members. Everyone can see upcoming appointments, expenses, and health status at a glance. The situation filter is essential - we can filter by 'In kennel', 'On the street', or 'With negligent owner' to prioritize rescues and care."*
 
 ---
 
@@ -59,6 +60,37 @@ Record and manage vital information related to your pets’ medical and daily ca
 **Workflow:**  
 - From each Pet Profile, navigate to Health tab to add or review events.
 - Receive visual alerts for overdue or upcoming care actions.
+
+---
+
+### 🔍 Pet Filtering by Situation  
+**Purpose:**  
+Enable associations, shelters, and rescues to filter and view animals according to their current situation, making it easier to manage multiple animals in different states.
+
+**Features:**  
+- **Filter by Situation:** Select from different statuses such as "Adopted", "In kennel", "On the street", "In an association", and more.
+- **Clear Visualization:** Each animal displays a visual badge showing their current situation.
+- **"All" Option:** View all animals regardless of their situation.
+
+**Available Situations:**  
+- Adopted
+- In kennel
+- On the street  
+- In an association
+- With negligent owner
+- In a hotel
+- Other
+
+**Benefits:**  
+- Facilitates management for organizations with multiple animals in different situations.
+- Allows quick identification of animals available for adoption or requiring special care.
+- Helps shelters organize and prioritize animals by status.
+
+**Workflow:**  
+- On the main Pets page, use the "Filter by situation" dropdown at the top of the page.
+- Select the desired situation from the menu.
+- The animal list will be filtered automatically.
+- Each animal shows their current situation in a colored badge below their name.
 
 ---
 
