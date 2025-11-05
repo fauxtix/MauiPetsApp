@@ -20,6 +20,7 @@ Embora as folhas de cálculo funcionem para rastreamento básico, o **Daisy Pets
 ✅ **Perfis Partilháveis** - Gere e partilhe perfis completos de animais em PDF com veterinários ou cuidadores instantaneamente  
 ✅ **Design Mobile-First** - Acesso rápido no telemóvel quando estiver no veterinário ou loja de animais  
 ✅ **Rastreamento de Despesas** - Compreenda os custos dos cuidados aos seus animais com relatórios de gastos categorizados  
+✅ **Filtragem por Situação** - Ideal para abrigos e associações: filtre animais por status (adotado, em canil, na rua, etc.)  
 ✅ **Acesso Offline** - Todos os dados armazenados localmente; não requer internet  
 ✅ **Segurança de Dados** - Recursos integrados de backup e restauro protegem o histórico do seu animal
 
@@ -29,10 +30,10 @@ Embora as folhas de cálculo funcionem para rastreamento básico, o **Daisy Pets
 *"Uso o Daisy Pets para rastrear o calendário de vacinação do meu cão. O aplicativo alerta-me 30 dias antes das vacinas e posso partilhar o PDF médico completo com o hotel canino com um toque."*
 
 **Pequena Organização de Resgate (10-20 animais):**  
-*"Gerimos registos médicos de todos os nossos gatos de resgate. Quando os adotantes vêm, podemos mostrar instantaneamente o histórico completo de cuidados e partilhar um perfil em PDF."*
+*"Gerimos registos médicos de todos os nossos gatos de resgate. Quando os adotantes vêm, podemos mostrar instantaneamente o histórico completo de cuidados e partilhar um perfil em PDF. Usamos o filtro de situação para ver rapidamente quais animais estão 'Disponíveis para adoção' vs. 'Já adotados'."*
 
 **Grande Abrigo (50+ animais):**  
-*"O Daisy Pets ajuda-nos a coordenar cuidados entre vários membros da equipa. Todos podem ver consultas próximas, despesas e estado de saúde rapidamente."*
+*"O Daisy Pets ajuda-nos a coordenar cuidados entre vários membros da equipa. Todos podem ver consultas próximas, despesas e estado de saúde rapidamente. O filtro por situação é essencial - podemos filtrar por 'Em canil', 'Na rua' ou 'Com dono negligente' para priorizar resgates e cuidados."*
 
 ---
 
@@ -59,6 +60,37 @@ Registe e gerencie informações vitais relacionadas aos cuidados médicos e di�
 **Fluxo de trabalho:**  
 - A partir do perfil do animal, navegue até a aba de Saúde para adicionar ou consultar eventos.
 - Receba alertas visuais para ações em atraso ou próximas.
+
+---
+
+### 🔍 Filtro de Animais por Situação  
+**Objetivo:**  
+Permitir que associações, abrigos e resgates filtrem e visualizem animais de acordo com sua situação atual, facilitando a gestão de múltiplos animais em diferentes estados.
+
+**Recursos:**  
+- **Filtro por Situação:** Selecione entre diferentes estados como "Adotado", "Em canil", "Na rua", "Numa associação", entre outros.
+- **Visualização Clara:** Cada animal exibe um badge visual com sua situação atual.
+- **Opção "Todos":** Veja todos os animais independentemente da situação.
+
+**Situações disponíveis:**  
+- Adotado
+- Em canil
+- Na rua  
+- Numa associação
+- Com dono negligente
+- Num hotel
+- Outra
+
+**Benefícios:**  
+- Facilita a gestão de organizações com múltiplos animais em diferentes situações.
+- Permite identificar rapidamente animais disponíveis para adoção ou que necessitam de cuidados especiais.
+- Ajuda abrigos a organizar e priorizar animais por status.
+
+**Fluxo de trabalho:**  
+- Na página principal de Pets, use o filtro "Filtrar por situação" no topo da página.
+- Selecione a situação desejada no menu suspenso.
+- A lista de animais será filtrada automaticamente.
+- Cada animal mostra sua situação atual em um badge colorido abaixo do nome.
 
 ---
 
