@@ -2,6 +2,40 @@
 
 ...
 
+## 🎯 Para Quem É Este Aplicativo?
+
+**Daisy Pets** foi projetado para ser flexível e valioso para **todos os donos de animais**, quer tenha:
+
+- 🏠 **1-2 animais em casa** - Donos individuais que querem manter-se organizados e nunca perder datas importantes de cuidados
+- 🏢 **Associações, abrigos ou resgates de animais** - Organizações que gerem múltiplos animais simultaneamente
+- 🐕‍🦺 **Criadores profissionais** - Quem precisa de rastreamento detalhado de saúde e linhagem
+- 👨‍⚕️ **Profissionais de cuidados a animais** - Tosadores, passeadores ou cuidadores que gerem animais de clientes
+
+### Por Que Não Usar Apenas Excel?
+
+Embora as folhas de cálculo funcionem para rastreamento básico, o **Daisy Pets** oferece vantagens que se tornam evidentes mesmo com apenas um ou dois animais:
+
+✅ **Lembretes Automáticos** - Nunca se esqueça de datas de vacinação ou desparasitação com alertas visuais  
+✅ **Fotos e Documentos Integrados** - Mantenha certificados de vacinação, relatórios veterinários e fotos de animais num só lugar  
+✅ **Perfis Partilháveis** - Gere e partilhe perfis completos de animais em PDF com veterinários ou cuidadores instantaneamente  
+✅ **Design Mobile-First** - Acesso rápido no telemóvel quando estiver no veterinário ou loja de animais  
+✅ **Rastreamento de Despesas** - Compreenda os custos dos cuidados aos seus animais com relatórios de gastos categorizados  
+✅ **Acesso Offline** - Todos os dados armazenados localmente; não requer internet  
+✅ **Segurança de Dados** - Recursos integrados de backup e restauro protegem o histórico do seu animal
+
+### Casos de Uso Reais
+
+**Dono Individual (1-2 animais):**  
+*"Uso o Daisy Pets para rastrear o calendário de vacinação do meu cão. O aplicativo alerta-me 30 dias antes das vacinas e posso partilhar o PDF médico completo com o hotel canino com um toque."*
+
+**Pequena Organização de Resgate (10-20 animais):**  
+*"Gerimos registos médicos de todos os nossos gatos de resgate. Quando os adotantes vêm, podemos mostrar instantaneamente o histórico completo de cuidados e partilhar um perfil em PDF."*
+
+**Grande Abrigo (50+ animais):**  
+*"O Daisy Pets ajuda-nos a coordenar cuidados entre vários membros da equipa. Todos podem ver consultas próximas, despesas e estado de saúde rapidamente."*
+
+---
+
 # Funcionalidades principais
 
 Abaixo estão as principais capacidades do aplicativo, detalhadas para fácil uso e referência.
