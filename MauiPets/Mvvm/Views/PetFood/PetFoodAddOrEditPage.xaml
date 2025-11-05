@@ -88,11 +88,21 @@
                        Grid.Row="2"
                        FontSize = "14"
                        VerticalOptions="Center"/>
-                <Entry x:Name="PetFoodBrand" 
+                <!--<Entry x:Name="PetFoodBrand" 
                        Text="{Binding SelectedPetFood.Marca}" 
                        Grid.Row="3"
                        FontSize = "14"
-                       VerticalOptions="Center"/>
+                       VerticalOptions="Center"/>-->
+
+                <!-- Picker bound to Brands list -->
+                <Picker Grid.Row="3"
+                        ItemsSource="{Binding Brands}"
+                        ItemDisplayBinding="{Binding Descricao}"
+                        SelectedItem="{Binding SelectedBrand, Mode=TwoWay}"
+                        Title="Select brand"
+                        FontSize="12"
+                        VerticalOptions="Center" />
+
                 <Label Text="Qtd. diária"
                        Grid.Row="4"
                        FontSize = "14"

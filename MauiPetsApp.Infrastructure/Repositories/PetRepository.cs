@@ -19,14 +19,8 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task<int> InsertAsync(Pet pet)
         {
-            // Normalize date fields to ISO (yyyy-MM-dd) when possible
-            string dbDataChip = pet.DataChip ?? string.Empty;
-            if (TryParseDate(pet.DataChip, out var parsedChip))
-                dbDataChip = parsedChip.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-
-            string dbDataNascimento = pet.DataNascimento ?? string.Empty;
-            if (TryParseDate(pet.DataNascimento, out var parsedNascimento))
-                dbDataNascimento = parsedNascimento.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            string dbDataNascimento = Convert.ToDateTime(pet.DataNascimento).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            string dbDataChip = Convert.ToDateTime(pet.DataChip).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Chip", pet.Chip);
@@ -82,14 +76,9 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task UpdateAsync(int Id, Pet pet)
         {
-            // Normalize date fields to ISO (yyyy-MM-dd) when possible
-            string dbDataChip = pet.DataChip ?? string.Empty;
-            if (TryParseDate(pet.DataChip, out var parsedChip))
-                dbDataChip = parsedChip.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 
-            string dbDataNascimento = pet.DataNascimento ?? string.Empty;
-            if (TryParseDate(pet.DataNascimento, out var parsedNascimento))
-                dbDataNascimento = parsedNascimento.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            string dbDataNascimento = Convert.ToDateTime(pet.DataNascimento).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            string dbDataChip = Convert.ToDateTime(pet.DataChip).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", pet.Id);
@@ -159,6 +148,7 @@ namespace MauiPetsApp.Infrastructure
             sb.Append("DELETE FROM Pet ");
             sb.Append("WHERE Id = @Id");
             var notifSql = "DELETE FROM Notification";
+            var logsSql = "DELETE FROM PetsLogs";
             using (var connection = _context.CreateConnection())
             {
                 connection.Open();
@@ -168,6 +158,7 @@ namespace MauiPetsApp.Infrastructure
                     {
                         await connection.ExecuteAsync(sb.ToString(), new { Id }, transaction);
                         await connection.ExecuteAsync(notifSql, transaction: transaction);
+                        await connection.ExecuteAsync(logsSql, transaction: transaction);
                         transaction.Commit();
                     }
                     catch (Exception ex)

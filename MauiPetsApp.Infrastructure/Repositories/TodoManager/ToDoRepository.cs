@@ -46,6 +46,10 @@ namespace MauiPetsApp.Infrastructure.TodoManager
 
         public async Task<int> InsertAsync(ToDo toDo)
         {
+
+            string convertedDbStartDate = Convert.ToDateTime(toDo.StartDate).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            string convertedDbEndtDate = Convert.ToDateTime(toDo.EndDate).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
             StringBuilder sb = new StringBuilder();
 
             sb.Append("INSERT INTO Todo (");
@@ -61,11 +65,11 @@ namespace MauiPetsApp.Infrastructure.TodoManager
                 {
                     var param = new
                     {
-                        Description = toDo.Description,
-                        StartDate = FormatToShortDateOrKeep(toDo.StartDate),
-                        EndDate = FormatToShortDateOrKeep(toDo.EndDate),
-                        Completed = toDo.Completed,
-                        CategoryId = toDo.CategoryId
+                        toDo.Description,
+                        StartDate = convertedDbStartDate,
+                        EndDate = convertedDbEndtDate,
+                        toDo.Completed,
+                        toDo.CategoryId
                     };
 
                     var result = await connection.QueryFirstAsync<int>(sb.ToString(), param: param);
@@ -83,11 +87,14 @@ namespace MauiPetsApp.Infrastructure.TodoManager
 
         public async Task UpdateAsync(int Id, ToDo toDo)
         {
+            string convertedDbStartDate = Convert.ToDateTime(toDo.StartDate).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            string convertedDbEndtDate = Convert.ToDateTime(toDo.EndDate).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", toDo.Id);
             dynamicParameters.Add("@Description", toDo.Description);
-            dynamicParameters.Add("@StartDate", FormatToShortDateOrKeep(toDo.StartDate));
-            dynamicParameters.Add("@EndDate", FormatToShortDateOrKeep(toDo.EndDate));
+            dynamicParameters.Add("@StartDate", convertedDbStartDate);
+            dynamicParameters.Add("@EndDate", convertedDbEndtDate);
             dynamicParameters.Add("@Completed", toDo.Completed);
             dynamicParameters.Add("@CategoryId", toDo.CategoryId);
 

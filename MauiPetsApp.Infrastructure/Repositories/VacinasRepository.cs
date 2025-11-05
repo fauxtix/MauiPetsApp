@@ -51,12 +51,8 @@ namespace MauiPetsApp.Infrastructure
             var description = $"{petName} - Vacina da {vacina.Marca}";
             var categoryId = await GetVaccineTodoCategoryId("Vacinação");
 
-            // Normalize date for DB: store as ISO yyyy-MM-dd when possible
-            string dbDataToma = vacina.DataToma ?? string.Empty;
-            if (TryParseDataToma(vacina.DataToma, out var parsedDate))
-            {
-                dbDataToma = parsedDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-            }
+            string convertedDbDataToma = Convert.ToDateTime(vacina.DataToma).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            string dbDataToma = convertedDbDataToma ?? string.Empty;
 
             int result;
 
@@ -86,11 +82,11 @@ namespace MauiPetsApp.Infrastructure
                     {
                         var parameters = new
                         {
-                            IdPet = vacina.IdPet,
-                            IdTipoVacina = vacina.IdTipoVacina,
+                            vacina.IdPet,
+                            vacina.IdTipoVacina,
                             DataToma = dbDataToma,
-                            Marca = vacina.Marca,
-                            ProximaTomaEmMeses = vacina.ProximaTomaEmMeses
+                            vacina.Marca,
+                            vacina.ProximaTomaEmMeses
                         };
 
                         result = await connection.QueryFirstAsync<int>(sb.ToString(), param: parameters, transaction: transaction);
@@ -111,11 +107,9 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task UpdateAsync(int Id, Vacina vacina)
         {
-            string dbDataToma = vacina.DataToma ?? string.Empty;
-            if (TryParseDataToma(vacina.DataToma, out var parsedDate))
-            {
-                dbDataToma = parsedDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-            }
+            string convertedDbDataToma = Convert.ToDateTime(vacina.DataToma).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            string dbDataToma = convertedDbDataToma ?? string.Empty;
+
 
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", vacina.Id);

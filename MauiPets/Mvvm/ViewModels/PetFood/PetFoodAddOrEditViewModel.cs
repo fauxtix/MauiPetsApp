@@ -5,6 +5,7 @@ using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
 using Microsoft.Extensions.Logging;
+using System.Collections.ObjectModel;
 using static MauiPets.Helpers.ViewModelsService;
 
 namespace MauiPets.Mvvm.ViewModels.PetFood
@@ -17,6 +18,7 @@ namespace MauiPets.Mvvm.ViewModels.PetFood
         private readonly ILogger<PetFoodAddOrEditViewModel> _logger;
         public IRacaoService _petFoodService { get; set; }
         public IPetService _petService { get; set; }
+        private readonly ILookupTableService _lookupService;
         public int SelectedPetFoodId { get; set; }
 
         [ObservableProperty]
@@ -24,13 +26,19 @@ namespace MauiPets.Mvvm.ViewModels.PetFood
         [ObservableProperty]
         public string _petName;
 
+        [ObservableProperty]
+        MarcaRacaoDto _selectedBrand;
+
+        public ObservableCollection<MarcaRacaoDto> Brands { get; set; } = new();
 
 
-        public PetFoodAddOrEditViewModel(IRacaoService petFoodservice, IPetService petService, ILogger<PetFoodAddOrEditViewModel> logger)
+
+        public PetFoodAddOrEditViewModel(IRacaoService petFoodservice, IPetService petService, ILogger<PetFoodAddOrEditViewModel> logger, ILookupTableService lookupService)
         {
             _petFoodService = petFoodservice;
             _petService = petService;
             _logger = logger;
+            _lookupService = lookupService;
         }
 
 
@@ -51,6 +59,26 @@ namespace MauiPets.Mvvm.ViewModels.PetFood
 
                 PetPhoto = selectedPet.Foto;
                 PetName = selectedPet.Nome;
+                var lookup = await _lookupService.GetLookupTableData("MarcaRacao");
+                Brands.Clear();
+                foreach (var item in lookup)
+                {
+                    Brands.Add(new MarcaRacaoDto
+                    {
+                        Id = item.Id,
+                        Descricao = item.Descricao
+                    });
+                }
+                // If editing, select the existing brand in the picker (IdRacao property must exist on SelectedPetFood)
+                if (SelectedPetFood != null && SelectedPetFood.IdRacao > 0)
+                {
+                    SelectedBrand = Brands.FirstOrDefault(b => b.Id == SelectedPetFood.IdRacao);
+                }
+                else
+                {
+                    // optionally select the first available brand to avoid null
+                    SelectedBrand = Brands.FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
@@ -97,6 +125,14 @@ namespace MauiPets.Mvvm.ViewModels.PetFood
         {
             try
             {
+
+                // Before validation, ensure the DTO has the FK and optional descriptive Marca filled for display
+                if (SelectedBrand != null)
+                {
+                    SelectedPetFood.IdRacao = SelectedBrand.Id;
+                    SelectedPetFood.Marca = SelectedBrand.Descricao; // keep string for display/backwards compat
+                }
+
                 var errorMessages = _petFoodService.RegistoComErros(SelectedPetFood);
                 if (!string.IsNullOrEmpty(errorMessages))
                 {

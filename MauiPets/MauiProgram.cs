@@ -325,7 +325,6 @@ namespace MauiPets
                 catch { }
             };
 
-            // Run date normalization migration once at startup (backup DB first)
             try
             {
                 using var scope = app.Services.CreateScope();
@@ -364,10 +363,6 @@ namespace MauiPets
                             Preferences.Set(migrationFlagKey, "1"); // nothing to do; mark as done
                             Log.Information("No legacy date values found; migration skipped and flagged.");
                         }
-                    }
-                    else
-                    {
-                        Log.Information("DateNormalizationMigration already applied; skipping.");
                     }
                 }
                 else

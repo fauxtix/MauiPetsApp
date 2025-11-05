@@ -45,6 +45,9 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task<int> InsertAsync(Despesa expense)
         {
+
+            string dbDataMovimento = Convert.ToDateTime(expense.DataMovimento).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
             StringBuilder sb = new StringBuilder();
 
             sb.Append("INSERT INTO Despesa (");
@@ -60,34 +63,16 @@ namespace MauiPetsApp.Infrastructure
             {
                 using (var connection = _context.CreateConnection())
                 {
-                    // Normalize DataMovimento to ISO yyyy-MM-dd if possible
-                    string dbDataMovimento = expense.DataMovimento ?? string.Empty;
-                    if (TryParseDate(expense.DataMovimento, out var parsedMovimento))
-                    {
-                        dbDataMovimento = parsedMovimento.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-                    }
-
-                    // Normalize DataCriacao: prefer provided value, otherwise set now, stored as ISO
-                    string dbDataCriacao = expense.DataCriacao ?? string.Empty;
-                    if (TryParseDate(expense.DataCriacao, out var parsedCriacao))
-                    {
-                        dbDataCriacao = parsedCriacao.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-                    }
-                    else
-                    {
-                        dbDataCriacao = DateOnly.FromDateTime(DateTime.UtcNow).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-                    }
-
                     var parameters = new
                     {
                         DataMovimento = dbDataMovimento,
-                        ValorPago = expense.ValorPago,
-                        Descricao = expense.Descricao,
-                        IdTipoDespesa = expense.IdTipoDespesa,
-                        IdCategoriaDespesa = expense.IdCategoriaDespesa,
-                        Notas = expense.Notas,
-                        DataCriacao = dbDataCriacao,
-                        TipoMovimento = expense.TipoMovimento
+                        expense.ValorPago,
+                        expense.Descricao,
+                        expense.IdTipoDespesa,
+                        expense.IdCategoriaDespesa,
+                        expense.Notas,
+                        DataCriacao = DateTime.UtcNow.ToString("yyyy-MM-dd"),
+                        expense.TipoMovimento
                     };
 
                     var result = await connection.QueryFirstAsync<int>(sb.ToString(), param: parameters);
@@ -105,13 +90,7 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task<bool> UpdateAsync(int id, Despesa expense)
         {
-
-            // Normalize DataMovimento to ISO when possible
-            string dbDataMovimento = expense.DataMovimento ?? string.Empty;
-            if (TryParseDate(expense.DataMovimento, out var parsedMovimento))
-            {
-                dbDataMovimento = parsedMovimento.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-            }
+            string dbDataMovimento = Convert.ToDateTime(expense.DataMovimento).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", expense.Id);

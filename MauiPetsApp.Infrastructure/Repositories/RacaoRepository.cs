@@ -46,9 +46,9 @@ namespace MauiPetsApp.Infrastructure
             StringBuilder sb = new StringBuilder();
 
             sb.Append("INSERT INTO Racao (");
-            sb.Append("DataCompra, Marca, QuantidadeDiaria, IdPet) ");
+            sb.Append("DataCompra, Marca, QuantidadeDiaria, IdPet, IdRacao) ");
             sb.Append(" VALUES(");
-            sb.Append("@DataCompra, @Marca, @QuantidadeDiaria, @IdPet");
+            sb.Append("@DataCompra, @Marca, @QuantidadeDiaria, @IdPet, @IdRacao");
             sb.Append(");");
             sb.Append("SELECT last_insert_rowid()");
 
@@ -68,7 +68,8 @@ namespace MauiPetsApp.Infrastructure
                         DataCompra = dbDataCompra,
                         Marca = racao.Marca,
                         QuantidadeDiaria = racao.QuantidadeDiaria,
-                        IdPet = racao.IdPet
+                        IdPet = racao.IdPet,
+                        IdRacao = racao.IdRacao
                     };
 
                     var result = await connection.QueryFirstAsync<int>(sb.ToString(), param: parameters);
@@ -99,13 +100,15 @@ namespace MauiPetsApp.Infrastructure
             dynamicParameters.Add("@Marca", racao.Marca);
             dynamicParameters.Add("@QuantidadeDiaria", racao.QuantidadeDiaria);
             dynamicParameters.Add("@IdPet", racao.IdPet);
+            dynamicParameters.Add("@IdRacao", racao.IdRacao);
 
             StringBuilder sb = new StringBuilder();
             sb.Append("UPDATE Racao SET ");
             sb.Append("DataCompra = @DataCompra, ");
             sb.Append("Marca = @Marca, ");
             sb.Append("QuantidadeDiaria = @QuantidadeDiaria, ");
-            sb.Append("IdPet = @IdPet ");
+            sb.Append("IdPet = @IdPet, ");
+            sb.Append("IdRacao = @IdRacao ");
             sb.Append("WHERE Id = @Id");
 
             using (var connection = _context.CreateConnection())
@@ -183,10 +186,12 @@ namespace MauiPetsApp.Infrastructure
         public async Task<IEnumerable<RacaoVM>> GetAllRacoesVMAsync()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("SELECT Racao.Id, DataCompra, Marca, QuantidadeDiaria, IdPet, Pet.Nome AS [NomePet] ");
+            sb.Append("SELECT Racao.Id, DataCompra, Marca, QuantidadeDiaria, IdPet, IdRacao, Pet.Nome AS [NomePet], MarcaRacao.Descricao AS [MarcaRacao] ");
             sb.Append("FROM Racao ");
             sb.Append("INNER JOIN Pet ON ");
             sb.Append("Racao.IdPet = Pet.Id ");
+            sb.Append("INNER JOIN MarcaRacao ON ");
+            sb.Append("Racao.IdRacao = MarcaRacao.Id ");
 
 
             using (var connection = _context.CreateConnection())
@@ -206,10 +211,12 @@ namespace MauiPetsApp.Infrastructure
         public async Task<IEnumerable<RacaoVM>> GetRacaoVMAsync(int Id)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("SELECT Racao.Id, DataCompra, Marca, QuantidadeDiaria, IdPet, Pet.Nome AS [NomePet] ");
+            sb.Append("SELECT Racao.Id, DataCompra, Marca, QuantidadeDiaria, IdPet, IdRacao, Pet.Nome AS [NomePet], MarcaRacao.Descricao AS [MarcaRacao] ");
             sb.Append("FROM Racao ");
             sb.Append("INNER JOIN Pet ON ");
             sb.Append("Racao.IdPet = Pet.Id ");
+            sb.Append("INNER JOIN MarcaRacao ON ");
+            sb.Append("Racao.IdRacao = MarcaRacao.Id ");
             sb.Append("WHERE Racao.IdPet = @Id");
 
 

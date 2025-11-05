@@ -7,7 +7,10 @@
         public string DataCompra { get; set; } = string.Empty;
         public string Marca { get; set; } = string.Empty;
         public int QuantidadeDiaria { get; set; }
+        public int IdRacao { get; set; }
+
         public string NomePet { get; set; } = string.Empty;
+        public string MarcaRacao { get; set; } = string.Empty;
 
         public string DataCompraFormatada
         {

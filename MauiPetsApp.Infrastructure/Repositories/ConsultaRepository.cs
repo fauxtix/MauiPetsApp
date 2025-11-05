@@ -43,6 +43,8 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task<int> InsertAsync(ConsultaVeterinario Consulta)
         {
+            string dbDataConsulta = Convert.ToDateTime(Consulta.DataConsulta).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
             StringBuilder sb = new StringBuilder();
 
             sb.Append("INSERT INTO ConsultaVeterinario (");
@@ -52,25 +54,20 @@ namespace MauiPetsApp.Infrastructure
             sb.Append(");");
             sb.Append("SELECT last_insert_rowid()");
 
+
             try
             {
                 using (var connection = _context.CreateConnection())
                 {
-                    // Normalize date to ISO (yyyy-MM-dd) if possible to avoid culture-dependent parsing later
-                    string dbDataConsulta = Consulta.DataConsulta ?? string.Empty;
-                    if (TryParseDate(Consulta.DataConsulta, out var parsed))
-                    {
-                        dbDataConsulta = parsed.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-                    }
 
                     var parameters = new
                     {
                         DataConsulta = dbDataConsulta,
-                        Motivo = Consulta.Motivo,
-                        Diagnostico = Consulta.Diagnostico,
-                        Tratamento = Consulta.Tratamento,
-                        Notas = Consulta.Notas,
-                        IdPet = Consulta.IdPet
+                        Consulta.Motivo,
+                        Consulta.Diagnostico,
+                        Consulta.Tratamento,
+                        Consulta.Notas,
+                        Consulta.IdPet
                     };
 
                     var result = await connection.QueryFirstAsync<int>(sb.ToString(), param: parameters);
@@ -88,12 +85,7 @@ namespace MauiPetsApp.Infrastructure
 
         public async Task UpdateAsync(int Id, ConsultaVeterinario Consulta)
         {
-            // Normalize date before saving
-            string dbDataConsulta = Consulta.DataConsulta ?? string.Empty;
-            if (TryParseDate(Consulta.DataConsulta, out var parsed))
-            {
-                dbDataConsulta = parsed.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-            }
+            string dbDataConsulta = Convert.ToDateTime(Consulta.DataConsulta).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", Consulta.Id);
