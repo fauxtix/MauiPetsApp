@@ -74,6 +74,7 @@ Enable associations, shelters, and rescues to filter and view animals according 
 
 **Available Situations:**  
 - Adopted
+- In Temporary Adoption Family
 - In kennel
 - On the street  
 - In an association

@@ -74,6 +74,7 @@ Permitir que associações, abrigos e resgates filtrem e visualizem animais de a
 
 **Situações disponíveis:**  
 - Adotado
+- Em Família de Adoção Temporária
 - Em canil
 - Na rua  
 - Numa associação
