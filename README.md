@@ -2,6 +2,40 @@
 
 ...
 
+## 🎯 Who Is This App For?
+
+**Daisy Pets** is designed to be flexible and valuable for **all pet owners**, whether you have:
+
+- 🏠 **1-2 pets at home** - Individual pet owners who want to stay organized and never miss important care dates
+- 🏢 **Pet associations, shelters, or rescues** - Organizations managing multiple animals simultaneously
+- 🐕‍🦺 **Professional breeders** - Those who need detailed health and lineage tracking
+- 👨‍⚕️ **Pet care professionals** - Groomers, walkers, or sitters managing client pets
+
+### Why Not Just Use Excel?
+
+While spreadsheets work for basic tracking, **Daisy Pets** offers advantages that become apparent even with just one or two pets:
+
+✅ **Automated Reminders** - Never forget vaccination or deworming dates with visual alerts  
+✅ **Integrated Photos & Documents** - Keep vaccination certificates, vet reports, and pet photos all in one place  
+✅ **Shareable Profiles** - Generate and share complete PDF pet profiles with vets or pet sitters instantly  
+✅ **Mobile-First Design** - Quick access on your phone when at the vet or pet store  
+✅ **Expense Tracking** - Understand your pet care costs with categorized spending reports  
+✅ **Offline Access** - All data stored locally; no internet required  
+✅ **Data Security** - Built-in backup and restore features protect your pet's history
+
+### Real-World Use Cases
+
+**Individual Owner (1-2 pets):**  
+*"I use Daisy Pets to track my dog's vaccination schedule. The app alerts me 30 days before shots are due, and I can share his complete medical PDF with the boarding kennel with one tap."*
+
+**Small Rescue Organization (10-20 animals):**  
+*"We manage medical records for all our rescue cats. When adopters come, we can instantly show them the complete care history and share a PDF profile."*
+
+**Large Shelter (50+ animals):**  
+*"Daisy Pets helps us coordinate care across multiple staff members. Everyone can see upcoming appointments, expenses, and health status at a glance."*
+
+---
+
 # Key Features
 
 Below are the main capabilities of the app, detailed for easy use and reference.
