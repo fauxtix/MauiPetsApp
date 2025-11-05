@@ -120,7 +120,7 @@ public partial class PetViewModel : BaseViewModel, IDisposable
 
     partial void OnSelectedSituationChanged(LookupTableVM? value)
     {
-        Task.Run(FilterPetsAsync);
+        _ = FilterPetsAsync();
     }
 
     private async Task FilterPetsAsync()
@@ -129,7 +129,8 @@ public partial class PetViewModel : BaseViewModel, IDisposable
         {
             await Task.Yield();
 
-            if (_allPets == null || !_allPets.Any())
+            // Wait for pets to be loaded before filtering
+            if (!_allPets.Any())
                 return;
 
             var filteredPets = _allPets.AsEnumerable();
@@ -138,7 +139,7 @@ public partial class PetViewModel : BaseViewModel, IDisposable
             if (SelectedSituation != null && SelectedSituation.Id > 0)
             {
                 filteredPets = filteredPets.Where(p => 
-                    p.SituacaoAnimal?.Equals(SelectedSituation.Descricao, StringComparison.OrdinalIgnoreCase) == true);
+                    p.SituacaoAnimal?.Equals(SelectedSituation.Descricao, StringComparison.OrdinalIgnoreCase) ?? false);
             }
 
             MainThread.BeginInvokeOnMainThread(() =>
@@ -169,14 +170,10 @@ public partial class PetViewModel : BaseViewModel, IDisposable
 
             if (pets.Count > 0)
             {
+                // Don't call FilterPetsAsync here to avoid double-filtering
+                // The filter will be applied when SelectedSituation changes
                 Pets.Clear();
                 Pets.AddRange(pets);
-                
-                // Apply filter if a situation is already selected
-                if (SelectedSituation != null && SelectedSituation.Id > 0)
-                {
-                    await FilterPetsAsync();
-                }
             }
         }
         catch (Exception ex)
