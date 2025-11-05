@@ -5,8 +5,10 @@ using MauiPets.Core.Application.Interfaces.Services.Notifications;
 using MauiPets.Core.Application.ViewModels.Messages;
 using MauiPets.Extensions;
 using MauiPets.Mvvm.Views.Pets;
+using MauiPets.Resources.Languages;
 using MauiPetsApp.Core.Application.Interfaces.Services;
 using MauiPetsApp.Core.Application.ViewModels;
+using MauiPetsApp.Core.Application.ViewModels.LookupTables;
 using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 using static MauiPets.Helpers.ViewModelsService;
@@ -29,20 +31,30 @@ public partial class PetViewModel : BaseViewModel, IDisposable
     private readonly ILogger<PetViewModel> _logger;
 
     public ObservableCollection<PetVM> Pets { get; } = new();
+    public ObservableCollection<LookupTableVM> Situations { get; } = new();
+
+    [ObservableProperty]
+    private LookupTableVM? selectedSituation;
+
+    private List<PetVM> _allPets = new();
 
     private readonly IPetService _petService;
     private readonly IVacinasService _petVaccinesService;
     private readonly INotificationsSyncService _notificationService;
+    private readonly ILookupTableService _lookupTableService;
 
     public PetViewModel(IPetService petService,
                         IVacinasService petVaccinesService,
                         ILogger<PetViewModel> logger,
+                        ILookupTableService lookupTableService,
                         INotificationsSyncService notificationService = null)
     {
         _petService = petService;
         _petVaccinesService = petVaccinesService;
         _logger = logger;
+        _lookupTableService = lookupTableService;
         _notificationService = notificationService;
+        Task.Run(LoadSituationsAsync);
         Task.Run(GetPetsAsync);
         Task.Run(UpdateUnreadNotificationsAsync); // Atualiza badge ao iniciar
         WeakReferenceMessenger.Default.Register<UpdateUnreadNotificationsMessage>(this, async (r, m) =>
@@ -86,6 +98,61 @@ public partial class PetViewModel : BaseViewModel, IDisposable
         }
     }
 
+    private async Task LoadSituationsAsync()
+    {
+        try
+        {
+            var situations = (await _lookupTableService.GetLookupTableData("Situacao")).ToList();
+            
+            // Add "All" option at the beginning
+            Situations.Clear();
+            Situations.Add(new LookupTableVM { Id = 0, Descricao = AppResources.TituloTodos });
+            Situations.AddRange(situations);
+            
+            // Set "All" as default selection
+            SelectedSituation = Situations.FirstOrDefault();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Erro ao carregar situações: {ex.Message}");
+        }
+    }
+
+    partial void OnSelectedSituationChanged(LookupTableVM? value)
+    {
+        Task.Run(FilterPetsAsync);
+    }
+
+    private async Task FilterPetsAsync()
+    {
+        try
+        {
+            await Task.Yield();
+
+            if (_allPets == null || !_allPets.Any())
+                return;
+
+            var filteredPets = _allPets.AsEnumerable();
+
+            // Filter by situation if not "All" (Id = 0)
+            if (SelectedSituation != null && SelectedSituation.Id > 0)
+            {
+                filteredPets = filteredPets.Where(p => 
+                    p.SituacaoAnimal?.Equals(SelectedSituation.Descricao, StringComparison.OrdinalIgnoreCase) == true);
+            }
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Pets.Clear();
+                Pets.AddRange(filteredPets);
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Erro ao filtrar pets: {ex.Message}");
+        }
+    }
+
     [RelayCommand]
     private async Task GetPetsAsync()
     {
@@ -98,11 +165,18 @@ public partial class PetViewModel : BaseViewModel, IDisposable
             await Task.Yield();
 
             var pets = (await _petService.GetAllVMAsync()).ToList();
+            _allPets = pets;
 
             if (pets.Count > 0)
             {
                 Pets.Clear();
                 Pets.AddRange(pets);
+                
+                // Apply filter if a situation is already selected
+                if (SelectedSituation != null && SelectedSituation.Id > 0)
+                {
+                    await FilterPetsAsync();
+                }
             }
         }
         catch (Exception ex)

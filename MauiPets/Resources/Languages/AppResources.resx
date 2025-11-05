@@ -678,4 +678,10 @@
   <data name="Titulo_NoPets" xml:space="preserve">
     <value>Não há Pets para tratar...</value>
   </data>
+  <data name="TituloFiltrarPorSituacao" xml:space="preserve">
+    <value>Filtrar por situação</value>
+  </data>
+  <data name="TituloTodos" xml:space="preserve">
+    <value>Todos</value>
+  </data>
 </root>
