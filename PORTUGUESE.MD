@@ -9,7 +9,7 @@
 - 🐕‍🦺 **Criadores profissionais** - Quem precisa de rastreamento detalhado de saúde e linhagem
 - 👨‍⚕️ **Profissionais de cuidados a animais** - Tosadores, passeadores ou cuidadores que gerem animais de clientes
 
-### Por Que Não Usar Apenas Excel?
+### Por que não usar apenas Excel?
 
 Embora as folhas de cálculo funcionem para rastreamento básico,  **Daisy Pets** oferece vantagens que se tornam evidentes mesmo com apenas um ou dois animais:
 
@@ -21,7 +21,7 @@ Embora as folhas de cálculo funcionem para rastreamento básico,  **Daisy Pets*
 ✅ **Acesso Offline** - Todos os dados armazenados localmente; não requer internet  
 ✅ **Segurança de Dados** - Recursos integrados de backup e restauro protegem o histórico do seu animal
 
-### Casos de Uso Reais
+### Casos de uso reais
 
 **Dono Individual (1-2 animais):**  
 *"Uso o Daisy Pets para rastrear o calendário de vacinação do meu cão. O aplicativo alerta-me 30 dias antes das vacinas e posso partilhar o PDF médico completo com o hotel canino com um toque."*
