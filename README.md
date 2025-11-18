@@ -1,6 +1,5 @@
 # Daisy Pets / Mobile 🐶🐱
 
-...
 
 ## 🎯 Who Is This App For?
 
