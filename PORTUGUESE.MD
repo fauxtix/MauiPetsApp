@@ -1,7 +1,5 @@
 # Daisy Pets / Mobile 🐶🐱
 
-...
-
 ## 🎯 Para Quem é esta aplicação?
 
 **Daisy Pets** foi projetado para ser flexível para **todos os donos de animais**, quer tenha:
