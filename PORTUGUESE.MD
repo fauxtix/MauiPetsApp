@@ -2,9 +2,9 @@
 
 ...
 
-## 🎯 Para Quem É Este Aplicativo?
+## 🎯 Para Quem é esta aplicação?
 
-**Daisy Pets** foi projetado para ser flexível e valioso para **todos os donos de animais**, quer tenha:
+**Daisy Pets** foi projetado para ser flexível para **todos os donos de animais**, quer tenha:
 
 - 🏠 **1-2 animais em casa** - Donos individuais que querem manter-se organizados e nunca perder datas importantes de cuidados
 - 🏢 **Associações, abrigos ou resgates de animais** - Organizações que gerem múltiplos animais simultaneamente
@@ -13,7 +13,7 @@
 
 ### Por Que Não Usar Apenas Excel?
 
-Embora as folhas de cálculo funcionem para rastreamento básico, o **Daisy Pets** oferece vantagens que se tornam evidentes mesmo com apenas um ou dois animais:
+Embora as folhas de cálculo funcionem para rastreamento básico,  **Daisy Pets** oferece vantagens que se tornam evidentes mesmo com apenas um ou dois animais:
 
 ✅ **Lembretes Automáticos** - Nunca se esqueça de datas de vacinação ou desparasitação com alertas visuais  
 ✅ **Fotos e Documentos Integrados** - Mantenha certificados de vacinação, relatórios veterinários e fotos de animais num só lugar  
@@ -225,22 +225,6 @@ A funcionalidade de gestão de documentos permite enviar, consultar, editar e ap
 - Arquivos são salvos localmente na pasta de dados do aplicativo.
 - Documentos têm nome único para evitar conflitos.
 - Ao excluir, o arquivo é também removido do armazenamento local, se existir.
-
----
-
-### 🌐 Seleção de Idioma
-
-Nova opção em **Configurações** permite escolher o idioma do app:
-
-- 🇵🇹 **Português**
-- 🇬🇧 **Inglês**
-
-Mude de idioma a qualquer momento no menu de configurações. Preferência aplicada instantaneamente à interface.
-
-**Como funciona:**  
-- O idioma escolhido é salvo nas preferências do usuário.
-- Todas as telas e textos mudam conforme selecionado.
-- Idiomas disponíveis: `Português (pt-PT)` e `English (en-US)`.
 
 ---
 
