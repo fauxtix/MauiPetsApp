@@ -1,6 +1,6 @@
 # Daisy Pets / Mobile 🐶🐱
 
-> 🇵🇹 [Versão em português](PORTUGUWSE.md)
+> 🇵🇹 [Versão em português](PORTUGUESE.MD)
 
 ## 🎯 Who Is This App For?
 
