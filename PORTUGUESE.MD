@@ -1,6 +1,6 @@
 # Daisy Pets / Mobile 🐶🐱
 
-> EN [English Version](README.md)
+> [English Version](README.md)
 
 ## 🎯 Para Quem é esta aplicação?
 
