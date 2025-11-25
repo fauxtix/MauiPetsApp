@@ -29,7 +29,7 @@ While spreadsheets work for basic tracking, **Daisy Pets** offers advantages tha
 *"I use Daisy Pets to track my dog's vaccination schedule. The app alerts me 30 days before shots are due, and I can share his complete medical PDF with the boarding kennel with one tap."*
 
 **Small Rescue Organization (10-20 animals):**  
-*"We manage medical records for all our rescue cats. When adopters come, we can instantly show them the complete care history and share a PDF profile."*
+*"We manage medical records for all our rescue cats and dogs. When adopters come, we can instantly show them the complete care history and share a PDF profile."*
 
 **Large Shelter (50+ animals):**  
 *"Daisy Pets helps us coordinate care across multiple staff members. Everyone can see upcoming appointments, expenses, and health status at a glance."*
