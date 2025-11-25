@@ -6,7 +6,7 @@
 
 **Daisy Pets** foi projetado para ser flexível para **todos os donos de animais**, quer tenha:
 
-- 🏠 **1-2 animais em casa** - Donos individuais que querem manter-se organizados e nunca perder datas importantes de cuidados
+- 🏠 **1-5 animais em casa** - Donos individuais que querem manter-se organizados e nunca perder datas importantes de cuidados
 - 🏢 **Associações, abrigos ou resgates de animais** - Organizações que gerem múltiplos animais simultaneamente
 - 🐕‍🦺 **Criadores profissionais** - Quem precisa de rastreamento detalhado de saúde e linhagem
 - 👨‍⚕️ **Profissionais de cuidados a animais** - Tosadores, passeadores ou cuidadores que gerem animais de clientes
