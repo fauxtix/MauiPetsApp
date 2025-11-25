@@ -6,7 +6,7 @@
 
 **Daisy Pets** is designed to be flexible and valuable for **all pet owners**, whether you have:
 
-- 🏠 **1-2 pets at home** - Individual pet owners who want to stay organized and never miss important care dates
+- 🏠 **1-5 pets at home** - Individual pet owners who want to stay organized and never miss important care dates
 - 🏢 **Pet associations, shelters, or rescues** - Organizations managing multiple animals simultaneously
 - 🐕‍🦺 **Professional breeders** - Those who need detailed health and lineage tracking
 - 👨‍⚕️ **Pet care professionals** - Groomers, walkers, or sitters managing client pets
