@@ -29,7 +29,7 @@ Embora as folhas de cálculo funcionem para rastreamento básico,  **Daisy Pets*
 *"Uso o Daisy Pets para rastrear o calendário de vacinação do meu cão. O aplicativo alerta-me 30 dias antes das vacinas e posso partilhar o PDF médico completo com o hotel canino com um toque."*
 
 **Pequena Organização de Resgate (10-20 animais):**  
-*"Gerimos registos médicos de todos os nossos gatos de resgate. Quando os adotantes vêm, podemos mostrar instantaneamente o histórico completo de cuidados e partilhar um perfil em PDF."*
+*"Gerimos registos médicos de todos os nossos cães e gatos de resgate. Quando os adotantes vêm, podemos mostrar instantaneamente o histórico completo de cuidados e partilhar um perfil em PDF."*
 
 **Grande Abrigo (50+ animais):**  
 *"O Daisy Pets ajuda-nos a coordenar cuidados entre vários membros da equipa. Todos podem ver consultas próximas, despesas e estado de saúde rapidamente."*
